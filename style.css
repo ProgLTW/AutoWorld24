@@ -43,9 +43,7 @@ nav a {
     color: black;
 }
 
-nav li:hover {
-    background-color: white;
-}
+
 
 nav li:first-child {
     margin-right: auto;
@@ -57,7 +55,9 @@ nav li:last-child {
     margin-left: auto;
     background-color: orange;
 }
-
+nav li:not(:first-child):hover {
+    background-color: white;
+}
 .container {
     border-radius: 30px;
     margin-top: 100px;

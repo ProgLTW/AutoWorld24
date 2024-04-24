@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AutoWorld</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
+    <!-- Includi solo il file CSS di Bootstrap per i componenti che ti interessano -->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <style>
+        /* Stili personalizzati */
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            min-height: 100vh;
+            background-image: url(auto.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        @font-face {
+            font-family: 'Formula1 Display';
+            src: url('C:\Windows\Fonts\Formula1-Display.ttf') format('truetype'); /* Imposta il percorso al file del font */
+        }
+
+        nav {
+            background-color: #ffa500;
+            font-family: 'Formula1 Display';
+        }
+
+        nav ul {
+            width: 90%;
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        nav li {
+            height: 50px;
+            padding: 0 40px;
+        }
+
+        nav a {
+            height: 100%;
+            padding: 0 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            color: black;
+        }
+
+        nav li:hover {
+            background-color: white;
+        }
+
+        nav li:first-child {
+            margin-right: auto;
+            font-size: xx-large;
+            background-color: orange;
+        }
+
+        nav li:last-child {
+            margin-left: auto;
+            background-color: orange;
+        }
+
+        .container {
+            border-radius: 30px;
+            margin-top: 100px;
+            text-align: center;
+            background-color: #2c2c2c96;
+            margin-left: 600px;
+            margin-right: 600px;
+            font-family: 'Formula1 Display';
+            color: orange;
+        }
+
+        .content {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .box {
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 120px;
+        }
+
+        .car-logos-container {
+            position: fixed;
+            overflow-x: hidden;
+            overflow-y: hidden; /* Nascondi lo scorrimento verticale */
+            white-space: nowrap;
+            background-color: black;
+            height: 70px;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .car-logos {
+            width: auto;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+            background-color: transparent;
+        }
+
+        .animation {
+            animation: slide 40s linear infinite;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .car-logos img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="text-center">
+    <nav>
+        <ul>
+            <li><a href="index.html"><b>AUTOWORLD</b></a></li>
+            <li><a href="ricerca.php"><b>RICERCA</b></a></li>
+            <li><a href="vendi.php"><b>VENDI</b></a></li>
+            <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
+            <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
+            <li><a href="login/index.html" class="btn btn-primary btn-lg" role="button">LOGIN</a></li>
+            <li><a href="registrazione/index.html" class="btn btn-primary btn-lg" role="button">REGISTRATI</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>COSA CERCHI?</h1>
+        <div class="box">
+            <h2>AUTO</h2>
+            <img src="iconauto.png" class="icon-auto">
+        </div>
+        <div class="box">
+            <h2>RICAMBI</h2>
+            <img src="iconaruota.png" class="icon-auto">
+        </div>
+    </div>
+    <div class="car-logos-container">
+        <div class="car-logos animation">
+            <img src="honda.png" alt="Logo 1">
+            <img src="toyota.png" alt="Logo 2">
+            <img src="audi.png" alt="Logo 3">
+            <img src="bmw.png" alt="Logo 4">
+            <img src="ford.png" alt="Logo 5">
+            <img src="volkswagen.png" alt="Logo 6">
+            <img src="mercedes.png" alt="Logo 7">
+            <img src="kia.png" alt="Logo 8">
+        </div>
+    </div>        
+</body>
+</html>

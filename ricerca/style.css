@@ -1,0 +1,127 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    min-height: 100vh;
+    background-image: url(auto.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+@font-face {
+    font-family: 'Formula1 Display';
+    src: url('C:\Windows\Fonts\Formula1-Display.ttf') format('truetype'); /* Imposta il percorso al file del font */
+}
+
+nav {
+    background-color: #ffa500;
+    font-family: 'Formula1 Display';
+}
+
+nav ul {
+    width: 90%;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav li {
+    height: 50px;
+    padding: 0 40px;
+}
+
+nav a {
+    height: 100%;
+    padding: 0 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+nav li:hover {
+    background-color: white;
+}
+
+nav li:first-child {
+    margin-right: auto;
+    font-size: xx-large;
+    background-color: orange;
+}
+
+nav li:last-child {
+    margin-left: auto;
+    background-color: orange;
+}
+
+.container {
+    border-radius: 30px;
+    margin-top: 100px;
+    text-align: center; /* Allinea il contenuto al centro */
+    background-color: #2c2c2c96;
+    margin-left: 600px;
+    margin-right: 600px;
+    font-family: 'Formula1 Display';
+    color: orange;
+}
+
+.content {
+    display: inline-block; /* Imposta il contenuto come blocco inline */
+    margin-top: 20px; /* Spazio sopra i riquadri */
+}
+
+.box {
+    display: inline-block; /* Imposta i riquadri come blocchi inline */
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 120px;
+}
+
+.car-logos-container {
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: hidden; /* Nascondi lo scorrimento verticale */
+    white-space: nowrap;
+    background-color: black;
+    height: 70px;
+    bottom: 0;
+    width: 100%;
+}
+
+.car-logos {
+    width: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+    background-color: transparent;
+}
+
+.animation {
+    animation: slide 40s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.car-logos img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+
+
+

@@ -57,7 +57,25 @@ nav li:last-child {
 }
 nav li:not(:first-child):hover {
     background-color: white;
+    transform: scale(1.15);
 }
+
+.icon-auto-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.icon-auto-button img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.icon-auto-button:hover img {
+    transform: scale(1.15);
+}
+
+
+
+
 .container {
     border-radius: 30px;
     margin-top: 100px;

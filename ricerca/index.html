@@ -1,58 +1,110 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
     <title>AutoWorld</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="sign-in.css">
+    <link rel="stylesheet" href="../style.css"/>
     <script src="./bootstrap/js/bootstrap.min.js"></script>
     <style> 
         .icon-auto {
             width: 150px; /* Larghezza desiderata */
             height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
         }
+        form {
+            margin: auto;
+        }
     </style>
 </head>
 <body class="text-center">
     <nav>
         <ul>
-        <li><a href="index.html"><b>AUTOWORLD</b></a></li>
-        <li><a href="ricerca.php"><b>RICERCA</b></a></li>
+        <li><a href="../index.html"><b>AUTOWORLD</b></a></li>
+        <li><a href="index.html" class="btn btn-primary btn-lg" 
+            role="button">
+            <b>RICERCA</b>
+        </a></li>
         <li><a href="vendi.php"><b>VENDI</b></a></li>
         <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
         <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
-        <li><a href="login/index.html" class="btn btn-primary btn-lg" 
+        <li><a href="../login/index.html" class="btn btn-primary btn-lg" 
             role="button">
             LOGIN
         </a></li>
-        <li><a href="registrazione/index.html" class="btn btn-primary btn-lg" 
+        <li><a href="../registrazione/index.html" class="btn btn-primary btn-lg" 
             role="button">
             REGISTRATI
         </a></li>
         </ul>
     </nav>
-    <div class="container">
-        <h1>COSA CERCHI?</h1>
-        <div class="box">
-            <h2>AUTO</h2>
-            <img src="iconauto.png" class="icon-auto">
-        </div>
-        <div class="box">
-            <h2>RICAMBI</h2>
-            <img src="iconaruota.png" class="icon-auto">
-        </div>
-    </div>
+    <form name="myForm" action="ricerca.php" method="POST" class="form-signin m-auto" onsubmit="alertRmb()">
+        Marca:
+        <select name="marca" required>
+            <option value="">Seleziona</option>
+            <option value="Audi">Audi</option>
+            <option value="BMW">BMW</option>
+            <option value="Mercedes">Mercedes-Benz</option>
+            <option value="Volkswagen">Volkswagen</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Honda">Honda</option>
+            <option value="Ford">Ford</option>
+            <option value="Chevrolet">Chevrolet</option>
+            <option value="Nissan">Nissan</option>
+            <option value="Hyundai">Hyundai</option>
+            <option value="Mazda">Mazda</option>
+            <option value="Kia">Kia</option>
+            <option value="Subaru">Subaru</option>
+            <option value="Fiat">Fiat</option>
+            <option value="Volvo">Volvo</option>
+            <option value="Jeep">Jeep</option>
+            <option value="Land Rover">Land Rover</option>
+            <option value="Renault">Renault</option>
+            <option value="Peugeot">Peugeot</option>
+            <option value="Citroën">Citroën</option>
+            <option value="Mitsubishi">Mitsubishi</option>
+            <option value="Alfa Romeo">Alfa Romeo</option>
+            <option value="Lancia">Lancia</option>
+            <option value="Maserati">Maserati</option>
+            <option value="Jaguar">Jaguar</option>
+            <option value="Ferrari">Ferrari</option>
+            <option value="Porsche">Porsche</option>
+            <option value="">Seleziona</option>
+            <option value="Acura">Acura</option>
+            <option value="Bentley">Bentley</option>
+            <option value="Buick">Buick</option>
+            <option value="Cadillac">Cadillac</option>
+            <option value="Chrysler">Chrysler</option>
+            <option value="Dodge">Dodge</option>
+            <option value="Fiat">Fiat</option>
+            <option value="GMC">GMC</option>
+            <option value="Infiniti">Infiniti</option>
+            <option value="Lamborghini">Lamborghini</option>
+            <option value="Lexus">Lexus</option>
+            <option value="Lincoln">Lincoln</option>
+            <option value="Lotus">Lotus</option>
+            <option value="Mini">Mini</option>
+            <option value="Rolls-Royce">Rolls-Royce</option>
+            <option value="Smart">Smart</option>
+            <option value="Tesla">Tesla</option>
+            <option value="Vauxhall">Vauxhall</option>
+            <option value="Volvo">Volvo</option>
+        </select>        
+        <input type="text" placeholder="Modello" name="modello">
+        <button type="submit" class="btn btn-primary">Cerca</button>
+    </form>
     <div class="car-logos-container">
         <div class="car-logos animation">
-            <img src="honda.png" alt="Logo 1">
-            <img src="toyota.png" alt="Logo 2">
-            <img src="audi.png" alt="Logo 3">
-            <img src="bmw.png" alt="Logo 4">
-            <img src="ford.png" alt="Logo 5">
-            <img src="volkswagen.png" alt="Logo 6">
-            <img src="mercedes.png" alt="Logo 7">
-            <img src="kia.png" alt="Logo 8">
+            <img src="../immagini/loghiauto/audi.png">
+            <img src="../immagini/loghiauto/bmw.png">
+            <img src="../immagini/loghiauto/ford.png">
+            <img src="../immagini/loghiauto/honda.png">
+            <img src="../immagini/loghiauto/kia.png">
+            <img src="../immagini/loghiauto/mazda.png">
+            <img src="../immagini/loghiauto/mercedes.png">
+            <img src="../immagini/loghiauto/toyota.png">
+            <img src="../immagini/loghiauto/volkswagen.png">
         </div>
     </div>        
 </body>

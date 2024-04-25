@@ -22,6 +22,7 @@
         td:nth-child(1) {
             width: 350px;
             border-right: 1px solid black;
+            height: auto;
         }
         td:nth-child(1):hover {
             background-color: white;
@@ -49,32 +50,40 @@
             width: 80%;
             height: 400px;
         }
+        a {
+            text-decoration: none; /* Rimuove la sottolineatura */
+            color: black; /* Cambia il colore del testo */
+        }
+        .logo-container a {
+            color: orange; /* Cambia il colore del testo all'interno dell'ancora */
+        }
     </style>
 </head>
 <body class="text-center">
     <div class="logo-container">
-        <h2 class="logo">AUTOWORLD</h2> <!-- Aggiunto margine inferiore -->
+        <h2><a href="../index.html">AUTOWORLD</a></h2>
     </div>
     <table>
         <tr>
             <td>
-                <h1>LOGIN</h1>
+                <h1><a href="index.html">LOGIN</a></h1>
             </td>
             <td rowspan="3"> 
+                <h1>Login</h1>
                 <form name="myForm" action="login.php" method="POST" class="form-signin m-auto" onsubmit="alertRmb()">
-                        <input type="email" placeholder="Indirizzo e-mail" name="inputEmail" class="form-control" required autofocus>
-                        <input type="password" placeholder="Password" name="inputPassword" class="form-control" required>
-                        <div id="divRemember" class="checkbox mb-2">
-                            <input type="checkbox" name="remember" id="rmb">
-                            <label for="rmb">Ricordami</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Invia!</button>
-                    </form>
+                    <input type="email" placeholder="Indirizzo e-mail" name="inputEmail" class="form-control" required autofocus>
+                    <input type="password" placeholder="Password" name="inputPassword" class="form-control" required>
+                    <div id="divRemember" class="checkbox mb-2">
+                        <input type="checkbox" name="remember" id="rmb">
+                        <label for="rmb">Ricordami</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Invia!</button>
+                </form>
             </td>
         </tr>
         <tr>
             <td>
-                <h1>REGISTRATI</h1>
+                <h1><a href="../registrazione/index.html">REGISTRATI</a></h1>
             </td>
         </tr>
         <tr>

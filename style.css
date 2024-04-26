@@ -52,9 +52,18 @@ nav li:first-child {
 }
 
 nav li:last-child {
-    margin-left: auto;
     background-color: orange;
+    justify-content: flex-end;
+    margin-left: -30px;
+    margin-right: -90px;
 }
+
+nav li:nth-last-child(2) {
+    margin-left: 60px;
+    background-color: orange;
+    justify-content: flex-end;
+}
+
 nav li:not(:first-child):hover {
     background-color: white;
     transform: scale(1.15);

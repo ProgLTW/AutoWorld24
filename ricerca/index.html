@@ -75,7 +75,6 @@
                 fromSelect.value = toValue;
             }
     }
-
     </script>
     <style> 
         .icon-auto {
@@ -85,6 +84,18 @@
         form {
             margin: auto;
             font-family: 'Formula1 Display';
+            width: 120%;
+        }
+        form label {
+            display: inline-block;
+            margin-bottom: 5px; /* Riduce lo spazio inferiore dell'etichetta */
+        }
+        form select {
+            margin-top: 5px; /* Sposta la casella di selezione verso l'alto */
+        }
+        select {
+            font-family: 'Formula1 Display', sans-serif; /* Cambia il font delle caselle di selezione */
+            font-size: 16px; /* Regola la dimensione del font se necessario */
         }
     </style>
 </head>
@@ -165,7 +176,7 @@
             <select id="modello" name="modello" disabled required>
                 <option value="">Seleziona</option>
             </select><br>
-            <label for="carrozzeria">Prezzo:</label>
+            <label for="prezzo">Prezzo:</label>
             <select id="prezzo_da" type="number" name="Da" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
                 <option value="">Da</option>
                 <option type="number" value="500">500€</option>
@@ -197,7 +208,7 @@
                 <option type="number" value="9000">9000€</option>
             </select><br>
             <label for="carrozzeria">Carrozzeria:</label>
-            <select name="carrozzeria" required>
+            <select id="carrozzeria" name="carrozzeria" required>
                 <option value="">Seleziona</option>
                 <option value="City Car">City Car</option>
                 <option value="Cabrio">Cabrio</option>

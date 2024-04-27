@@ -106,6 +106,7 @@ nav li:not(:first-child):hover {
     color: orange;
 }
 
+
 .content {
     display: inline-block; /* Imposta il contenuto come blocco inline */
     margin-top: 20px; /* Spazio sopra i riquadri */

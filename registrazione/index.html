@@ -74,17 +74,13 @@
                 <h1><a href="index.html">REGISTRATI</a></h1>
             </td>
             <td rowspan="3"> 
-                <form action="registration.php" class="form-signin m-auto" method="POST" name="myForm" onSubmit="return validForm()">
+                <form action="registrazione.php" class="form-signin m-auto" method="POST" name="myForm" onSubmit="return validForm()">
                     <h1 class="mb-3 font-weight-normal">Registrazione</h1>
                     <input type="email" name="inputEmail" class="form-control" placeholder="Indirizzo e-mail" required autofocus />
                     <input type="password" name="inputPassword" class="form-control" placeholder="Password" required />
                     <input type="password" name="inputConfermaPassword" class="form-control" placeholder="Conferma Password" required />
                     <input type="text" name="inputName" class="form-control" placeholder="Nome" autofocus />
                     <input type="text" name="inputSurname" class="form-control" placeholder="Cognome" autofocus />
-                    <div id="divCap" class="text-center">
-                        <label for="cap">Inserisci il CAP di provenienza:</label>
-                        <input id="cap" type="text" name="inputCap" size="5" maxlength="5" />
-                    </div>
                     <div id="divRemember" class="checkbox mb-3">
                         <input id="rmb" type="checkbox" name="remember" />
                         <label for="rmb">Ricordami</label>

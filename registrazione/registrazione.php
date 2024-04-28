@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $data = pg_query_params($dbconn, $q2, array($email, $password, $nome, $cognome));
             if ($data) {
                 echo "<h1> Registrazione completata. Puoi iniziare ad usare il sito <br/></h1>";
-                echo "<a href='../login'> Clicca qui </a> per loggarti!";
+                echo "<a href='../login/index.html'> Clicca qui </a> per loggarti!";
             }
         }
     }

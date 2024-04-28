@@ -85,6 +85,7 @@
             margin: auto;
             font-family: 'Formula1 Display';
             width: 120%;
+            margin-left: 150px;
         }
         form label {
             display: inline-block;
@@ -97,6 +98,14 @@
             font-family: 'Formula1 Display', sans-serif; /* Cambia il font delle caselle di selezione */
             font-size: 16px; /* Regola la dimensione del font se necessario */
         }
+        input {
+            font-family: 'Formula1 Display';
+            font-size: 16px;
+        }
+        button {
+            font-family: 'Formula1 Display';
+            font-size: 16px;
+        }
     </style>
 </head>
 <body class="text-center">
@@ -107,7 +116,7 @@
             role="button">
             <b>RICERCA</b>
         </a></li>
-        <li><a href="vendi.php"><b>VENDI</b></a></li>
+        <li><a href="../vendi/index.html"><b>VENDI</b></a></li>
         <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
         <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
         <li><a href="../login/index.html" class="btn btn-primary btn-lg" 
@@ -260,8 +269,17 @@
                 <option value="GPL">GPL</option>
                 <option value="Metano">Metano</option>
             </select><br>
-
-            <button type="submit" class="btn btn-primary">Cerca</button>
+            <label for="cambio">Cambio:</label>
+            <select name="cambio" required>
+                <option value="">Seleziona</option>
+                <option value="manuale">Manuale</option>
+                <option value="automatico">Automatico</option>
+                <option value="semiautomatico">Semiautomatico</option>
+            </select><br>
+            <label for="potenza">Potenza (CV):</label>
+            <input type="number" id="potenza_da" name="Da" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000">
+            <input type="number" id="potenza_a" name="A" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000"><br>
+            <button type="submit" class="btn btn-primary" style="margin-left: 150px; margin-top: 30px; margin-bottom: 30px;">Cerca</button>
         </form>
     </div>
     <div class="car-logos-container">

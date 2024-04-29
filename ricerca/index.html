@@ -201,7 +201,7 @@
                 <option type="number" value="8000">8000€</option>
                 <option type="number" value="9000">9000€</option>
             </select>
-            <select id="prezzo_a" type="number" name="A" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
+            <select id="prezzo_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
                 <option value="">A</option>
                 <option type="number" value="500">500€</option>
                 <option type="number" value="1000">1000€</option>
@@ -235,7 +235,7 @@
                     }
                 </script>
             </select>
-            <select id="anno_a" type="number" name="A" onchange="updateMinimo('anno_da', 'anno_a')">
+            <select id="anno_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('anno_da', 'anno_a')">
                 <option value="">A</option>
                 <script>
                     for (let i = 2024; i >= 1900; i--) {
@@ -252,7 +252,7 @@
                     }
                 </script>
             </select>
-            <select id="km_a" type="number" name="A" onchange="updateMinimo('km_da', 'km_a')">
+            <select id="km_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('km_da', 'km_a')">
                 <option value="">A</option>
                 <script>
                     for (let i = 0; i <= 200000; i = i + 25000) {
@@ -278,7 +278,7 @@
             </select><br>
             <label for="potenza">Potenza (CV):</label>
             <input type="number" id="potenza_da" name="Da" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000">
-            <input type="number" id="potenza_a" name="A" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000"><br>
+            <input type="number" id="potenza_a" name="A" style="margin-left: 0%;" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000"><br>
             <button type="submit" class="btn btn-primary" style="margin-left: 150px; margin-top: 30px; margin-bottom: 30px;">Cerca</button>
         </form>
     </div>

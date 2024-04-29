@@ -135,7 +135,7 @@
         </ul>
     </nav>
     <div class="container2">
-        <form name="myForm" action="vendi.php" method="POST" class="form-signin m-auto" onsubmit="alertRmb()">
+        <form name="myForm" action="vendi.php" method="POST" enctype="multipart/form-data" class="form-signin m-auto" onsubmit="alertRmb()">
             <label for="marca">Marca:</label>
             <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
                 <option value="">Seleziona</option>

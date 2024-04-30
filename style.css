@@ -160,7 +160,6 @@ nav li:not(:first-child):hover {
     margin-right: 10px;
 }
 
-
 .form-signin input[type="text"],
 .form-signin input[type="number"],
 .form-signin input[type="email"],
@@ -175,4 +174,13 @@ nav li:not(:first-child):hover {
     border: 1px solid #ccc; /* Aggiungi un bordo */
     margin-left: 30px;
 }
+
+.annunci-container {
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: hidden; /* Nascondi lo scorrimento verticale */
+    white-space: nowrap;
+    background-color: black;
+}
+
 

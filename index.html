@@ -15,29 +15,46 @@
         .small-logo {
             margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
         }
+        /* Aggiungi stili per gli annunci pubblicitari */
+        .ad-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px; /* Aggiungi spazio tra gli annunci e il contenuto principale */
+        }
+        .ad {
+            width: 200px; /* Modifica la larghezza degli annunci in base alle tue esigenze */
+            height: 200px; /* Modifica l'altezza degli annunci in base alle tue esigenze */
+            background-color: #f0f0f0; /* Colore di sfondo degli annunci */
+        }
+        .container {
+            margin-top: -130px; /* Riduci il margine superiore per eliminare lo spazio vuoto */
+        }
     </style>
 </head>
 <body class="text-center">
+    
+
     <nav>
         <ul>
-        <li><a href="index.html"><b>AUTOWORLD</b></a></li>
-        <li><a href="ricerca/index.html" class="btn btn-primary btn-lg" 
-            role="button">
-            <b>RICERCA</b>
-        </a></li>
-        <li><a href="vendi/index.html"><b>VENDI</b></a></li>
-        <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
-        <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
-        <li><a href="login/index.html" class="btn btn-primary btn-lg" 
-            role="button">
-            LOGIN
-        </a></li>
-        <li><a href="registrazione/index.html" class="btn btn-primary btn-lg" 
-            role="button">
-            REGISTRATI
-        </a></li>
+            <li><a href="index.html"><b>AUTOWORLD</b></a></li>
+            <li><a href="ricerca/index.html" class="btn btn-primary btn-lg" role="button"><b>RICERCA</b></a></li>
+            <li><a href="vendi/index.html"><b>VENDI</b></a></li>
+            <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
+            <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
+            <li><a href="login/index.html" class="btn btn-primary btn-lg" role="button">LOGIN</a></li>
+            <li><a href="registrazione/index.html" class="btn btn-primary btn-lg" role="button">REGISTRATI</a></li>
         </ul>
     </nav>
+    <!-- Annunci pubblicitari -->
+    <div class="ad-container">
+        <div class="ad">
+            <a href="https://auto-esperienza.com/2024/03/05/controllare-auto-usata-allacquisto/" target="_blank">
+                <img src="immagini/annuncio1.jpg" alt="Annuncio 1" style="height: 200px; width: 200px;">
+            </a>
+        </div>
+        <div class="ad">Annuncio 2</div>
+    </div>
+    <!-- Fine Annunci pubblicitari -->
     <div class="container">
         <h1>COSA CERCHI?</h1>
         <div class="box">

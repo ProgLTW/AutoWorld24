@@ -39,7 +39,6 @@ if ($dbconn) {
     $potenza = $_POST['potenza'];
     $foto = $uploadedFile;
     $descrizione = $_POST['descrizione'];
-    echo "aaaa$foto";
 
     // Query SQL per l'inserimento dei dati nella tabella Auto
     $query = "INSERT INTO annuncio (marca, modello, prezzo, trattabile, carrozzeria, anno, chilometraggio, carburante, cambio, potenza, foto, descrizione) 

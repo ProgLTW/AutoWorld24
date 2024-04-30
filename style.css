@@ -3,12 +3,13 @@
     padding: 0;
 }
 
-body{
+body {
     min-height: 100vh;
     background-image: url(immagini/auto.jpg);
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center;
+    background-repeat: no-repeat; /* Impedisce la ripetizione dello sfondo */
+    background-attachment: fixed;
 }
 
 @font-face {
@@ -17,6 +18,9 @@ body{
 }
 
 nav {
+    position: fixed; /* Rende la navbar fissa */
+    top: 0;
+    width: 100%;
     background-color: #ffa500;
     font-family: 'Formula1 Display';
 }
@@ -205,6 +209,8 @@ nav li:not(:first-child):hover {
 .scroll-container {
     position: relative;
     overflow: hidden;
+    margin-top: 300px;
+    margin-bottom: 700px;
 }
 
 .scroll-content {

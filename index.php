@@ -70,7 +70,6 @@
             <button class="icon-auto-button" onclick="location.href='link_to_auto_page.html';">
                 <img src="immagini/iconaruota.png" alt="Auto Icon" class="icon-auto">
             </button>
-            
         </div>
     </div>
     <div class="scroll-container">

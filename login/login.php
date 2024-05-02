@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     <?php
     if ($dbconn) {
         $email = $_POST['inputEmail'];
-        $url = "logineffettuato.php?email=" . urlencode($email);
+        $url = "../logineffettuato.php?email=" . urlencode($email);
         $q1 = "SELECT * FROM utente WHERE email=$1";
         $result = pg_query_params($dbconn, $q1, array($email));
         if ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) {
@@ -22,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $data = pg_query_params($dbconn, $q2, array($email, $password));
             if ($tuple = pg_fetch_array($data, null, PGSQL_ASSOC)) {
                 $nome = $tuple["nome"];
-                echo "<h1> Login avvenuto con successo.
-                Clicca <a href=\"../index.html\">qui</> <br/></h1>";
+                header("Location:../logineffettuato.php");
+                exit(); // Assicura che il codice successivo non venga eseguito dopo il reindirizzamento
             }
             else {
                 echo "<h1> Password errata. Riprova.

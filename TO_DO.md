@@ -16,5 +16,6 @@
 
 - (FIXED) BARRA ANNUNCI NELLA HOMEPAGE(INDEX.PHP), NON FUNZIONANO LE FRECCETTE DI SCORRIMENTO DX E SX. MODIFICARE FILE STYLE.CSS E INDEX.PHP TUTTO CIO' CHE CONTIENE SCROLL.
 - Pagina "Il mio profilo" 
--   ->cambiare home dopo accesso
--   ->menù a tendina con "i miei annunci", "salvati", modifica password, esci ...
+	-   ->cambiare home dopo accesso
+	-   ->menù a tendina con "i miei annunci", "salvati", modifica password, esci …
+- Pagina di login: le caselle login e registrazione sono a cazzo di cane

@@ -68,13 +68,13 @@
                 $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
                     or die('Could not connect: ' . pg_last_error());
                 if ($dbconn) {
-                    $email = $_GET['email'];
+                    $email = $_GET['email'];                
                     $query = "SELECT nome FROM utente WHERE email = '$email'";
                     // Esecuzione della query
                     $result = pg_query($dbconn, $query);
-                    if ($result->num_rows > 0) {
-                        // Output del nome utente
-                        while($row = $result->fetch_assoc()) {
+                    if ($result) {
+                        $num_rows = pg_num_rows($result);
+                        while($num_rows > 0) {
                             echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
                         }
                     } else {

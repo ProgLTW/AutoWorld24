@@ -21,8 +21,10 @@ nav {
     position: fixed; /* Rende la navbar fissa */
     top: 0;
     width: 100%;
+    height: auto;
     background-color: #ffa500;
     font-family: 'Formula1 Display';
+    
 }
 
 nav ul {
@@ -34,7 +36,7 @@ nav ul {
 }
 
 nav li {
-    height: 50px;
+    height: 70px;
     padding: 0 40px;
 }
 
@@ -45,12 +47,16 @@ nav a {
     display: flex;
     align-items: center;
     color: black;
+    /*font-size: 16px; /* Adjust the value to your desired font size */
 }
 
-
+nav li:not(:first-child) {
+    font-size: 18px; /* Adjust the value to your desired font size */
+}
 
 nav li:first-child {
     margin-right: auto;
+
     font-size: xx-large;
     background-color: orange;
 }
@@ -170,7 +176,7 @@ nav li:not(:first-child):hover {
 
 @keyframes slide {
     0% {
-        transform: translateX(0);
+        transform: translateX(0%);
     }
     100% {
         transform: translateX(100%);
@@ -206,17 +212,38 @@ nav li:not(:first-child):hover {
     background-color: black;
 }
 
-.scroll-container {
+.scroll-big-container {
     position: relative;
     overflow: hidden;
     margin-top: 300px;
     margin-bottom: 700px;
 }
 
+.scroll-container {
+    position: relative;
+    overflow: hidden;
+    
+    margin-top: 300px;
+    margin-bottom: 700px;
+    z-index: 1; 
+
+}
+
 .scroll-content {
+    display: flex;
     white-space: nowrap; /* Fai sì che il contenuto non vada a capo */
 }
 
+.annuncio {
+    flex: 0 0 auto;
+    margin-right: 10px; /* Aggiungi margine tra gli annunci */
+    /* Aggiungi altre proprietà CSS per lo stile degli annunci a tua scelta */
+}
+.annuncio img {
+    max-width: 100%;
+    height: auto;
+    /* Aggiungi altre proprietà CSS per lo stile delle immagini a tua scelta */
+}
 .scroll-button {
     position: absolute;
     top: 50%;
@@ -226,6 +253,13 @@ nav li:not(:first-child):hover {
     outline: none;
     cursor: pointer;
     font-size: 1.5rem;
+    z-index: 1; 
+}
+.scroll-button.scroll-left img,
+.scroll-button.scroll-right img {
+    width: 80px; /* Imposta la larghezza desiderata dell'immagine */
+    height: 80px; /* Imposta l'altezza automaticamente per mantenere le proporzioni */
+    /* Aggiungi altre proprietà CSS per personalizzare l'aspetto dell'immagine */
 }
 
 .scroll-left {

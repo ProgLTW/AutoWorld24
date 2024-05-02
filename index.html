@@ -18,6 +18,8 @@
         /* Aggiungi stili per gli annunci pubblicitari */
         .ad-container {
             margin-top: 120px;
+            margin-left: 20px;
+            margin-right: 20px;
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px; /* Aggiungi spazio tra gli annunci e il contenuto principale */
@@ -56,6 +58,7 @@
             </a>
         </div>
     </div>
+
     <div class="container">
         <h1>COSA CERCHI?</h1>
         <div class="box">
@@ -72,54 +75,56 @@
             </button>
         </div>
     </div>
+
+    <div class="scroll-big-container">
+        <button class="scroll-button scroll-left">
+            <img src="immagini/leftarrow.png" alt="Scroll Left">
+        </button>
     <div class="scroll-container">
-        <button class="scroll-button scroll-left">&lt;</button>
+        
+
         <div class="scroll-content">
-            <div class="container3">
-                <div class="row">
-                    <?php
-                        $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
-                            or die('Could not connect: ' . pg_last_error());
-
-                        if ($dbconn) {
-                            // Query per recuperare tutti gli annunci dalla tabella annuncio
-                            $query = "SELECT * FROM annuncio";
-
-                            // Esecuzione della query
-                            $result = pg_query($dbconn, $query);
-
-                            if ($result) {
-                                // Iterazione sui risultati della query per visualizzare gli annunci
-                                while ($row = pg_fetch_assoc($result)) {
-                                    // Visualizzazione di ciascun annuncio
-                                    echo "<div class='col'>";
-                                    echo "<div class='ad'>";
-                                    echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='150'>";
-                                    echo "<h2>{$row['marca']} {$row['modello']}</h2>";
-                                    echo "<p>Prezzo: {$row['prezzo']}</p>";
-                                    echo "<p>Trattabile: " . ($row['trattabile'] ? 'Sì' : 'No') . "</p>";
-                                    echo "<p>Carrozzeria: {$row['carrozzeria']}</p>";
-                                    // Aggiungi altri dettagli dell'annuncio qui...
-                                    echo "</div>";
-                                    echo "</div>";
-                                }
-                                // Rilascio della risorsa del risultato
-                                pg_free_result($result);
-                            } else {
-                                echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
-                            }
-                        } else {
-                            echo "Connessione al database non riuscita.";
-                        }
-
-                        // Chiusura della connessione al database
-                        pg_close($dbconn);
-                    ?>
-                </div>
+            <div class="annuncio">
+                <img src="immagini/prova1.png" alt="Annuncio 1">
             </div>
+            <div class="annuncio">
+                <img src="immagini/prova2.png" alt="Annuncio 2">
+            </div>
+            <div class="annuncio">
+                <img src="immagini/prova1.png" alt="Annuncio 1">
+            </div>
+            <div class="annuncio">
+                <img src="immagini/prova2.png" alt="Annuncio 2">
+            </div>
+            <div class="annuncio">
+                <img src="immagini/prova1.png" alt="Annuncio 1">
+            </div>
+            <div class="annuncio">
+                <img src="immagini/prova2.png" alt="Annuncio 2">
+            </div>
+            <div class="annuncio">
+                <img src="immagini/prova1.png" alt="Annuncio 1">
+            </div>
+            <div class="annuncio">
+                <img src="immagini/prova2.png" alt="Annuncio 2">
+            </div>
+            <div class="annuncio">
+                <img src="immagini/prova1.png" alt="Annuncio 1">
+            </div>
+            <div class="annuncio">
+                <img src="immagini/prova2.png" alt="Annuncio 2">
+            </div>
+                    
+               
         </div>
-        <button class="scroll-button scroll-right">&gt;</button>
+        
     </div>
+    <button class="scroll-button scroll-right">
+        <img src="immagini/rightarrow.png" alt="Scroll Right">
+    </button>
+</div>
+
+    
     <div class="car-logos-container">
             <div class="car-logos animation">
                 <img src="../immagini/loghiauto/audi.png">
@@ -131,16 +136,25 @@
                 <img src="../immagini/loghiauto/mercedes.png">
                 <img src="../immagini/loghiauto/toyota.png">
                 <img src="../immagini/loghiauto/volkswagen.png">
+                <img src="../immagini/loghiauto/hyundai.png">
+                <img src="../immagini/loghiauto/fiat.png">
+                <img src="../immagini/loghiauto/mg.png">
+                <img src="../immagini/loghiauto/peugeot.png">
+                <img src="../immagini/loghiauto/opel.png">
+                <img src="../immagini/loghiauto/nissan.png">
+                <img src="../immagini/loghiauto/renault.png">
             </div>
     </div>
     <script>
         $(document).ready(function() {
             $(".scroll-left").click(function() {
-                $(".scroll-content").animate({scrollLeft: "-=100px"}, "slow");
+                console.log("clicked left");
+                $(".scroll-container").animate({scrollLeft: "-=100px"}, "slow");
             });
 
             $(".scroll-right").click(function() {
-                $(".scroll-content").animate({scrollLeft: "+=100px"}, "slow");
+                console.log("clicked right");
+                $(".scroll-container").animate({scrollLeft: "+=100px"}, "slow");
             });
         });
     </script>     

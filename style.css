@@ -222,11 +222,6 @@ nav li:not(:first-child):hover {
 .scroll-container {
     position: relative;
     overflow: hidden;
-    
-    margin-top: 300px;
-    margin-bottom: 700px;
-    z-index: 1; 
-
 }
 
 .scroll-content {
@@ -253,7 +248,7 @@ nav li:not(:first-child):hover {
     outline: none;
     cursor: pointer;
     font-size: 1.5rem;
-    z-index: 1; 
+    z-index: 2; 
 }
 .scroll-button.scroll-left img,
 .scroll-button.scroll-right img {

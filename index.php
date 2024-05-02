@@ -81,7 +81,6 @@
             <img src="immagini/leftarrow.png" alt="Scroll Left">
         </button>
         <div class="scroll-container">
-            
             <div class="scroll-content">
                 <div class="annuncio">
                     <img src="immagini/prova1.png" alt="Annuncio 1">
@@ -114,9 +113,8 @@
                     <img src="immagini/prova2.png" alt="Annuncio 2">
                 </div>
             </div>
-            
         </div>
-        <button class="scroll-button scroll-right">
+            <button class="scroll-button scroll-right">
                 <img src="immagini/rightarrow.png" alt="Scroll Right">
             </button>
     </div>

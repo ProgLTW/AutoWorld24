@@ -138,7 +138,6 @@ nav li:not(:first-child):hover {
 }
 .car-logos {
     width: auto;
-    overflow-x: auto;
     white-space: nowrap;
     padding: 10px 0;
     background-color: transparent;
@@ -148,10 +147,10 @@ nav li:not(:first-child):hover {
 }
 @keyframes slide {
     0% {
-        transform: translateX(0%);
+        transform: translateX(50%);
     }
     100% {
-        transform: translateX(100%);
+        transform: translateX(-50%);
     }
 }
 .car-logos img {

@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     <?php
     if ($dbconn) {
         $email = $_POST['inputEmail'];
+        $url = "logineffettuato.php?email=" . urlencode($email);
         $q1 = "SELECT * FROM utente WHERE email=$1";
         $result = pg_query_params($dbconn, $q1, array($email));
         if ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) {

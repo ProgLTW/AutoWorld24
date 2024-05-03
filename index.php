@@ -50,12 +50,12 @@
     <div class="ad-container">
         <div class="ad">
             <a href="https://auto-esperienza.com/2024/03/05/controllare-auto-usata-allacquisto/" target="_blank">
-                <img src="immagini/pubblicita1.jpg" alt="Pubblicità 1" style="height: 200px; width: 200px;">
+                <img src="immagini/pubblicita1.jpg" alt="Pubblicità 1" style="height: 200px; width: 266px;">
             </a>
         </div>
         <div class="ad">
             <a href="https://auto-esperienza.com/2023/08/09/come-vendere-la-propria-auto-usata-facilmente-velocemente-a-buon-prezzo-e-in-sicurezza-tutti-i-metodi-noicompriamoauto-concessionaria-online-tra-privati-passaggio-proprieta-pagamento-preparazione/" target="_blank">
-                <img src="immagini/pubblicita2.jpg" alt="Pubblicità 2" style="height: 200px; width: 200px;">
+                <img src="immagini/pubblicita2.jpg" alt="Pubblicità 2" style="height: 200px; width: 266px;">
             </a>
         </div>
     </div>

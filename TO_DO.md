@@ -23,3 +23,4 @@
 - Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato
 - alla pagina degli annunci aggiungere filtri.
 - pulsante RICERCA a tendina: -RICERCA PERSONALIZZATA -VEDI ANNUNCI
+

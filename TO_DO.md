@@ -14,7 +14,7 @@
     git commit -m "message..."
     git push
 
-- BARRA ANNUNCI NELLA HOMEPAGE(INDEX.PHP), COLLEGARE CON ANNUNCI DATABASE
+- BARRA ANNUNCI NELLA HOMEPAGE(INDEX.PHP), COLLEGARE CON ANNUNCI DATABASE  --FATTO--
 - Pagina "Il mio profilo" 
 	-   ->cambiare home dopo accesso
 	-   ->menù a tendina con "i miei annunci", "salvati", modifica password, esci …
@@ -22,4 +22,4 @@
 - Login effettuato
 - Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato
 - alla pagina degli annunci aggiungere filtri.
-- pulsante RICERCA a tendina: -RICERCA PERSONALIZZATA -VEDI ANNUNCI
+- pulsante RICERCA a tendina: -RICERCA PERSONALIZZATA -VEDI ANNUNCI --FATTO-

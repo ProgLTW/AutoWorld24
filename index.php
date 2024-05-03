@@ -39,7 +39,13 @@
     <nav>
         <ul>
             <li><a href="index.php"><b>AUTOWORLD</b></a></li>
-            <li><a href="ricerca/index.html" class="btn btn-primary btn-lg" role="button"><b>RICERCA</b></a></li>
+            <li class="dropdown">
+            <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
+            <div class="dropdown-menu">
+                <a href="ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
+                <a href="ricerca/vedi-annunci.php">Vedi Annunci</a>
+            </div>
+        </li>
             <li><a href="vendi/index.html"><b>VENDI</b></a></li>
             <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
             <li><a href="preferiti.php"><b>PREFERITI</b></a></li>

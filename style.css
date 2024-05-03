@@ -183,7 +183,7 @@ nav li:not(:first-child):hover {
     position: relative;
     overflow: hidden;
     margin-top: 300px;
-    margin-bottom: 700px;
+    margin-bottom: 800px;
 }
 .scroll-container {
     position: relative;
@@ -193,17 +193,38 @@ nav li:not(:first-child):hover {
 .scroll-content {
     display: flex;
     white-space: nowrap; /* Fai sì che il contenuto non vada a capo */
+    margin: 20px;
+    background-color: #2c2c2c96;
+
 }
-.annuncio {
-    flex: 0 0 auto;
-    margin-right: 10px; /* Aggiungi margine tra gli annunci */
-    /* Aggiungi altre proprietà CSS per lo stile degli annunci a tua scelta */
+
+
+.ad {
+    display: flex; /* Utilizza flexbox per allineare l'immagine e il testo */
+    align-items: center; /* Allinea verticalmente il contenuto */
+    gap: 80px; /* Aggiungi spazio tra l'immagine e il testo */
+    background-color: #333; /* Colore di sfondo per migliorare la leggibilità del testo */
+    padding: 20px; /* Aggiungi padding */
+    margin-right: 30px;
 }
-.annuncio img {
-    max-width: 100%;
+
+.ad img {
+    max-width: auto; /* Imposta la larghezza massima dell'immagine */
     height: auto;
-    /* Aggiungi altre proprietà CSS per lo stile delle immagini a tua scelta */
 }
+
+.ad .text {
+    flex: 1; /* Fai sì che il testo occupi tutto lo spazio rimanente */
+}
+
+.ad h2, .ad p {
+    background-color: black; /* Colore di sfondo per migliorare la leggibilità del testo */
+    color: white; /* Colore del testo */
+    font-family: 'Formula1 Display';
+    margin: auto; /* Rimuovi il margine interno */
+    
+}
+
 .scroll-button {
     position: absolute;
     top: 50%;

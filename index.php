@@ -7,9 +7,7 @@
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
     <link rel="stylesheet" href="style.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <style> 
-        
         .icon-auto {
             width: 150px; /* Larghezza desiderata */
             height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
@@ -66,7 +64,6 @@
             </a>
         </div>
     </div>
-    
     <div class="container">
         <h1>COSA CERCHI?</h1>
         <div class="box">
@@ -83,65 +80,62 @@
             </button>
         </div>
     </div>
-
     <div class="scroll-big-container">
         <button class="scroll-button scroll-left">
             <img src="immagini/leftarrow.png" alt="Scroll Left">
         </button>
         <div class="scroll-container">
             <div class="scroll-content">
-                
+                <?php
+                    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+                        or die('Could not connect: ' . pg_last_error());
 
-            <?php
-$dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
-    or die('Could not connect: ' . pg_last_error());
+                    if ($dbconn) {
+                        // Query per recuperare tutti gli annunci dalla tabella annuncio
+                        $query = "SELECT * FROM annuncio";
 
-if ($dbconn) {
-    // Query per recuperare tutti gli annunci dalla tabella annuncio
-    $query = "SELECT * FROM annuncio";
+                        // Esecuzione della query
+                        $result = pg_query($dbconn, $query);
 
-    // Esecuzione della query
-    $result = pg_query($dbconn, $query);
+                        if ($result) {
+                            // Iterazione sui risultati della query per visualizzare gli annunci
+                            while ($row = pg_fetch_assoc($result)) {
+                                // Inizio di un nuovo annuncio
+                                echo "<div class='container3'>";
+                                
+                                // Visualizzazione dell'immagine dell'annuncio
+                                echo "<div class='foto'>";
+                                echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
+                                echo "</div>";
 
-    if ($result) {
-        // Iterazione sui risultati della query per visualizzare gli annunci
-        while ($row = pg_fetch_assoc($result)) {
-            // Inizio di un nuovo annuncio
-            echo "<div class='annuncio'>";
-            
-            // Visualizzazione dell'immagine dell'annuncio
-            echo "<div class='foto'>";
-            echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='150'>";
-            echo "</div>";
+                                // Inizio delle caratteristiche dell'annuncio
+                                echo "<div class='caratteristiche'>";
+                                echo "<h2>{$row['marca']} {$row['modello']}</h2>";
+                                echo "<p>km {$row['chilometraggio']}</p>";
+                                echo "<p>€ {$row['prezzo']}</p>";
+                                echo "<p><img src=\"immagini/calendario.png\" width='20px'>&nbsp;{$row['anno']}</p>";
+                                echo "<p><img src=\"immagini/carburante.png\" width='20px'>&nbsp;{$row['carburante']}</p>";
+                                echo "<p><img src=\"immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
+                                echo "<p><img src=\"immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
+                                // Aggiungi altre caratteristiche dell'annuncio qui...
+                                echo "</div>";
 
-            // Inizio delle caratteristiche dell'annuncio
-            echo "<div class='caratteristiche'>";
-            echo "<h2>{$row['marca']} {$row['modello']}</h2>";
-            echo "<p>Prezzo: {$row['prezzo']}</p>";
-            echo "<p>Trattabile: " . ($row['trattabile'] ? 'Sì' : 'No') . "</p>";
-            echo "<p>Carrozzeria: {$row['carrozzeria']}</p>";
-            // Aggiungi altre caratteristiche dell'annuncio qui...
-            echo "</div>";
+                                // Fine dell'annuncio
+                                echo "</div>";
+                            }
 
-            // Fine dell'annuncio
-            echo "</div>";
-        }
+                            // Rilascio della risorsa del risultato
+                            pg_free_result($result);
+                        } else {
+                            echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+                        }
+                    } else {
+                        echo "Connessione al database non riuscita.";
+                    }
 
-        // Rilascio della risorsa del risultato
-        pg_free_result($result);
-    } else {
-        echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
-    }
-} else {
-    echo "Connessione al database non riuscita.";
-}
-
-// Chiusura della connessione al database
-pg_close($dbconn);
-?>
-
-
-                
+                    // Chiusura della connessione al database
+                    pg_close($dbconn);
+                ?>  
             </div>
         </div>
             <button class="scroll-button scroll-right">

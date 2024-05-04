@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
         } else {
             $nome = $_POST['inputName'];
             $cognome = $_POST['inputSurname'];
-            $password = password_hash($_POST['inputPassword'], PASSWORD_DEFAULT);
+            $password = $_POST['inputPassword'];
             $q2 = "INSERT INTO utente VALUES ($1, $2, $3, $4)";
             $data = pg_query_params($dbconn, $q2, array($email, $password, $nome, $cognome));
             if ($data) {

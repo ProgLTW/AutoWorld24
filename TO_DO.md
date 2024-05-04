@@ -21,7 +21,7 @@ Pagina "Il mio profilo"
 ->cambiare home dopo accesso
 ->menù a tendina con "i miei annunci", "salvati", modifica password, esci …
 
-Pagina di login: le caselle login e registrazione sono a cazzo di cane
+Pagina di login: le caselle login e registrazione sono a cazzo di cane --FATTO--
 
 Login effettuato
 

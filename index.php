@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html> 
 <html>
 <head>
@@ -43,6 +44,27 @@
         .small-logo {
             margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
         }
+        /* Stili per il menu a tendina */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
         /* Aggiungi stili per gli annunci pubblicitari */
         .ad-container {
             margin-top: 120px;
@@ -67,19 +89,57 @@
         <ul>
             <li><a href="index.php"><b>AUTOWORLD</b></a></li>
             <li class="dropdown">
-            <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
-            <div class="dropdown-menu">
-                <a href="ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
-                <a href="ricerca/vedi-annunci.php">Vedi Annunci</a>
-            </div>
-        </li>
+                <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
+                <div class="dropdown-menu">
+                    <a href="ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
+                    <a href="ricerca/vedi-annunci.php">Vedi Annunci</a>
+                </div>
+            </li>
             <li><a href="vendi/index.html"><b>VENDI</b></a></li>
             <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
             <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
-            <li><a href="login/index.html" class="btn btn-primary btn-lg" role="button">LOGIN</a></li>
-            <li><a href="registrazione/index.html" class="btn btn-primary btn-lg" role="button">REGISTRATI</a></li>
+            <?php
+                $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+                $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+                if ($loggato) {
+                    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+                        or die('Could not connect: ' . pg_last_error());
+
+                    if ($dbconn) {             
+                        $query = "SELECT nome FROM utente WHERE email = $1";
+                        $result = pg_query_params($dbconn, $query, array($email));
+
+                        if ($result) {
+                            $num_rows = pg_num_rows($result);
+                            if ($num_rows > 0) {
+                                $row = pg_fetch_assoc($result);
+                                echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
+                                // Qui inizia la sezione del dropdown
+                                echo "<div class='dropdown-content'>";
+                                echo "<a href='#'>I miei annunci</a>";
+                                echo "<a href='preferiti.php'>Preferiti</a>";
+                                echo "<a href='#'>Modifica password</a>";
+                                echo "<a href='#'>Esci</a>";
+                                echo "</div>"; // Chiudi dropdown-content
+                                echo "</li>"; // Chiudi dropdown
+                            } else {
+                                echo "<li><a href='login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                            }
+                        } else {
+                            echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+                        }
+                    } else {
+                        echo "Connessione al database non riuscita.";
+                    }
+                    pg_close($dbconn);
+                } else {
+                    echo "<li><a href='login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                    echo "<li><a href='registrazione/index.html' class='btn btn-primary btn-lg' role='button'>REGISTRATI</a></li>";
+                }
+            ?>
         </ul>
     </nav>
+
     <div class="ad-container">
         <div class="ad">
             <a href="https://auto-esperienza.com/2024/03/05/controllare-auto-usata-allacquisto/" target="_blank">

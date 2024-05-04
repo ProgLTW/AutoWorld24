@@ -230,7 +230,7 @@ nav li:not(:first-child):hover {
 .scroll-big-container {
     position: relative;
     overflow: hidden;
-    margin-top: 300px;
+    margin-top: 170px;
     margin-bottom: 800px;
 }
 .scroll-container {

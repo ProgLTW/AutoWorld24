@@ -55,19 +55,37 @@
                     if ($result) {
                         // Iterazione sui risultati della query per visualizzare gli annunci
                         while ($row = pg_fetch_assoc($result)) {
-                            // Visualizzazione di ciascun annuncio
-                            echo "<div class='col'>";
-                            echo "<div class='ad'>";
-                            echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='150'>";
-                            echo "<div class='text'>";
-                            echo "<h2 style='color: white'>{$row['marca']} {$row['modello']}</h2>";
-                            echo "<p style='color: white'>Prezzo: {$row['prezzo']}</p>";
-                            echo "<p style='color: white'>Trattabile: " . ($row['trattabile'] ? 'Sì' : 'No') . "</p>";
-                            echo "<p style='color: white'>Carrozzeria: {$row['carrozzeria']}</p>";
-                            // Aggiungi altri dettagli dell'annuncio qui...
+                            // Inizio di un nuovo annuncio
+                            echo "<div class='container3'>";
+                            // Visualizzazione dell'immagine dell'annuncio
+                            echo "<div class='foto'>";
+                            echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
                             echo "</div>";
+
+                            // Inizio delle caratteristiche dell'annuncio
+                            echo "<div class='caratteristiche'>";
+                            echo "<h2>{$row['marca']} {$row['modello']}</h2>";
+                            echo "<p>km {$row['chilometraggio']}</p>";
+                            echo "<p>€ {$row['prezzo']}</p>";
+                            echo "<p><img src=\"immagini/calendario.png\" width='20px'>&nbsp;{$row['anno']}</p>";
+                            echo "<p><img src=\"immagini/carburante.png\" width='20px'>&nbsp;{$row['carburante']}</p>";
+                            echo "<p><img src=\"immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
+                            echo "<p><img src=\"immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
+                            // Aggiungi altre caratteristiche dell'annuncio qui...
+
+                            // Aggiunta della stella per contrassegnare come preferito
+                            $checked = $row['preferito'] ? 'checked' : ''; // Se il preferito è true, il checkbox sarà selezionato
+                            $stellaVuota = $row['preferito'] ? '' : 'stella-vuota'; // Se il preferito è false, applica la classe stella-vuota
+                            echo "<p>";
+                            echo "<input type='checkbox' class='preferito-checkbox' id='preferito{$row['id']}' data-id='{$row['id']}' $checked>"; // Checkbox nascosto
+                            echo "<label for='preferito{$row['id']}' class='stella $stellaVuota'>&#9734;</label>"; // Etichetta personalizzata per l'icona della stella
+                            echo "</p>";
+
                             echo "</div>";
+
+                            // Fine dell'annuncio
                             echo "</div>";
+
                         }
                         // Rilascio della risorsa del risultato
                         pg_free_result($result);

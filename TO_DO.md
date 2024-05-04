@@ -13,12 +13,22 @@ git merge origin/main
 git add .
 git commit -m "message..."
 git push
+
+
 BARRA ANNUNCI NELLA HOMEPAGE(INDEX.PHP), COLLEGARE CON ANNUNCI DATABASE --FATTO--
+
 Pagina "Il mio profilo"
 ->cambiare home dopo accesso
 ->menù a tendina con "i miei annunci", "salvati", modifica password, esci …
+
 Pagina di login: le caselle login e registrazione sono a cazzo di cane
+
 Login effettuato
+
 Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato
+
 alla pagina degli annunci aggiungere filtri.
+
+pagina ricerca personalizzata e pagina vedi annunci
+
 pulsante RICERCA a tendina: -RICERCA PERSONALIZZATA -VEDI ANNUNCI --FATTO-

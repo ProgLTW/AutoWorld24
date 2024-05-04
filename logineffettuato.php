@@ -73,24 +73,37 @@
             <?php
                 $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
                     or die('Could not connect: ' . pg_last_error());
+
                 if ($dbconn) {
                     $email = $_GET['email'];                
-                    $query = "SELECT nome FROM utente WHERE email = '$email'";
-                    // Esecuzione della query
-                    $result = pg_query($dbconn, $query);
+                    $query = "SELECT nome FROM utente WHERE email = $1";
+                    // Esecuzione della query con parametro email
+                    $result = pg_query_params($dbconn, $query, array($email));
+
                     if ($result) {
                         $num_rows = pg_num_rows($result);
-                        while($num_rows > 0) {
+                        // Se esiste almeno una riga restituita dalla query
+                        if ($num_rows > 0) {
+                            // Recupera i dati dell'utente dalla prima riga restituita
+                            $row = pg_fetch_assoc($result);
+                            // Visualizza il nome dell'utente
                             echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
+                        } else {
+                            // Se non ci sono risultati, mostra il link di login
+                            echo "<li><a href='login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
                         }
                     } else {
-                        echo "<li><a href='login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                        // Gestione dell'errore durante l'esecuzione della query
+                        echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
                     }
                 } else {
+                    // Gestione del fallimento della connessione al database
                     echo "Connessione al database non riuscita.";
                 }
+                // Chiusura della connessione al database
                 pg_close($dbconn);
             ?>
+
             <div class="dropdown-content">
                 <a href="#">I miei annunci</a>
                 <a href="#">Salvati</a>
@@ -135,42 +148,69 @@
             <img src="immagini/leftarrow.png" alt="Scroll Left">
         </button>
         <div class="scroll-container">
-            
             <div class="scroll-content">
-                <div class="annuncio">
-                    <img src="immagini/prova1.png" alt="Annuncio 1">
-                </div>
-                <div class="annuncio">
-                    <img src="immagini/prova2.png" alt="Annuncio 2">
-                </div>
-                <div class="annuncio">
-                    <img src="immagini/prova1.png" alt="Annuncio 1">
-                </div>
-                <div class="annuncio">
-                    <img src="immagini/prova2.png" alt="Annuncio 2">
-                </div>
-                <div class="annuncio">
-                    <img src="immagini/prova1.png" alt="Annuncio 1">
-                </div>
-                <div class="annuncio">
-                    <img src="immagini/prova2.png" alt="Annuncio 2">
-                </div>
-                <div class="annuncio">
-                    <img src="immagini/prova1.png" alt="Annuncio 1">
-                </div>
-                <div class="annuncio">
-                    <img src="immagini/prova2.png" alt="Annuncio 2">
-                </div>
-                <div class="annuncio">
-                    <img src="immagini/prova1.png" alt="Annuncio 1">
-                </div>
-                <div class="annuncio">
-                    <img src="immagini/prova2.png" alt="Annuncio 2">
-                </div>
+                <?php
+                    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+                        or die('Could not connect: ' . pg_last_error());
+
+                    if ($dbconn) {
+                        // Query per recuperare tutti gli annunci dalla tabella annuncio
+                        $query = "SELECT * FROM annuncio";
+
+                        // Esecuzione della query
+                        $result = pg_query($dbconn, $query);
+
+                        if ($result) {
+                            // Iterazione sui risultati della query per visualizzare gli annunci
+                            while ($row = pg_fetch_assoc($result)) {
+                                // Inizio di un nuovo annuncio
+                                echo "<div class='container3'>";
+                                // Visualizzazione dell'immagine dell'annuncio
+                                echo "<div class='foto'>";
+                                echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
+                                echo "</div>";
+
+                                // Inizio delle caratteristiche dell'annuncio
+                                echo "<div class='caratteristiche'>";
+                                echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
+                                echo "<p>km {$row['chilometraggio']}</p>";
+                                echo "<p>€ {$row['prezzo']}</p>";
+                                echo "<p><img src=\"immagini/calendario.png\" width='20px'>&nbsp;{$row['anno']}</p>";
+                                echo "<p><img src=\"immagini/carburante.png\" width='20px'>&nbsp;{$row['carburante']}</p>";
+                                echo "<p><img src=\"immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
+                                echo "<p><img src=\"immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
+                                // Aggiungi altre caratteristiche dell'annuncio qui...
+
+                                // Aggiunta della stella per contrassegnare come preferito
+                                $checked = $row['preferito'] ? 'checked' : ''; // Se il preferito è true, il checkbox sarà selezionato
+                                $stellaVuota = $row['preferito'] ? '' : 'stella-vuota'; // Se il preferito è false, applica la classe stella-vuota
+                                echo "<p>";
+                                echo "<input type='checkbox' class='preferito-checkbox' id='preferito{$row['id']}' data-id='{$row['id']}' $checked>"; // Checkbox nascosto
+                                echo "<label for='preferito{$row['id']}' class='stella $stellaVuota'>&#9734;</label>"; // Etichetta personalizzata per l'icona della stella
+                                echo "</p>";
+
+                                echo "</div>";
+
+                                // Fine dell'annuncio
+                                echo "</div>";
+
+                            }
+
+                            // Rilascio della risorsa del risultato
+                            pg_free_result($result);
+                        } else {
+                            echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+                        }
+                    } else {
+                        echo "Connessione al database non riuscita.";
+                    }
+
+                    // Chiusura della connessione al database
+                    pg_close($dbconn);
+                ?>  
             </div>
-            
         </div>
-        <button class="scroll-button scroll-right">
+            <button class="scroll-button scroll-right">
                 <img src="immagini/rightarrow.png" alt="Scroll Right">
             </button>
     </div>
@@ -210,4 +250,3 @@
     </script>     
 </body>
 </html>
-/*prova*/

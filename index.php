@@ -137,7 +137,7 @@
 
                                 // Inizio delle caratteristiche dell'annuncio
                                 echo "<div class='caratteristiche'>";
-                                echo "<h2>{$row['marca']} {$row['modello']}</h2>";
+                                echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
                                 echo "<p>km {$row['chilometraggio']}</p>";
                                 echo "<p>€ {$row['prezzo']}</p>";
                                 echo "<p><img src=\"immagini/calendario.png\" width='20px'>&nbsp;{$row['anno']}</p>";

@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $q2 = "SELECT * FROM utente WHERE email=$1 and pwd=$2";
             $data = pg_query_params($dbconn, $q2, array($email, $password));
             if ($tuple = pg_fetch_array($data, null, PGSQL_ASSOC)) {
-                $nome = $tuple["nome"];
-                header("Location:../logineffettuato.php");
-                exit(); // Assicura che il codice successivo non venga eseguito dopo il reindirizzamento
+                $email = $_POST['inputEmail'];
+                header("Location: ../logineffettuato.php?email=" . urlencode($email));
+                exit();
             }
             else {
                 echo "<h1> Password errata. Riprova.

@@ -1,4 +1,18 @@
-<?php session_start();?>
+<?php
+session_start();
+// Logout logic
+if(isset($_GET['logout'])) {
+    // Unset all of the session variables
+    $_SESSION = array();
+
+    // Destroy the session
+    session_destroy();
+
+    // Redirect to the homepage
+    header("Location: ../index.php");
+    exit();
+}
+?>
 <!DOCTYPE html> 
 <html>
 <head>
@@ -119,7 +133,7 @@
                                 echo "<a href='#'>I miei annunci</a>";
                                 echo "<a href='preferiti.php'>Preferiti</a>";
                                 echo "<a href='#'>Modifica password</a>";
-                                echo "<a href='#'>Esci</a>";
+                                echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
                                 echo "</div>"; // Chiudi dropdown-content
                                 echo "</li>"; // Chiudi dropdown
                             } else {

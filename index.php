@@ -109,7 +109,7 @@ if(isset($_GET['logout'])) {
                     <a href="ricerca/vedi-annunci.php">Vedi Annunci</a>
                 </div>
             </li>
-            <li><a href="vendi/index.html"><b>VENDI</b></a></li>
+            <li><a href="vendi/index.php"><b>VENDI</b></a></li>
             <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
             <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
             <?php

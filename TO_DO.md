@@ -27,14 +27,15 @@ Login effettuato
 
 Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato
 
-alla pagina degli annunci aggiungere filtri.
+alla pagina degli annunci aggiungere filtri. --FATTO--
 
 pagina ricerca personalizzata --FATTO--
-pagina vedi annunci
+
+pagina vedi annunci da completare
 
 pulsante RICERCA a tendina: -RICERCA PERSONALIZZATA -VEDI ANNUNCI --FATTO-
 
-pulsante logout
+pulsante logout --FATTO--
 
 sistemare preferiti dopo login
 

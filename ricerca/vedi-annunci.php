@@ -1,3 +1,18 @@
+<?php
+session_start();
+// Logout logic
+if(isset($_GET['logout'])) {
+    // Unset all of the session variables
+    $_SESSION = array();
+
+    // Destroy the session
+    session_destroy();
+
+    // Redirect to the homepage
+    header("Location: ../index.php");
+    exit();
+}
+?>
 <!DOCTYPE html> 
 <html>
 <head>
@@ -106,35 +121,6 @@
             font-family: 'Formula1 Display';
             font-size: 16px;
         }
-        
-        /* Add your CSS styles here */
-        .block{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap: 20px;
-            background-color: white;
-        }
-        .column{
-            flex: 1;
-            padding: 20px;
-            border: 1px solid #ccc;
-            margin: 10px;
-        }
-        .section {
-            flex: 1;
-            margin-right: 20px; /* Add spacing between sections */
-        }
-        .section:last-child {
-            margin-right: 0; /* Remove margin from last section */
-        }
-        .section-header {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        .section-content {
-            /* Add your styles for section content */
-        }
-    
     </style>
 </head>
 <body class="text-center">
@@ -148,116 +134,249 @@
                 <a href="../ricerca/vedi-annunci.php">Vedi Annunci</a>
             </div>
             </li>
-        <li><a href="../vendi/index.html"><b>VENDI</b></a></li>
+        <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
         <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
         <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
-        <li><a href="../login/index.html" class="btn btn-primary btn-lg" 
-            role="button">
-            LOGIN
-        </a></li>
-        <li><a href="../registrazione/index.html" class="btn btn-primary btn-lg" 
-            role="button">
-            REGISTRATI
-        </a></li>
+        <?php
+                $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+                $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+                if ($loggato) {
+                    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+                        or die('Could not connect: ' . pg_last_error());
+
+                    if ($dbconn) {             
+                        $query = "SELECT nome FROM utente WHERE email = $1";
+                        $result = pg_query_params($dbconn, $query, array($email));
+
+                        if ($result) {
+                            $num_rows = pg_num_rows($result);
+                            if ($num_rows > 0) {
+                                $row = pg_fetch_assoc($result);
+                                echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
+                                // Qui inizia la sezione del dropdown
+                                echo "<div class='dropdown-content'>";
+                                echo "<a href='#'>I miei annunci</a>";
+                                echo "<a href='preferiti.php'>Preferiti</a>";
+                                echo "<a href='#'>Modifica password</a>";
+                                echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
+                                echo "</div>"; // Chiudi dropdown-content
+                                echo "</li>"; // Chiudi dropdown
+                            } else {
+                                echo "<li><a href='login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                            }
+                        } else {
+                            echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+                        }
+                    } else {
+                        echo "Connessione al database non riuscita.";
+                    }
+                    pg_close($dbconn);
+                } else {
+                    echo "<li><a href='login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                    echo "<li><a href='registrazione/index.html' class='btn btn-primary btn-lg' role='button'>REGISTRATI</a></li>";
+                }
+            ?>
         </ul>
     </nav>
-    <div class="container">
-    <div class="column">
-        <!-- Content for the first column -->
-        <h2>Column 1</h2>
-        <p>This is the content of the first column.</p>
-    </div>
-    <div class="column">
-        <!-- Content for the second column -->
-        <h2>Column 2</h2>
-        <p>This is the content of the second column.</p>
-    </div>
-    
-        <!-- Filtri Section -->
-        <section class="section" id="filtri">
-            <div class="section-header">Filtri</div>
-            <div class="section-content">
-                <!-- Add your filter options here -->
-                <label for="filter-category">Category:</label>
-                <select id="filter-category">
-                    <option value="all">All</option>
-                    <option value="cars">Cars</option>
-                    <option value="bikes">Bikes</option>
-                    <!-- Add more options as needed -->
-                </select>
-                <!-- Add more filter options as needed -->
-            </div>
-        </section>
 
-        <!-- Annunci Section -->
-        <section class="section" id="annunci">
-            <div class="section-header">Annunci</div>
-            <div class="section-content">
-                <!-- Add your advertisements here -->
-                <div class="advertisement">
-                    <h2>Advertisement 1</h2>
-                    <p>Description of advertisement 1</p>
-                </div>
-                <div class="advertisement">
-                    <h2>Advertisement 2</h2>
-                    <p>Description of advertisement 2</p>
-                </div>
-                <!-- Add more advertisements as needed -->
-            </div>
-        </section>
-    </div>
+    <style>
+        .item1{grid-area: filtri; }
+        .item2{grid-area: annunci; }
+
+        .grid-container{
+            display: grid;
+            grid-template-areas:
+            'filtri annunci annunci annunci annunci annunci';
+            gap: 10px;
+            background-color: #2c2c2c96;
+            padding: 10px;
+            margin-top: 50px;
+            margin: 30px;
+            
+        }
+        .item1, .item2 {
+            font-family: 'Formula1 Display';
+            font-size: 16px;
+            margin-top: 100px;
+            text-align: left;
+            color: white;
+            z-index: 2;
+
+            
+        }
+
+    </style>
     
+
+    <div class="grid-container">
+        <div class="item1">
+            <form name="myForm" action="ricerca.php" method="POST" class="form-signin m-auto" onsubmit="alertRmb()">
+                <label for="marca">Marca:</label>
+                <select id="marca" name="marca" required onchange="updateModelloOptions(this.value)">
+                    <option value="">Seleziona</option>
+                    <option value="Audi">Audi</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Mercedes">Mercedes-Benz</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Chevrolet">Chevrolet</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="Mazda">Mazda</option>
+                    <option value="Kia">Kia</option>
+                    <option value="Subaru">Subaru</option>
+                    <option value="Fiat">Fiat</option>
+                    <option value="Volvo">Volvo</option>
+                    <option value="Jeep">Jeep</option>
+                    <option value="Land Rover">Land Rover</option>
+                    <option value="Renault">Renault</option>
+                    <option value="Peugeot">Peugeot</option>
+                    <option value="Citroën">Citroën</option>
+                    <option value="Mitsubishi">Mitsubishi</option>
+                    <option value="Alfa Romeo">Alfa Romeo</option>
+                    <option value="Lancia">Lancia</option>
+                    <option value="Maserati">Maserati</option>
+                    <option value="Jaguar">Jaguar</option>
+                    <option value="Ferrari">Ferrari</option>
+                    <option value="Porsche">Porsche</option>
+                    <option value="Acura">Acura</option>
+                    <option value="Bentley">Bentley</option>
+                    <option value="Buick">Buick</option>
+                    <option value="Cadillac">Cadillac</option>
+                    <option value="Chrysler">Chrysler</option>
+                    <option value="Dodge">Dodge</option>
+                    <option value="Fiat">Fiat</option>
+                    <option value="GMC">GMC</option>
+                    <option value="Infiniti">Infiniti</option>
+                    <option value="Lamborghini">Lamborghini</option>
+                    <option value="Lexus">Lexus</option>
+                    <option value="Lincoln">Lincoln</option>
+                    <option value="Lotus">Lotus</option>
+                    <option value="Mini">Mini</option>
+                    <option value="Rolls-Royce">Rolls-Royce</option>
+                    <option value="Smart">Smart</option>
+                    <option value="Tesla">Tesla</option>
+                    <option value="Vauxhall">Vauxhall</option>
+                    <option value="Volvo">Volvo</option>
+                </select> <br>
+                <label for="modello">Modello:</label>
+                <select id="modello" name="modello" disabled required>
+                    <option value="">Seleziona</option>
+                </select><br>
+                <label for="prezzo">Prezzo:</label>
+                <select id="prezzo_da" type="number" name="Da" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
+                    <option value="">Da</option>
+                    <option type="number" value="500">500€</option>
+                    <option type="number" value="1000">1000€</option>
+                    <option type="number" value="1500">1500€</option>
+                    <option type="number" value="2000">2000€</option>
+                    <option type="number" value="2500">2500€</option>
+                    <option type="number" value="3000">3000€</option>
+                    <option type="number" value="4000">4000€</option>
+                    <option type="number" value="5000">5000€</option>
+                    <option type="number" value="6000">6000€</option>
+                    <option type="number" value="7000">7000€</option>
+                    <option type="number" value="8000">8000€</option>
+                    <option type="number" value="9000">9000€</option>
+                </select>
+                <select id="prezzo_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
+                    <option value="">A</option>
+                    <option type="number" value="500">500€</option>
+                    <option type="number" value="1000">1000€</option>
+                    <option type="number" value="1500">1500€</option>
+                    <option type="number" value="2000">2000€</option>
+                    <option type="number" value="2500">2500€</option>
+                    <option type="number" value="3000">3000€</option>
+                    <option type="number" value="4000">4000€</option>
+                    <option type="number" value="5000">5000€</option>
+                    <option type="number" value="6000">6000€</option>
+                    <option type="number" value="7000">7000€</option>
+                    <option type="number" value="8000">8000€</option>
+                    <option type="number" value="9000">9000€</option>
+                </select><br>
+                <label for="carrozzeria">Carrozzeria:</label>
+                <select id="carrozzeria" name="carrozzeria" required>
+                    <option value="">Seleziona</option>
+                    <option value="City Car">City Car</option>
+                    <option value="Cabrio">Cabrio</option>
+                    <option value="Suv/Fuoristrada/Pick-up">Suv/Fuoristrada/Pick-up</option>
+                    <option value="Station Wagon">Station Wagon</option>
+                    <option value="Berlina">Berlina</option>
+                    <option value="Monovolume">Monovolume</option>
+                </select><br>
+                <label for="anno">Anno:</label>
+                <select id="anno_da" type="number" name="Da" onchange="updateMassimo('anno_da', 'anno_a')">
+                    <option value="">Da</option>
+                    <script>
+                        for (let i = 2024; i >= 1900; i--) {
+                            document.write(`<option value="${i}">${i}</option>`);
+                        }
+                    </script>
+                </select>
+                <select id="anno_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('anno_da', 'anno_a')">
+                    <option value="">A</option>
+                    <script>
+                        for (let i = 2024; i >= 1900; i--) {
+                            document.write(`<option value="${i}">${i}</option>`);
+                        }
+                    </script>
+                </select><br>
+                <label for="chilometraggio">Chilometraggio:</label>
+                <select id="km_da" type="number" name="Da" onchange="updateMassimo('km_da', 'km_a')">
+                    <option value="">Da</option>
+                    <script>
+                        for (let i = 0; i <= 200000; i = i + 25000) {
+                            document.write(`<option value="${i}">${i}</option>`);
+                        }
+                    </script>
+                </select>
+                <select id="km_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('km_da', 'km_a')">
+                    <option value="">A</option>
+                    <script>
+                        for (let i = 0; i <= 200000; i = i + 25000) {
+                            document.write(`<option value="${i}">${i}</option>`);
+                        }
+                    </script>
+                </select><br>
+                <label for="carburante">Carburante:</label>
+                <select name="carburante" required>
+                    <option value="">Seleziona</option>
+                    <option value="Benzina">Benzina</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="Ibrida">Ibrida</option>
+                    <option value="GPL">GPL</option>
+                    <option value="Metano">Metano</option>
+                </select><br>
+                <label for="cambio">Cambio:</label>
+                <select name="cambio" required>
+                    <option value="">Seleziona</option>
+                    <option value="manuale">Manuale</option>
+                    <option value="automatico">Automatico</option>
+                    <option value="semiautomatico">Semiautomatico</option>
+                </select><br>
+                <label for="potenza">Potenza (CV):</label>
+                <input type="number" id="potenza_da" name="Da" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000">
+                <input type="number" id="potenza_a" name="A" style="margin-left: 0%;" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000"><br>
+                <button type="submit" class="btn btn-primary" style="margin-left: 150px; margin-top: 30px; margin-bottom: 30px;">Cerca</button>
+            </form>
+        </div>
+        <div class="item2" >ANNUNCI
+        </div>
+    </div>
     <div class="car-logos-container">
-            <div class="car-logos animation">
-                <img src="../immagini/loghiauto/audi.png">
-                <img src="../immagini/loghiauto/bmw.png">
-                <img src="../immagini/loghiauto/ford.png">
-                <img src="../immagini/loghiauto/honda.png">
-                <img src="../immagini/loghiauto/kia.png">
-                <img src="../immagini/loghiauto/mazda.png">
-                <img src="../immagini/loghiauto/mercedes.png">
-                <img src="../immagini/loghiauto/toyota.png">
-                <img src="../immagini/loghiauto/volkswagen.png">
-                <img src="../immagini/loghiauto/hyundai.png">
-                <img src="../immagini/loghiauto/fiat.png">
-                <img src="../immagini/loghiauto/mg.png">
-                <img src="../immagini/loghiauto/peugeot.png">
-                <img src="../immagini/loghiauto/opel.png">
-                <img src="../immagini/loghiauto/nissan.png">
-                <img src="../immagini/loghiauto/renault.png">
-                <img src="../immagini/loghiauto/audi.png">
-                <img src="../immagini/loghiauto/bmw.png">
-                <img src="../immagini/loghiauto/ford.png">
-                <img src="../immagini/loghiauto/honda.png">
-                <img src="../immagini/loghiauto/kia.png">
-                <img src="../immagini/loghiauto/mazda.png">
-                <img src="../immagini/loghiauto/mercedes.png">
-                <img src="../immagini/loghiauto/toyota.png">
-                <img src="../immagini/loghiauto/volkswagen.png">
-                <img src="../immagini/loghiauto/hyundai.png">
-                <img src="../immagini/loghiauto/fiat.png">
-                <img src="../immagini/loghiauto/mg.png">
-                <img src="../immagini/loghiauto/peugeot.png">
-                <img src="../immagini/loghiauto/opel.png">
-                <img src="../immagini/loghiauto/nissan.png">
-                <img src="../immagini/loghiauto/renault.png">
-                <img src="../immagini/loghiauto/audi.png">
-                <img src="../immagini/loghiauto/bmw.png">
-                <img src="../immagini/loghiauto/ford.png">
-                <img src="../immagini/loghiauto/honda.png">
-                <img src="../immagini/loghiauto/kia.png">
-                <img src="../immagini/loghiauto/mazda.png">
-                <img src="../immagini/loghiauto/mercedes.png">
-                <img src="../immagini/loghiauto/toyota.png">
-                <img src="../immagini/loghiauto/volkswagen.png">
-                <img src="../immagini/loghiauto/hyundai.png">
-                <img src="../immagini/loghiauto/fiat.png">
-                <img src="../immagini/loghiauto/mg.png">
-                <img src="../immagini/loghiauto/peugeot.png">
-                <img src="../immagini/loghiauto/opel.png">
-                <img src="../immagini/loghiauto/nissan.png">
-                <img src="../immagini/loghiauto/renault.png">
-            </div>
-    </div>     
+        <div class="car-logos animation">
+            <img src="../immagini/loghiauto/audi.png">
+            <img src="../immagini/loghiauto/bmw.png">
+            <img src="../immagini/loghiauto/ford.png">
+            <img src="../immagini/loghiauto/honda.png">
+            <img src="../immagini/loghiauto/kia.png">
+            <img src="../immagini/loghiauto/mazda.png">
+            <img src="../immagini/loghiauto/mercedes.png">
+            <img src="../immagini/loghiauto/toyota.png">
+            <img src="../immagini/loghiauto/volkswagen.png">
+        </div>
+    </div>        
 </body>
 </html>

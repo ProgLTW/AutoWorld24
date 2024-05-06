@@ -51,8 +51,12 @@ if ($dbconn) {
     
     if ($result) {
         echo "<h1>Dati inseriti correttamente nella tabella Auto</h1>";
+        echo "<a href='vendi/vendi.php'>Vendi ancora</a>";
+        echo "<a href='../index.php'>Torna alla home</a>";
     } else {
         echo "<h1>Errore durante l'inserimento dei dati nella tabella Auto</h1>";
+        echo "<a href='vendi/vendi.php'>Riprova</a>";
+        echo "<a href='../index.php'>Torna alla home</a>";
     }
 }
 ?>

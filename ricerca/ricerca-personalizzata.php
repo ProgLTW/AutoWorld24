@@ -179,7 +179,7 @@ if(isset($_GET['logout'])) {
         </ul>
     </nav>
     <div class="container2">
-        <form name="myForm" action="ricerca.php" method="POST" class="form-signin m-auto" onsubmit="alertRmb()">
+        <form name="myForm" action="vedi-annunci.php" method="POST" class="form-signin m-auto" onsubmit="alertRmb()">
             <label for="marca">Marca:</label>
             <select id="marca" name="marca" required onchange="updateModelloOptions(this.value)">
                 <option value="">Seleziona</option>

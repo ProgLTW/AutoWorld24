@@ -25,7 +25,9 @@ pulsante RICERCA a tendina: -RICERCA PERSONALIZZATA -VEDI ANNUNCI --FATTO-
 pulsante logout --FATTO--
 sistemare barra in alto --FATTO--
 modifica password --FATTO--
+design vedi annunci --FATTO--
 
+    
 ---DA FARE---
 Pagina "Il mio profilo"
     ->menù a tendina con "i miei annunci", "salvati"
@@ -34,9 +36,8 @@ Login effettuato
 
 Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato
 
-pagina "vedi annunci" da completare
+quando clicco preferiti non resta loggato
 
-sistemare preferiti dopo login
 
 ricerca peronalizzata deve ricondurre a vedi annunci coi filtri gia compilati(forse)
 

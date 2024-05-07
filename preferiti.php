@@ -18,21 +18,58 @@
     </style>
 </head>
 <body class="text-center">
-    <nav>
+<nav>
         <ul>
             <li><a href="index.php"><b>AUTOWORLD</b></a></li>
             <li class="dropdown">
-            <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
-            <div class="dropdown-menu">
-                <a href="ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
-                <a href="ricerca/vedi-annunci.php">Vedi Annunci</a>
-            </div>
-        </li>
-            <li><a href="vendi/index.html"><b>VENDI</b></a></li>
-            <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
-            <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
-            <li><a href="login/index.html" class="btn btn-primary btn-lg" role="button">LOGIN</a></li>
-            <li><a href="registrazione/index.html" class="btn btn-primary btn-lg" role="button">REGISTRATI</a></li>
+                <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
+                <div class="dropdown-menu">
+                    <a href="../ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
+                    <a href="../ricerca/vedi-annunci.php">Vedi Annunci</a>
+                </div>
+            </li>
+            <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
+            <li><a href="../ricambi.php"><b>RICAMBI</b></a></li>
+            <li><a href="../preferiti.php"><b>PREFERITI</b></a></li>
+            <?php
+                $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+                $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+                if ($loggato) {
+                    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+                        or die('Could not connect: ' . pg_last_error());
+
+                    if ($dbconn) {             
+                        $query = "SELECT nome FROM utente WHERE email = $1";
+                        $result = pg_query_params($dbconn, $query, array($email));
+
+                        if ($result) {
+                            $num_rows = pg_num_rows($result);
+                            if ($num_rows > 0) {
+                                $row = pg_fetch_assoc($result);
+                                echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
+                                // Qui inizia la sezione del dropdown
+                                echo "<div class='dropdown-menu'>";
+                                echo "<a href='#'>I miei annunci</a>";
+                                echo "<a href='../preferiti.php'>Preferiti</a>";
+                                echo "<a href='../modifica-password.php'>Modifica password</a>";
+                                echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
+                                echo "</div>"; // Chiudi dropdown-content
+                                echo "</li>"; // Chiudi dropdown
+                            } else {
+                                echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                            }
+                        } else {
+                            echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+                        }
+                    } else {
+                        echo "Connessione al database non riuscita.";
+                    }
+                    pg_close($dbconn);
+                } else {
+                    echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                    echo "<li><a href='../registrazione/index.html' class='btn btn-primary btn-lg' role='button'>REGISTRATI</a></li>";
+                }
+            ?>
         </ul>
     </nav>
     <div class="scroll-big-container">

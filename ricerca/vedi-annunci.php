@@ -158,20 +158,20 @@ if(isset($_GET['logout'])) {
     </style>
 </head>
 <body class="text-center">
-    <nav>
+<nav>
         <ul>
-        <li><a href="../index.php"><b>AUTOWORLD</b></a></li>
-        <li class="dropdown">
-            <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
-            <div class="dropdown-menu">
-                <a href="../ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
-                <a href="../ricerca/vedi-annunci.php">Vedi Annunci</a>
-            </div>
+            <li><a href="../index.php"><b>AUTOWORLD</b></a></li>
+            <li class="dropdown">
+                <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
+                <div class="dropdown-menu">
+                    <a href="../ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
+                    <a href="../ricerca/vedi-annunci.php">Vedi Annunci</a>
+                </div>
             </li>
-        <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
-        <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
-        <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
-        <?php
+            <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
+            <li><a href="../ricambi.php"><b>RICAMBI</b></a></li>
+            <li><a href="../preferiti.php"><b>PREFERITI</b></a></li>
+            <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                 $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
                 if ($loggato) {
@@ -188,15 +188,15 @@ if(isset($_GET['logout'])) {
                                 $row = pg_fetch_assoc($result);
                                 echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
                                 // Qui inizia la sezione del dropdown
-                                echo "<div class='dropdown-content'>";
+                                echo "<div class='dropdown-menu'>";
                                 echo "<a href='#'>I miei annunci</a>";
-                                echo "<a href='preferiti.php'>Preferiti</a>";
-                                echo "<a href='#'>Modifica password</a>";
+                                echo "<a href='../preferiti.php'>Preferiti</a>";
+                                echo "<a href='../modifica-password.php'>Modifica password</a>";
                                 echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
                                 echo "</div>"; // Chiudi dropdown-content
                                 echo "</li>"; // Chiudi dropdown
                             } else {
-                                echo "<li><a href='login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                                echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
                             }
                         } else {
                             echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
@@ -206,8 +206,8 @@ if(isset($_GET['logout'])) {
                     }
                     pg_close($dbconn);
                 } else {
-                    echo "<li><a href='login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
-                    echo "<li><a href='registrazione/index.html' class='btn btn-primary btn-lg' role='button'>REGISTRATI</a></li>";
+                    echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                    echo "<li><a href='../registrazione/index.html' class='btn btn-primary btn-lg' role='button'>REGISTRATI</a></li>";
                 }
             ?>
         </ul>
@@ -517,17 +517,56 @@ if(isset($_GET['logout'])) {
 
 
     <div class="car-logos-container">
-        <div class="car-logos animation">
-            <img src="../immagini/loghiauto/audi.png">
-            <img src="../immagini/loghiauto/bmw.png">
-            <img src="../immagini/loghiauto/ford.png">
-            <img src="../immagini/loghiauto/honda.png">
-            <img src="../immagini/loghiauto/kia.png">
-            <img src="../immagini/loghiauto/mazda.png">
-            <img src="../immagini/loghiauto/mercedes.png">
-            <img src="../immagini/loghiauto/toyota.png">
-            <img src="../immagini/loghiauto/volkswagen.png">
-        </div>
-    </div>        
+            <div class="car-logos animation">
+                <img src="../immagini/loghiauto/audi.png">
+                <img src="../immagini/loghiauto/bmw.png">
+                <img src="../immagini/loghiauto/ford.png">
+                <img src="../immagini/loghiauto/honda.png">
+                <img src="../immagini/loghiauto/kia.png">
+                <img src="../immagini/loghiauto/mazda.png">
+                <img src="../immagini/loghiauto/mercedes.png">
+                <img src="../immagini/loghiauto/toyota.png">
+                <img src="../immagini/loghiauto/volkswagen.png">
+                <img src="../immagini/loghiauto/hyundai.png">
+                <img src="../immagini/loghiauto/fiat.png">
+                <img src="../immagini/loghiauto/mg.png">
+                <img src="../immagini/loghiauto/peugeot.png">
+                <img src="../immagini/loghiauto/opel.png">
+                <img src="../immagini/loghiauto/nissan.png">
+                <img src="../immagini/loghiauto/renault.png">
+                <img src="../immagini/loghiauto/audi.png">
+                <img src="../immagini/loghiauto/bmw.png">
+                <img src="../immagini/loghiauto/ford.png">
+                <img src="../immagini/loghiauto/honda.png">
+                <img src="../immagini/loghiauto/kia.png">
+                <img src="../immagini/loghiauto/mazda.png">
+                <img src="../immagini/loghiauto/mercedes.png">
+                <img src="../immagini/loghiauto/toyota.png">
+                <img src="../immagini/loghiauto/volkswagen.png">
+                <img src="../immagini/loghiauto/hyundai.png">
+                <img src="../immagini/loghiauto/fiat.png">
+                <img src="../immagini/loghiauto/mg.png">
+                <img src="../immagini/loghiauto/peugeot.png">
+                <img src="../immagini/loghiauto/opel.png">
+                <img src="../immagini/loghiauto/nissan.png">
+                <img src="../immagini/loghiauto/renault.png">
+                <img src="../immagini/loghiauto/audi.png">
+                <img src="../immagini/loghiauto/bmw.png">
+                <img src="../immagini/loghiauto/ford.png">
+                <img src="../immagini/loghiauto/honda.png">
+                <img src="../immagini/loghiauto/kia.png">
+                <img src="../immagini/loghiauto/mazda.png">
+                <img src="../immagini/loghiauto/mercedes.png">
+                <img src="../immagini/loghiauto/toyota.png">
+                <img src="../immagini/loghiauto/volkswagen.png">
+                <img src="../immagini/loghiauto/hyundai.png">
+                <img src="../immagini/loghiauto/fiat.png">
+                <img src="../immagini/loghiauto/mg.png">
+                <img src="../immagini/loghiauto/peugeot.png">
+                <img src="../immagini/loghiauto/opel.png">
+                <img src="../immagini/loghiauto/nissan.png">
+                <img src="../immagini/loghiauto/renault.png">
+            </div>
+    </div>    
 </body>
 </html>

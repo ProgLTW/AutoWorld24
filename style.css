@@ -57,10 +57,12 @@ nav li:last-child {
     margin-left: -30px;
     margin-right: -90px;
 }
-nav li:nth-last-child(2) {
-    margin-left: 60px;
-    background-color: orange;
+nav li:nth-child(-n+5) {
+    position: sticky;
+    z-index: 1;
+    margin-right: auto;
     justify-content: flex-end;
+    background-color: orange;
 }
 nav li:not(:first-child):hover {
     background-color: white;
@@ -283,7 +285,7 @@ nav li:not(:first-child):hover {
     outline: none;
     cursor: pointer;
     font-size: 1.5rem;
-    z-index: 2; 
+    z-index: 1; 
 }
 .scroll-button.scroll-left img,
 .scroll-button.scroll-right img {

@@ -23,13 +23,12 @@ pagina ricerca personalizzata --FATTO--
 BARRA ANNUNCI NELLA HOMEPAGE(INDEX.PHP), COLLEGARE CON ANNUNCI DATABASE --FATTO--
 pulsante RICERCA a tendina: -RICERCA PERSONALIZZATA -VEDI ANNUNCI --FATTO-
 pulsante logout --FATTO--
-
-
+sistemare barra in alto --FATTO--
+modifica password --FATTO--
 
 ---DA FARE---
 Pagina "Il mio profilo"
-    ->Ssistemare barra in alto
-    ->menù a tendina con "i miei annunci", "salvati", modifica password, esci …
+    ->menù a tendina con "i miei annunci", "salvati"
 
 Login effettuato
 

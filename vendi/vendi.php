@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: /");
     exit; // Esce dallo script per evitare l'esecuzione di ulteriori istruzioni
@@ -41,12 +42,15 @@ if ($dbconn) {
     $descrizione = $_POST['descrizione'];
     $preferito = 0;
 
+    // Ottieni l'email dalla sessione
+    $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+
     // Query SQL per l'inserimento dei dati nella tabella Auto
-    $query = "INSERT INTO annuncio (marca, modello, prezzo, trattabile, carrozzeria, anno, chilometraggio, carburante, cambio, potenza, foto, descrizione, preferito) 
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)";
+    $query = "INSERT INTO annuncio (marca, modello, prezzo, trattabile, carrozzeria, anno, chilometraggio, carburante, cambio, potenza, foto, descrizione, preferito, email) 
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)";
 
     // Esecuzione della query con i parametri
-    $result = pg_query_params($dbconn, $query, array($marca, $modello, $prezzo, $trattabile, $carrozzeria, $anno, $chilometraggio, $carburante, $cambio, $potenza, $foto, $descrizione, $preferito));
+    $result = pg_query_params($dbconn, $query, array($marca, $modello, $prezzo, $trattabile, $carrozzeria, $anno, $chilometraggio, $carburante, $cambio, $potenza, $foto, $descrizione, $preferito, $email));
 
     
     if ($result) {

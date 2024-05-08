@@ -28,11 +28,11 @@ modifica password --FATTO--
 design vedi annunci --FATTO--
 quando clicco preferiti non resta loggato --FATTO--
 Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato --FATTO--
-
+submit in vendi funziona solo se loggato
+database aggiornato (email linkata tra le due tabelle)
+miei annunci funziona
     
 ---DA FARE---
-Pagina "Il mio profilo"
-    ->menù a tendina con "i miei annunci", "salvati"
 
 Login effettuato
 
@@ -42,4 +42,4 @@ far funzionare filtri-annunci
 
 in vedi annunci dropdown-menu non si sovrappone a tutto
 
-I miei annunci: Query failed: ERROR: column "email" does not exist LINE 1: SELECT * FROM annuncio WHERE email = $1 
+preferiti

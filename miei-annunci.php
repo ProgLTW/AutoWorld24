@@ -28,6 +28,53 @@ session_start();
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
     <link rel="stylesheet" href="style.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .annunci{
+            width: 80%;
+            background-color: #2c2c2c96;
+            border-radius: 10px;
+            font-family: 'Formula1 Display';
+            font-size: 20px;
+            margin-top: 100px;
+            text-align: left;
+            color: white;
+            z-index: 2;
+            flex: 1;
+            padding: 20px;
+            border: 1px solid orange;
+            margin-left: 50px;
+        }
+
+        .container3 {
+            display: flex;
+            border-radius: 10px;
+            background-color: white;
+            font-family: 'Formula1 Display';
+            font-size: 32px;
+            color: orange;
+            margin: 0 auto;
+            background-color: #2c2c2c96;
+        }
+
+
+        .foto {
+            width: 400px; /* Imposta la larghezza massima al 30% del contenitore */
+            margin-right: 20px;
+        }
+
+        .foto img {
+            margin-top: 20px;
+            width: 100%; /* Immagine al 100% della larghezza del contenitore */
+            border-radius: 10px;
+        }
+
+        .caratteristiche {
+            flex: 1; /* Le caratteristiche occupano il 50% dello spazio */
+            padding: 50px;
+        }
+
+    </style>
 </head>
 <body class="text-center">
     <nav>
@@ -89,15 +136,12 @@ session_start();
 <header>
     <!-- Intestazione della pagina -->
     <h1>I Miei Annunci</h1>
-    <a href="logout.php">Logout</a>
 </header>
 
 <main>
     <!-- Elenco degli annunci -->
     <div class="annunci">
-    // Aggiungi questo blocco prima della sezione "I miei annunci"
-
-
+    
     <?php
         $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
             or die('Could not connect: ' . pg_last_error());
@@ -121,12 +165,12 @@ session_start();
                     // Inizio delle caratteristiche dell'annuncio
                     echo "<div class='caratteristiche'>";
                     echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
-                    echo "<p>km {$row['chilometraggio']}</p>";
-                    echo "<p>€ {$row['prezzo']}</p>";
-                    echo "<p><img src=\"immagini/calendario.png\" width='20px'>&nbsp;{$row['anno']}</p>";
-                    echo "<p><img src=\"immagini/carburante.png\" width='20px'>&nbsp;{$row['carburante']}</p>";
-                    echo "<p><img src=\"immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
-                    echo "<p><img src=\"immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
+                    echo "<p>Chilometri: {$row['chilometraggio']}</p>";
+                    echo "<p>Prezzo: {$row['prezzo']}</p>";
+                    echo "<p>Anno: {$row['anno']}</p>";
+                    echo "<p>Carburante: {$row['carburante']}</p>";
+                    echo "<p>Cambio: {$row['cambio']}</p>";
+                    echo "<p>Potenza: {$row['potenza']} CV</p>";
                     // Aggiungi altre caratteristiche dell'annuncio qui...
 
                     // Aggiunta della stella per contrassegnare come preferito

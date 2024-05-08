@@ -191,7 +191,7 @@ if(isset($_GET['logout'])) {
         </ul>
     </nav>
     <div class="container2">
-        <form name="myForm" action="vendi.php" method="POST" enctype="multipart/form-data" class="form-signin m-auto" onsubmit="alertRmb()">
+        <form name="myForm" action="<?php echo isset($_SESSION['loggato']) ? 'vendi.php' : '#'; ?>" method="POST" enctype="multipart/form-data" class="form-signin m-auto" onsubmit="alertRmb()">
             <label for="marca">Marca:</label>
             <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
                 <option value="">Seleziona</option>
@@ -293,7 +293,7 @@ if(isset($_GET['logout'])) {
             <input type="file" name="foto" accept="image/*" multiple><br>
             <label for="descrizione">Inserisci descrizione:</label><br>
             <textarea name="descrizione" cols="30" rows="6" placeholder="es. tagliandi, stato carrozzeria, stato motore, ecc."></textarea>
-            <button type="submit" class="btn btn-primary" style="margin-left: 50px; margin-top: 30px; margin-bottom: 30px; font-size: large;">Conferma</button>
+            <button type="submit" class="btn btn-primary" style="margin-left: 50px; margin-top: 30px; margin-bottom: 30px; font-size: large;" <?php echo isset($_SESSION['loggato']) ? '' : 'disabled'; ?>>Conferma</button>
             <button type="reset" class="btn btn-secondary" style="margin-left: 10px; font-size: large;">Reset</button>
         </form>
     </div>

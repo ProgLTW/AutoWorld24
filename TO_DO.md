@@ -42,4 +42,12 @@ far funzionare filtri-annunci
 
 in vedi annunci dropdown-menu non si sovrappone a tutto
 
-preferiti
+preferiti + stellina
+
+responsivenss (IMPORTANTE)
+
+implementare l'acquisto (e relativa eliminazione annuncio + i miei acquisti)
+
+password dimenticata (per ora va su modifica password)
+
+aggiustare pagine errore e dati inseriti correttamente (sono brutti)

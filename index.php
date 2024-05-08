@@ -12,6 +12,14 @@ if(isset($_GET['logout'])) {
     header("Location: ../index.php");
     exit();
 }
+
+    // Verifica se l'utente è loggato
+    $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+    // URL a cui reindirizzare l'utente
+    $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
+
+
+
 ?>
 <!DOCTYPE html> 
 <html>
@@ -58,27 +66,8 @@ if(isset($_GET['logout'])) {
         .small-logo {
             margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
         }
-        /* Stili per il menu a tendina */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
+        
+
         /* Aggiungi stili per gli annunci pubblicitari */
         .ad-container {
             margin-top: 120px;
@@ -111,7 +100,7 @@ if(isset($_GET['logout'])) {
             </li>
             <li><a href="vendi/index.php"><b>VENDI</b></a></li>
             <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
-            <li><a href="preferiti.php"><b>PREFERITI</b></a></li>
+            <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
             <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                 $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
@@ -130,9 +119,9 @@ if(isset($_GET['logout'])) {
                                 echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
                                 // Qui inizia la sezione del dropdown
                                 echo "<div class='dropdown-menu'>";
-                                echo "<a href='#'>I miei annunci</a>";
-                                echo "<a href='preferiti.php'>Preferiti</a>";
-                                echo "<a href='modifica-password.php'>Modifica password</a>";
+                                echo "<a href='../miei-annunci.php'>I miei annunci</a>";
+                                echo "<a href='../preferiti.php'>Preferiti</a>";
+                                echo "<a href='../modifica-password.php'>Modifica password</a>";
                                 echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
                                 echo "</div>"; // Chiudi dropdown-content
                                 echo "</li>"; // Chiudi dropdown

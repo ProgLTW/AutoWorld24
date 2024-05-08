@@ -1,3 +1,24 @@
+<?php
+session_start();
+// Logout logic
+if(isset($_GET['logout'])) {
+    // Unset all of the session variables
+    $_SESSION = array();
+
+    // Destroy the session
+    session_destroy();
+
+    // Redirect to the homepage
+    header("Location: ../index.php");
+    exit();
+}
+
+   // Verifica se l'utente è loggato
+   $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+   // URL a cui reindirizzare l'utente
+   $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
+
+?>
 <!DOCTYPE html> 
 <html>
 <head>

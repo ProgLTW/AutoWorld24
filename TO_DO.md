@@ -26,6 +26,8 @@ pulsante logout --FATTO--
 sistemare barra in alto --FATTO--
 modifica password --FATTO--
 design vedi annunci --FATTO--
+quando clicco preferiti non resta loggato --FATTO--
+Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato --FATTO--
 
     
 ---DA FARE---
@@ -34,11 +36,10 @@ Pagina "Il mio profilo"
 
 Login effettuato
 
-Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato
-
-quando clicco preferiti non resta loggato
-
-
 ricerca peronalizzata deve ricondurre a vedi annunci coi filtri gia compilati(forse)
 
 far funzionare filtri-annunci
+
+in vedi annunci dropdown-menu non si sovrappone a tutto
+
+I miei annunci: Query failed: ERROR: column "email" does not exist LINE 1: SELECT * FROM annuncio WHERE email = $1 

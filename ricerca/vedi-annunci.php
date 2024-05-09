@@ -155,6 +155,8 @@ if(isset($_GET['logout'])) {
             font-family: 'Formula1 Display';
             font-size: 16px;
         }
+
+
     </style>
 </head>
 <body class="text-center">
@@ -232,7 +234,6 @@ if(isset($_GET['logout'])) {
             margin-top: 100px;
             text-align: left;
             color: black;
-            z-index: 2;
             width: 400px; /* Larghezza fissa per la colonna sinistra */
             padding: 20px;
             background-color: orange;
@@ -246,7 +247,6 @@ if(isset($_GET['logout'])) {
             margin-top: 100px;
             text-align: left;
             color: white;
-            z-index: 2;
             flex: 1;
             padding: 20px;
             border: 1px solid orange;
@@ -267,6 +267,7 @@ if(isset($_GET['logout'])) {
             color: orange;
             margin: 0 auto;
             background-color: #2c2c2c96;
+            border: 1px solid orange;
         }
 
 
@@ -285,6 +286,42 @@ if(isset($_GET['logout'])) {
             flex: 1; /* Le caratteristiche occupano il 50% dello spazio */
             padding: 10px;
         }
+        
+
+        .buy-button {
+            background-color: orange;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            float: right;
+            right: 0;
+            top: 0px; /* Altezza del pulsante Details */
+        }
+
+        .details-button {
+            background-color: orange;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            position: relative;
+        }
+
 
     
 
@@ -476,10 +513,10 @@ if(isset($_GET['logout'])) {
                                 echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
                                 echo "<p>Chilometraggio:  {$row['chilometraggio']}</p>";
                                 echo "<p>Prezzo:  {$row['prezzo']}</p>";
-                                echo "<p>Anno {$row['anno']}</p>";
-                                echo "<p><img src=\"../immagini/carburante.png\" width='20px'>&nbsp;{$row['carburante']}</p>";
-                                echo "<p><img src=\"../immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
-                                echo "<p><img src=\"../immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
+                                echo "<p>Anno: {$row['anno']}</p>";
+                                echo "<p>Carburante: {$row['carburante']}</p>";
+                                echo "<p>Cambio: {$row['cambio']}</p>";
+                                echo "<p>Potenza: {$row['potenza']} CV</p>";
                                 // Aggiungi altre caratteristiche dell'annuncio qui...
 
                                 // Aggiunta della stella per contrassegnare come preferito
@@ -490,11 +527,15 @@ if(isset($_GET['logout'])) {
                                 echo "<label for='preferito{$row['id']}' class='stella $stellaVuota'>&#9734;</label>"; // Etichetta personalizzata per l'icona della stella
                                 echo "</p>";
 
-                                echo "</div>";
+                                echo "<a href='../ricerca/big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
 
+                                echo "<a href='#' class='btn btn-primary btn-lg buy-button' role='button'>COMPRA</a>";
+                                
+                              
+                                echo "</div>";                    
+                                
                                 // Fine dell'annuncio
                                 echo "</div>";
-
                             }
 
                             // Rilascio della risorsa del risultato

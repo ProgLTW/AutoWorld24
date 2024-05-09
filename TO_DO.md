@@ -31,7 +31,7 @@ Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato --FAT
 submit in vendi funziona solo se loggato
 database aggiornato (email linkata tra le due tabelle)
 miei annunci funziona
-    
+aggiunto pulsante compra in vedi annunci
 ---DA FARE---
 
 Login effettuato
@@ -39,8 +39,6 @@ Login effettuato
 ricerca peronalizzata deve ricondurre a vedi annunci coi filtri gia compilati(forse)
 
 far funzionare filtri-annunci
-
-in vedi annunci dropdown-menu non si sovrappone a tutto
 
 preferiti + stellina
 
@@ -50,4 +48,10 @@ implementare l'acquisto (e relativa eliminazione annuncio + i miei acquisti)
 
 password dimenticata (per ora va su modifica password)
 
-aggiustare pagine errore e dati inseriti correttamente (sono brutti)
+aggiustare pagine errore e dati inseriti correttamente (sono brutti) -> ho messo un alert su vendi
+
+quando clicco sul nome dell'annuncio, annuncio grande con descrizione,altre foto, venditore ecc?
+
+quando metto piu foto come le visualizzo in big annuncio?
+
+big-annuncio non riesco a far funzionare margin-bottom per qualche motivo

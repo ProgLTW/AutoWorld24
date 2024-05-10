@@ -90,8 +90,75 @@ if(isset($_GET['logout'])) {
                 fromSelect.value = toValue;
             }
     }
+    // Funzione per catturare i valori dei campi "Da" e "A" prima dell'invio del modulo
+// Funzione per catturare i valori dei campi "Da" e "A" prima dell'invio del modulo
+function salvaValoriDaA() {
+    var prezzoDa = document.getElementById('prezzo_da').value;
+    var prezzoA = document.getElementById('prezzo_a').value;
+    var annoDa = document.getElementById('anno_da').value;
+    var annoA = document.getElementById('anno_a').value;
+    var chilometraggioDa = document.getElementById('km_da').value;
+    var chilometraggioA = document.getElementById('km_a').value;
+    var potenzaDa = document.getElementById('potenza_da').value;
+    var potenzaA = document.getElementById('potenza_a').value;
 
-    document.addEventListener("DOMContentLoaded", function() {
+    // Memorizza i valori nei cookie o in localStorage
+    // Ad esempio, puoi utilizzare localStorage per memorizzare i valori temporaneamente
+    localStorage.setItem('prezzoDa', prezzoDa);
+    localStorage.setItem('prezzoA', prezzoA);
+    localStorage.setItem('annoDa', annoDa);
+    localStorage.setItem('annoA', annoA);
+    localStorage.setItem('chilometraggioDa', chilometraggioDa);
+    localStorage.setItem('chilometraggioA', chilometraggioA);
+    localStorage.setItem('potenzaDa', potenzaDa);
+    localStorage.setItem('potenzaA', potenzaA);
+}
+
+// Funzione per ripristinare i valori dei campi "Da" e "A" dopo l'invio del modulo
+function ripristinaValoriDaA() {
+    var prezzoDa = localStorage.getItem('prezzoDa');
+    var prezzoA = localStorage.getItem('prezzoA');
+    var annoDa = localStorage.getItem('annoDa');
+    var annoA = localStorage.getItem('annoA');
+    var chilometraggioDa = localStorage.getItem('chilometraggioDa');
+    var chilometraggioA = localStorage.getItem('chilometraggioA');
+    var potenzaDa = localStorage.getItem('potenzaDa');
+    var potenzaA = localStorage.getItem('potenzaA');
+
+    // Ripristina i valori nei rispettivi campi
+    document.getElementById('prezzo_da').value = prezzoDa;
+    document.getElementById('prezzo_a').value = prezzoA;
+    document.getElementById('anno_da').value = annoDa;
+    document.getElementById('anno_a').value = annoA;
+    document.getElementById('km_da').value = chilometraggioDa;
+    document.getElementById('km_a').value = chilometraggioA;
+    document.getElementById('potenza_da').value = potenzaDa;
+    document.getElementById('potenza_a').value = potenzaA;
+
+    // Cancella i valori memorizzati
+    localStorage.removeItem('prezzoDa');
+    localStorage.removeItem('prezzoA');
+    localStorage.removeItem('annoDa');
+    localStorage.removeItem('annoA');
+    localStorage.removeItem('chilometraggioDa');
+    localStorage.removeItem('chilometraggioA');
+    localStorage.removeItem('potenzaDa');
+    localStorage.removeItem('potenzaA');
+}
+
+// Aggiungi event listener per il submit del modulo
+document.getElementById('searchForm').addEventListener('submit', function() {
+    salvaValoriDaA(); // Salva i valori prima dell'invio
+});
+
+// Aggiungi event listener per il caricamento della pagina
+window.addEventListener('load', function() {
+    ripristinaValoriDaA(); // Ripristina i valori dopo il caricamento della pagina
+});
+
+
+
+    /*document.addEventListener("DOMContentLoaded", function() {
         const form = document.getElementById("searchForm");
         const searchResult = document.getElementById("searchResult");
 
@@ -122,7 +189,7 @@ if(isset($_GET['logout'])) {
                 console.error("Errore durante la richiesta:", error);
             });
         });
-    });
+    });*/
 
     </script>
     <style> 
@@ -340,7 +407,7 @@ if(isset($_GET['logout'])) {
                 $potenzaDa = isset($_POST['PotenzaDa']) ? $_POST['PotenzaDa'] : '';
                 $potenzaA = isset($_POST['PotenzaA']) ? $_POST['PotenzaA'] : '';
             ?>
-            <form id="searchForm" class="form-signin m-auto">
+            <form name="searchForm" action="vedi-annunci.php" method="POST" class="form-signin m-auto" style="margin-left: 0;">
                 <label for="marca">Marca:</label>
                 <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
                     <option value="" <?php if($marca == '') echo 'selected="selected"'; ?>>Seleziona</option>
@@ -491,9 +558,49 @@ if(isset($_GET['logout'])) {
                         or die('Could not connect: ' . pg_last_error());
 
                     if ($dbconn) {
-                        // Query per recuperare tutti gli annunci dalla tabella annuncio
-                        $query = "SELECT * FROM annuncio";
+                        // Query per recuperare gli annunci dalla tabella annuncio in base ai filtri
+                        $query = "SELECT * FROM annuncio WHERE 1=1"; // Inizia la query con un'istruzione true
 
+                        // Aggiungi filtri sulla marca e sul modello solo se sono stati specificati
+                        if (!empty($marca)) {
+                            $query .= " AND marca = '$marca'";
+                        }
+                        if (!empty($modello)) {
+                            $query .= " AND modello = '$modello'";
+                        }
+                        if (!empty($prezzoDa)) {
+                            $query .= " AND prezzo >= $prezzoDa";
+                        }
+                        if (!empty($prezzoA)) {
+                            $query .= " AND prezzo <= $prezzoA";
+                        }
+                        if (!empty($carrozzeria)) {
+                            $query .= " AND carrozzeria = '$carrozzeria'";
+                        }
+                        if (!empty($annoDa)) {
+                            $query .= " AND anno >= $annoDa";
+                        }
+                        if (!empty($annoA)) {
+                            $query .= " AND anno <= $annoA";
+                        }
+                        if (!empty($kmDa)) {
+                            $query .= " AND chilometraggio >= $kmDa";
+                        }
+                        if (!empty($kmA)) {
+                            $query .= " AND chilometraggio <= $kmA";
+                        }
+                        if (!empty($carburante)) {
+                            $query .= " AND carburante = '$carburante'";
+                        }
+                        if (!empty($cambio)) {
+                            $query .= " AND cambio = '$cambio'";
+                        }
+                        if (!empty($potenzaDa)) {
+                            $query .= " AND potenza >= $potenzaDa";
+                        }
+                        if (!empty($potenzaA)) {
+                            $query .= " AND potenza <= $potenzaA";
+                        }
                         // Esecuzione della query
                         $result = pg_query($dbconn, $query);
 

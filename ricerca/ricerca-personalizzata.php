@@ -231,7 +231,7 @@ if(isset($_GET['logout'])) {
                 <option value="Volvo">Volvo</option>
             </select> <br>
             <label for="modello">Modello:</label>
-            <select id="modello" name="modello" disabled required>
+            <select id="modello" name="modello" disabled>
                 <option value="">Seleziona</option>
             </select><br>
             <label for="prezzo">Prezzo:</label>

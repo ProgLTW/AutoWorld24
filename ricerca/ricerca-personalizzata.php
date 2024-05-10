@@ -178,12 +178,10 @@ if(isset($_GET['logout'])) {
             ?>
         </ul>
     </nav>
-
-
     <div class="container2">
         <form name="myForm" action="vedi-annunci.php" method="POST" class="form-signin m-auto" onsubmit="alertRmb()">
             <label for="marca">Marca:</label>
-            <select id="marca" name="marca" required onchange="updateModelloOptions(this.value)">
+            <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
                 <option value="">Seleziona</option>
                 <option value="Audi">Audi</option>
                 <option value="BMW">BMW</option>
@@ -237,7 +235,7 @@ if(isset($_GET['logout'])) {
                 <option value="">Seleziona</option>
             </select><br>
             <label for="prezzo">Prezzo:</label>
-            <select id="prezzo_da" type="number" name="Da" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
+            <select id="prezzo_da" type="number" name="PrezzoDa" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
                 <option value="">Da</option>
                 <option type="number" value="500">500€</option>
                 <option type="number" value="1000">1000€</option>
@@ -252,7 +250,7 @@ if(isset($_GET['logout'])) {
                 <option type="number" value="8000">8000€</option>
                 <option type="number" value="9000">9000€</option>
             </select>
-            <select id="prezzo_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
+            <select id="prezzo_a" type="number" name="PrezzoA" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
                 <option value="">A</option>
                 <option type="number" value="500">500€</option>
                 <option type="number" value="1000">1000€</option>
@@ -268,7 +266,7 @@ if(isset($_GET['logout'])) {
                 <option type="number" value="9000">9000€</option>
             </select><br>
             <label for="carrozzeria">Carrozzeria:</label>
-            <select id="carrozzeria" name="carrozzeria" required>
+            <select id="carrozzeria" name="carrozzeria">
                 <option value="">Seleziona</option>
                 <option value="City Car">City Car</option>
                 <option value="Cabrio">Cabrio</option>
@@ -278,7 +276,7 @@ if(isset($_GET['logout'])) {
                 <option value="Monovolume">Monovolume</option>
             </select><br>
             <label for="anno">Anno:</label>
-            <select id="anno_da" type="number" name="Da" onchange="updateMassimo('anno_da', 'anno_a')">
+            <select id="anno_da" type="number" name="AnnoDa" onchange="updateMassimo('anno_da', 'anno_a')">
                 <option value="">Da</option>
                 <script>
                     for (let i = 2024; i >= 1900; i--) {
@@ -286,7 +284,7 @@ if(isset($_GET['logout'])) {
                     }
                 </script>
             </select>
-            <select id="anno_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('anno_da', 'anno_a')">
+            <select id="anno_a" type="number" name="AnnoA" style="margin-left: 0%;" onchange="updateMinimo('anno_da', 'anno_a')">
                 <option value="">A</option>
                 <script>
                     for (let i = 2024; i >= 1900; i--) {
@@ -295,7 +293,7 @@ if(isset($_GET['logout'])) {
                 </script>
             </select><br>
             <label for="chilometraggio">Chilometraggio:</label>
-            <select id="km_da" type="number" name="Da" onchange="updateMassimo('km_da', 'km_a')">
+            <select id="km_da" type="number" name="KmDa" onchange="updateMassimo('km_da', 'km_a')">
                 <option value="">Da</option>
                 <script>
                     for (let i = 0; i <= 200000; i = i + 25000) {
@@ -303,7 +301,7 @@ if(isset($_GET['logout'])) {
                     }
                 </script>
             </select>
-            <select id="km_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('km_da', 'km_a')">
+            <select id="km_a" type="number" name="KmA" style="margin-left: 0%;" onchange="updateMinimo('km_da', 'km_a')">
                 <option value="">A</option>
                 <script>
                     for (let i = 0; i <= 200000; i = i + 25000) {
@@ -312,7 +310,7 @@ if(isset($_GET['logout'])) {
                 </script>
             </select><br>
             <label for="carburante">Carburante:</label>
-            <select name="carburante" required>
+            <select name="carburante">
                 <option value="">Seleziona</option>
                 <option value="Benzina">Benzina</option>
                 <option value="Diesel">Diesel</option>
@@ -321,15 +319,15 @@ if(isset($_GET['logout'])) {
                 <option value="Metano">Metano</option>
             </select><br>
             <label for="cambio">Cambio:</label>
-            <select name="cambio" required>
+            <select name="cambio">
                 <option value="">Seleziona</option>
-                <option value="manuale">Manuale</option>
-                <option value="automatico">Automatico</option>
-                <option value="semiautomatico">Semiautomatico</option>
+                <option value="Manuale">Manuale</option>
+                <option value="Automatico">Automatico</option>
+                <option value="Semiautomatico">Semiautomatico</option>
             </select><br>
             <label for="potenza">Potenza (CV):</label>
-            <input type="number" id="potenza_da" name="Da" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000">
-            <input type="number" id="potenza_a" name="A" style="margin-left: 0%;" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000"><br>
+            <input type="number" id="potenza_da" name="PotenzaDa" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000">
+            <input type="number" id="potenza_a" name="PotenzaA" style="margin-left: 0%;" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000"><br>
             <button type="submit" class="btn btn-primary" style="margin-left: 150px; margin-top: 30px; margin-bottom: 30px;">Cerca</button>
         </form>
     </div>

@@ -31,13 +31,13 @@ submit in vendi funziona solo se loggato
 database aggiornato (email linkata tra le due tabelle)
 miei annunci funziona
 aggiunto pulsante compra in vedi annunci
+ricerca peronalizzata deve ricondurre a vedi annunci coi filtri gia compilati(forse) --FATTO--
+
 ---DA FARE---
 
 Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato (funziona solo da homepage)
 
 Login effettuato
-
-ricerca peronalizzata deve ricondurre a vedi annunci coi filtri gia compilati(forse)
 
 far funzionare filtri-annunci
 

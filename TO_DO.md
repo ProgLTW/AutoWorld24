@@ -27,12 +27,13 @@ sistemare barra in alto --FATTO--
 modifica password --FATTO--
 design vedi annunci --FATTO--
 quando clicco preferiti non resta loggato --FATTO--
-Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato --FATTO--
 submit in vendi funziona solo se loggato
 database aggiornato (email linkata tra le due tabelle)
 miei annunci funziona
 aggiunto pulsante compra in vedi annunci
 ---DA FARE---
+
+Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato (funziona solo da homepage)
 
 Login effettuato
 

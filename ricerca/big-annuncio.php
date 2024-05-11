@@ -226,6 +226,8 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             margin: 100px auto; /* Questo imposta i margini superiori e inferiori a 100px e i margini laterali a 'auto', che centrerà l'elemento */
             background-color: white;
             padding: 20px;
+            border-radius: 10px;
+            border: 3px solid orange;
         }
      
         
@@ -242,12 +244,14 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         .foto {
              /* Imposta la larghezza massima al 30% del contenitore */
             margin-right: 20px;
+            white-space: nowrap;
         }
 
         .foto img {
             margin-top: 20px;
             width: 60%; /* Immagine al 100% della larghezza del contenitore */
             border-radius: 10px;
+            border: 1px solid orange;
         }
 
         .caratteristiche {
@@ -262,7 +266,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             max-width: 100%; /* Imposta la larghezza massima della descrizione */
             height: auto; /* Altezza automatica in base al contenuto */
             overflow: auto; /* Aggiungi uno scroll se necessario */
-            font-size: 25px;
+            font-size: 15px;
             border-radius: 10px;
         }
 
@@ -277,11 +281,24 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             border-radius: 5px;
             overflow: hidden;
         }
-       
+        .prezzo {
+            font-size: 30px;
+        }
+        .caratteristiche {
+            font-size: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
+        td {
+            padding: 20px; /* Aggiunge spazio intorno al contenuto all'interno delle celle */
+        }
 
-    
-
+        tr:not(:last-child) td {
+            margin-bottom: 10px; /* Aggiunge spazio solo alle righe eccetto l'ultima */
+        }
     </style>
 
 <div class="page2">
@@ -304,45 +321,70 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
             // Visualizza i dettagli dell'annuncio
             echo "<div class='container3'>";
+            echo "<table>";
 
-            echo "<h1><u>{$annuncio['marca']} {$annuncio['modello']}</u></h1><br>";
+            // Prima riga: Marca e modello
+            echo "<tr>";
+            echo "<td colspan='2'><h1><u>{$annuncio['marca']} {$annuncio['modello']}</u></h1></td>";
+            echo "</tr>";
 
-            // Visualizzazione dell'immagine dell'annuncio
-            echo "<div class='foto'>";
-            echo "<img src='../vendi/{$annuncio['foto']}' alt='Foto auto' width='500'>";
+            // Seconda riga: Immagine e prezzo
+            echo "<tr>";
+            echo "<td colspan='3'>";
+            echo "<div class='foto'><img src='../vendi/{$annuncio['foto']}' alt='Foto auto' width='500'></div>";
+            echo "</td>";
+            echo "<td>";
+            echo "<p class='prezzo'>€ Prezzo:  {$annuncio['prezzo']}</p>";
+            echo "</td>";
+            echo "</tr>";
+
+            // Terza riga: Chilometraggio, anno, carburante
+            echo "<tr>";
+            echo "<td>";
+            echo "<p class='caratteristiche'><span style='color: orange;'>km</span> Chilometraggio:  <b>{$annuncio['chilometraggio']}</b></p>";
+            echo "</td>";
+            echo "<td>";
+            echo "<p class='caratteristiche'><img src=\"../immagini/calendario.png\" width='20px'>&nbsp;Anno: <b>{$annuncio['anno']}</b></p>";
+            echo "</td>";
+            echo "<td>";
+            echo "<p class='caratteristiche'><img src=\"../immagini/carburante.png\" width='20px'>&nbsp;Carburante: <b>{$annuncio['carburante']}</b></p>";
+            echo "</td>";
+            echo "</tr>";
+
+            // Quarta riga: Cambio, potenza, aggiungi ai preferiti
+            echo "<tr>";
+            echo "<td>";
+            echo "<p class='caratteristiche'><img src=\"../immagini/cambio.png\" width='20px'>&nbsp;Cambio: <b>{$annuncio['cambio']}</b></p>";
+            echo "</td>";
+            echo "<td>";
+            echo "<p class='caratteristiche'><img src=\"../immagini/potenza.png\" width='20px'>&nbsp;Potenza: <b>{$annuncio['potenza']} CV</b></p>";
+            echo "</td>";
+            echo "<td>";
+            $checked = $annuncio['preferito'] ? 'checked' : '';
+            $stellaVuota = $annuncio['preferito'] ? '' : 'stella-vuota';
+            echo "<p class='caratteristiche'><input type='checkbox' class='preferito-checkbox' id='preferito{$annuncio['id']}' data-id='{$annuncio['id']}' $checked>";
+            echo "<label for='preferito{$annuncio['id']}' class='stella $stellaVuota'>&#9734;</label>";
+            echo " <u>Aggiungi ai preferiti</u></p>";
+            echo "</td>";
+            echo "</tr>";
+
+            // Quinta riga: Descrizione
+            echo "<tr>";
+            echo "<td colspan='2'>Descrizione:</td>";
+            echo "</tr>";
+            echo "<tr>";
+            echo "<td colspan='2' class='descr'>{$annuncio['descrizione']}</td>";
+            echo "</tr>";
+
+            // Sesta riga: Bottone
+            echo "<tr>";
+            echo "<td colspan='2'><a href='#' class='btn btn-primary btn-lg buy-button' role='button'>COMPRA</a></td>";
+            echo "</tr>";
+
+            echo "</table>";
             echo "</div>";
-            echo "<br>";
 
-            // Inizio delle caratteristiche dell'annuncio
-            echo "<div class='caratteristiche'>";
-            echo "<p>Chilometraggio:  {$annuncio['chilometraggio']}</p>";
-            echo "<p>Prezzo:  {$annuncio['prezzo']}</p>";
-            echo "<p>Anno: {$annuncio['anno']}</p>";
-            echo "<p>Carburante: {$annuncio['carburante']}</p>";
-            echo "<p>Cambio: {$annuncio['cambio']}</p>";
-            echo "<p>Potenza: {$annuncio['potenza']} CV</p>";
-            // Aggiungi altre caratteristiche dell'annuncio qui...
             
-            // Aggiunta della stella per contrassegnare come preferito
-            $checked = $annuncio['preferito'] ? 'checked' : ''; // Se il preferito è true, il checkbox sarà selezionato
-            $stellaVuota = $annuncio['preferito'] ? '' : 'stella-vuota'; // Se il preferito è false, applica la classe stella-vuota
-            echo "<p>";
-            echo "<input type='checkbox' class='preferito-checkbox' id='preferito{$annuncio['id']}' data-id='{$annuncio['id']}' $checked>"; // Checkbox nascosto
-            echo "<label for='preferito{$annuncio['id']}' class='stella $stellaVuota'>&#9734;</label>"; // Etichetta personalizzata per l'icona della stella
-            echo "</p>";
-            echo "<br>";
-            echo "<div class='descr'>";
-            echo "<p>Descrizione: {$annuncio['descrizione']}";
-            echo "</div>";
-            echo "<br>";
-            echo "<br>";
-            // Aggiungi altri dettagli dell'annuncio qui...
-            echo "<a href='#' class='btn btn-primary btn-lg buy-button' role='button'>COMPRA</a>";
-
-            echo "</div>";                    
-            
-            // Fine dell'annuncio
-            echo "</div>";
 
             // Rilascio della risorsa del risultato
             pg_free_result($result);

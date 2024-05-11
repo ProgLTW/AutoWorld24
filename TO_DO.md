@@ -32,10 +32,9 @@ database aggiornato (email linkata tra le due tabelle)
 miei annunci funziona
 aggiunto pulsante compra in vedi annunci
 ricerca peronalizzata deve ricondurre a vedi annunci coi filtri gia compilati(forse) --FATTO--
+Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato --FATTO--
 
 ---DA FARE---
-
-Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato (funziona solo da homepage)
 
 Login effettuato
 
@@ -54,5 +53,3 @@ aggiustare pagine errore e dati inseriti correttamente (sono brutti) -> ho messo
 quando clicco sul nome dell'annuncio, annuncio grande con descrizione,altre foto, venditore ecc?
 
 quando metto piu foto come le visualizzo in big annuncio?
-
-big-annuncio non riesco a far funzionare margin-bottom per qualche motivo

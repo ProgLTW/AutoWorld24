@@ -12,6 +12,10 @@ if(isset($_GET['logout'])) {
     header("Location: ../index.php");
     exit();
 }
+$loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+    // URL a cui reindirizzare l'utente
+    $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
+    
 ?>
 <!DOCTYPE html> 
 <html>
@@ -172,7 +176,7 @@ if(isset($_GET['logout'])) {
             </li>
             <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
             <li><a href="../ricambi.php"><b>RICAMBI</b></a></li>
-            <li><a href="../preferiti.php"><b>PREFERITI</b></a></li>
+            <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
             <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                 $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;

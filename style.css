@@ -245,6 +245,7 @@ nav li:not(:first-child):hover {
     display: flex;
     white-space: nowrap; /* Fai sì che il contenuto non vada a capo */
     margin: 20px;
+    margin-left: 50px;
     
 
 }

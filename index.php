@@ -85,6 +85,20 @@ if(isset($_GET['logout'])) {
         .container {
             margin-top: -250px; /* Riduci il margine superiore per eliminare lo spazio vuoto */
         }
+        .details-button {
+            background-color: orange;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 30px;
+        }
+
     </style>
 </head>
 <body class="text-center">
@@ -216,6 +230,9 @@ if(isset($_GET['logout'])) {
                                 echo "<input type='checkbox' class='preferito-checkbox' id='preferito{$row['id']}' data-id='{$row['id']}' $checked>"; // Checkbox nascosto
                                 echo "<label for='preferito{$row['id']}' class='stella $stellaVuota'>&#9734;</label>"; // Etichetta personalizzata per l'icona della stella
                                 echo "</p>";
+
+                                echo "<a href='../ricerca/big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
+                                                               
 
                                 echo "</div>";
 

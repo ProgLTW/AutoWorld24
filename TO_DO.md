@@ -33,6 +33,7 @@ miei annunci funziona
 aggiunto pulsante compra in vedi annunci
 ricerca peronalizzata deve ricondurre a vedi annunci coi filtri gia compilati(forse) --FATTO--
 Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato --FATTO--
+password dimenticata ma chiaramente non manda mail --FATTO--
 
 ---DA FARE---
 
@@ -46,10 +47,16 @@ responsivenss (IMPORTANTE)
 
 implementare l'acquisto (e relativa eliminazione annuncio + i miei acquisti)
 
-password dimenticata (per ora va su modifica password)
+password dimenticata 
 
 aggiustare pagine errore e dati inseriti correttamente (sono brutti) -> ho messo un alert su vendi
 
-quando clicco sul nome dell'annuncio, annuncio grande con descrizione,altre foto, venditore ecc?
+big annuncio: 
+    gestire foto multiple
+    aggiungere altri dettagli(?)
 
-quando metto piu foto come le visualizzo in big annuncio?
+
+IDEA "GIOCO" 
+Simulatore di finanziamento:
+Implementa uno strumento che consente agli utenti di inserire informazioni sul finanziamento desiderato, come il tasso di interesse, la durata del prestito, l'importo del finanziamento, ecc.
+Mostra loro un piano di pagamento approssimativo e calcola le rate mensili per l'acquisto dell'auto usata nel tuo inventario.

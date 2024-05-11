@@ -214,7 +214,7 @@ if(isset($_GET['logout'])) {
 
                                 // Inizio delle caratteristiche dell'annuncio
                                 echo "<div class='caratteristiche'>";
-                                echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
+                                echo "<h2><u><a href='../ricerca/big-annuncio.php?id={$row['id']}' style='color: orange;'>{$row['marca']} {$row['modello']}</a></u></h2><br>";
                                 echo "<p>km {$row['chilometraggio']}</p>";
                                 echo "<p>€ {$row['prezzo']}</p>";
                                 echo "<p><img src=\"immagini/calendario.png\" width='20px'>&nbsp;{$row['anno']}</p>";
@@ -230,12 +230,7 @@ if(isset($_GET['logout'])) {
                                 echo "<input type='checkbox' class='preferito-checkbox' id='preferito{$row['id']}' data-id='{$row['id']}' $checked>"; // Checkbox nascosto
                                 echo "<label for='preferito{$row['id']}' class='stella $stellaVuota'>&#9734;</label>"; // Etichetta personalizzata per l'icona della stella
                                 echo "</p>";
-
-                                echo "<a href='../ricerca/big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
-                                                               
-
                                 echo "</div>";
-
                                 // Fine dell'annuncio
                                 echo "</div>";
 

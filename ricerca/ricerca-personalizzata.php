@@ -243,33 +243,19 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             <label for="prezzo">Prezzo:</label>
             <select id="prezzo_da" type="number" name="PrezzoDa" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
                 <option value="">Da</option>
-                <option type="number" value="500">500€</option>
-                <option type="number" value="1000">1000€</option>
-                <option type="number" value="1500">1500€</option>
-                <option type="number" value="2000">2000€</option>
-                <option type="number" value="2500">2500€</option>
-                <option type="number" value="3000">3000€</option>
-                <option type="number" value="4000">4000€</option>
-                <option type="number" value="5000">5000€</option>
-                <option type="number" value="6000">6000€</option>
-                <option type="number" value="7000">7000€</option>
-                <option type="number" value="8000">8000€</option>
-                <option type="number" value="9000">9000€</option>
+                <?php
+                for ($i = 500; $i <= 100000; $i += 1000) {
+                    echo "<option type='number' value='$i'>" . $i . "€</option>";
+                }
+                ?>
             </select>
             <select id="prezzo_a" type="number" name="PrezzoA" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
                 <option value="">A</option>
-                <option type="number" value="500">500€</option>
-                <option type="number" value="1000">1000€</option>
-                <option type="number" value="1500">1500€</option>
-                <option type="number" value="2000">2000€</option>
-                <option type="number" value="2500">2500€</option>
-                <option type="number" value="3000">3000€</option>
-                <option type="number" value="4000">4000€</option>
-                <option type="number" value="5000">5000€</option>
-                <option type="number" value="6000">6000€</option>
-                <option type="number" value="7000">7000€</option>
-                <option type="number" value="8000">8000€</option>
-                <option type="number" value="9000">9000€</option>
+                <?php
+                for ($i = 500; $i <= 100000; $i += 1000) {
+                    echo "<option type='number' value='$i'>" . $i . "€</option>";
+                }
+                ?>
             </select><br>
             <label for="carrozzeria">Carrozzeria:</label>
             <select id="carrozzeria" name="carrozzeria">

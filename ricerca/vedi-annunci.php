@@ -102,8 +102,8 @@ function salvaValoriDaA() {
     var prezzoA = document.getElementById('prezzo_a').value;
     var annoDa = document.getElementById('anno_da').value;
     var annoA = document.getElementById('anno_a').value;
-    var chilometraggioDa = document.getElementById('km_da').value;
-    var chilometraggioA = document.getElementById('km_a').value;
+    var kmDa = document.getElementById('km_da').value;
+    var kmA = document.getElementById('km_a').value;
     var potenzaDa = document.getElementById('potenza_da').value;
     var potenzaA = document.getElementById('potenza_a').value;
 
@@ -113,8 +113,8 @@ function salvaValoriDaA() {
     localStorage.setItem('prezzoA', prezzoA);
     localStorage.setItem('annoDa', annoDa);
     localStorage.setItem('annoA', annoA);
-    localStorage.setItem('chilometraggioDa', chilometraggioDa);
-    localStorage.setItem('chilometraggioA', chilometraggioA);
+    localStorage.setItem('kmDa', kmDa);
+    localStorage.setItem('kmA', kmA);
     localStorage.setItem('potenzaDa', potenzaDa);
     localStorage.setItem('potenzaA', potenzaA);
 }
@@ -125,8 +125,8 @@ function ripristinaValoriDaA() {
     var prezzoA = localStorage.getItem('prezzoA');
     var annoDa = localStorage.getItem('annoDa');
     var annoA = localStorage.getItem('annoA');
-    var chilometraggioDa = localStorage.getItem('chilometraggioDa');
-    var chilometraggioA = localStorage.getItem('chilometraggioA');
+    var kmDa = localStorage.getItem('kmDa');
+    var kmA = localStorage.getItem('kmA');
     var potenzaDa = localStorage.getItem('potenzaDa');
     var potenzaA = localStorage.getItem('potenzaA');
 
@@ -135,8 +135,8 @@ function ripristinaValoriDaA() {
     document.getElementById('prezzo_a').value = prezzoA;
     document.getElementById('anno_da').value = annoDa;
     document.getElementById('anno_a').value = annoA;
-    document.getElementById('km_da').value = chilometraggioDa;
-    document.getElementById('km_a').value = chilometraggioA;
+    document.getElementById('km_da').value = kmDa;
+    document.getElementById('km_a').value = kmA;
     document.getElementById('potenza_da').value = potenzaDa;
     document.getElementById('potenza_a').value = potenzaA;
 
@@ -145,8 +145,8 @@ function ripristinaValoriDaA() {
     localStorage.removeItem('prezzoA');
     localStorage.removeItem('annoDa');
     localStorage.removeItem('annoA');
-    localStorage.removeItem('chilometraggioDa');
-    localStorage.removeItem('chilometraggioA');
+    localStorage.removeItem('kmDa');
+    localStorage.removeItem('kmA');
     localStorage.removeItem('potenzaDa');
     localStorage.removeItem('potenzaA');
 }
@@ -160,6 +160,7 @@ document.getElementById('searchForm').addEventListener('submit', function() {
 window.addEventListener('load', function() {
     ripristinaValoriDaA(); // Ripristina i valori dopo il caricamento della pagina
 });
+
 
 
 
@@ -433,35 +434,33 @@ window.addEventListener('load', function() {
                     <option value="" <?php if($modello == '') echo 'selected="selected"'; ?>>Seleziona</option>
                 </select><br>
                 <label for="prezzo">Prezzo:</label>
-                <select id="prezzo_da" type="number" name="Da" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
-                    <option value="" <?php if($prezzoDa == '') echo 'selected="selected"'; ?>>Da</option>
-                    <option type="number" value="500" <?php if($prezzoDa == '500') echo 'selected="selected"'; ?>>500€</option>
-                    <option type="number" value="1000" <?php if($prezzoDa == '1000') echo 'selected="selected"'; ?>>1000€</option>
-                    <option type="number" value="1500" <?php if($prezzoDa == '1500') echo 'selected="selected"'; ?>>1500€</option>
-                    <option type="number" value="2000" <?php if($prezzoDa == '2000') echo 'selected="selected"'; ?>>2000€</option>
-                    <option type="number" value="2500" <?php if($prezzoDa == '2500') echo 'selected="selected"'; ?>>2500€</option>
-                    <option type="number" value="3000" <?php if($prezzoDa == '3000') echo 'selected="selected"'; ?>>3000€</option>
-                    <option type="number" value="4000" <?php if($prezzoDa == '4000') echo 'selected="selected"'; ?>>4000€</option>
-                    <option type="number" value="5000" <?php if($prezzoDa == '5000') echo 'selected="selected"'; ?>>5000€</option>
-                    <option type="number" value="6000" <?php if($prezzoDa == '6000') echo 'selected="selected"'; ?>>6000€</option>
-                    <option type="number" value="7000" <?php if($prezzoDa == '7000') echo 'selected="selected"'; ?>>7000€</option>
-                    <option type="number" value="8000" <?php if($prezzoDa == '8000') echo 'selected="selected"'; ?>>8000€</option>
-                    <option type="number" value="9000" <?php if($prezzoDa == '9000') echo 'selected="selected"'; ?>>9000€</option>
+                <select id="prezzo_da" type="number" name="prezzo_da" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
+                    <!-- Opzione "Da" vuota -->
+                    <option value="" <?php if ($prezzoDa === '') echo 'selected="selected"'; ?>>Da</option>
+                    <!-- Opzioni per il campo "Da" del prezzo -->
+                    <?php
+                    for ($i = 500; $i <= 100000; $i += 500) {
+                        echo '<option value="' . $i . '"';
+                        if ($prezzoDa == $i) {
+                            echo ' selected="selected"';
+                        }
+                        echo '>' . $i . '€</option>';
+                    }
+                    ?>
                 </select>
-                <select id="prezzo_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
-                    <option value="" <?php if($prezzoA == '') echo 'selected="selected"'; ?>>A</option>
-                    <option type="number" value="500" <?php if($prezzoA == '500') echo 'selected="selected"'; ?>>500€</option>
-                    <option type="number" value="1000" <?php if($prezzoA == '1000') echo 'selected="selected"'; ?>>1000€</option>
-                    <option type="number" value="1500" <?php if($prezzoA == '1500') echo 'selected="selected"'; ?>>1500€</option>
-                    <option type="number" value="2000" <?php if($prezzoA == '2000') echo 'selected="selected"'; ?>>2000€</option>
-                    <option type="number" value="2500" <?php if($prezzoA == '2500') echo 'selected="selected"'; ?>>2500€</option>
-                    <option type="number" value="3000" <?php if($prezzoA == '3000') echo 'selected="selected"'; ?>>3000€</option>
-                    <option type="number" value="4000" <?php if($prezzoA == '4000') echo 'selected="selected"'; ?>>4000€</option>
-                    <option type="number" value="5000" <?php if($prezzoA == '5000') echo 'selected="selected"'; ?>>5000€</option>
-                    <option type="number" value="6000" <?php if($prezzoA == '6000') echo 'selected="selected"'; ?>>6000€</option>
-                    <option type="number" value="7000" <?php if($prezzoA == '7000') echo 'selected="selected"'; ?>>7000€</option>
-                    <option type="number" value="8000" <?php if($prezzoA == '8000') echo 'selected="selected"'; ?>>8000€</option>
-                    <option type="number" value="9000" <?php if($prezzoA == '9000') echo 'selected="selected"'; ?>>9000€</option>
+                <select id="prezzo_a" type="number" name="prezzo_a" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
+                    <!-- Opzione "Da" vuota -->
+                    <option value="" <?php if ($prezzoA === '') echo 'selected="selected"'; ?>>A</option>
+                    <!-- Opzioni per il campo "Da" del prezzo -->
+                    <?php
+                    for ($i = 500; $i <= 100000; $i += 500) {
+                        echo '<option value="' . $i . '"';
+                        if ($prezzoA == $i) {
+                            echo ' selected="selected"';
+                        }
+                        echo '>' . $i . '€</option>';
+                    }
+                    ?>
                 </select><br>
                 <label for="carrozzeria">Carrozzeria:</label>
                 <select id="carrozzeria" name="carrozzeria">
@@ -474,7 +473,7 @@ window.addEventListener('load', function() {
                     <option value="Monovolume" <?php if($carrozzeria == 'Monovolume') echo 'selected="selected"'; ?>>Monovolume</option>
                 </select><br>
                 <label for="anno">Anno:</label>
-                <select id="anno_da" type="number" name="Da" onchange="updateMassimo('anno_da', 'anno_a')">
+                <select id="anno_da" type="number" name="anno_da" onchange="updateMassimo('anno_da', 'anno_a')">
                     <option value="" <?php if($annoDa == '') echo 'selected="selected"'; ?>>Da</option>
                         <?php
                         // Loop per generare le opzioni di anno
@@ -488,7 +487,7 @@ window.addEventListener('load', function() {
                         }
                         ?>
                 </select>
-                <select id="anno_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('anno_da', 'anno_a')">
+                <select id="anno_a" type="number" name="anno_a" style="margin-left: 0%;" onchange="updateMinimo('anno_da', 'anno_a')">
                     <option value="" <?php if($annoA == '') echo 'selected="selected"'; ?>>A</option>
                         <?php
                         // Loop per generare le opzioni di anno
@@ -503,7 +502,7 @@ window.addEventListener('load', function() {
                         ?>
                 </select><br>
                 <label for="chilometraggio">Chilometraggio:</label>
-                <select id="km_da" type="number" name="Da" onchange="updateMassimo('km_da', 'km_a')">
+                <select id="km_da" type="number" name="km_da" onchange="updateMassimo('km_da', 'km_a')">
                     <option value="" <?php if($kmDa == '') echo 'selected="selected"'; ?>>Da</option>
                     <?php
                     // Loop per generare le opzioni di chilometraggio
@@ -517,7 +516,7 @@ window.addEventListener('load', function() {
                     }
                     ?>
                 </select>
-                <select id="km_a" type="number" name="A" style="margin-left: 0%;" onchange="updateMinimo('km_da', 'km_a')">
+                <select id="km_a" type="number" name="km_a" style="margin-left: 0%;" onchange="updateMinimo('km_da', 'km_a')">
                     <option value="" <?php if($kmA == '') echo 'selected="selected"'; ?>>A</option>
                     <?php
                     // Loop per generare le opzioni di chilometraggio
@@ -548,8 +547,8 @@ window.addEventListener('load', function() {
                     <option value="Semiautomatico" <?php if($cambio == 'Semiautomatico') echo 'selected="selected"'; ?>>Semiautomatico</option>
                 </select><br>
                 <label for="potenza">Potenza (CV):</label>
-                <input type="number" id="potenza_da" name="Da" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000" value="<?php echo isset($_POST['PotenzaDa']) ? htmlspecialchars($_POST['PotenzaDa']) : ''; ?>">
-                <input type="number" id="potenza_a" name="A" style="margin-left: 0%;" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000" value="<?php echo isset($_POST['PotenzaA']) ? htmlspecialchars($_POST['PotenzaA']) : ''; ?>"><br>
+                <input type="number" id="potenza_da" name="potenza_da" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000" value="<?php echo isset($_POST['PotenzaDa']) ? htmlspecialchars($_POST['PotenzaDa']) : ''; ?>">
+                <input type="number" id="potenza_a" name="potenza_a" style="margin-left: 0%;" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000" value="<?php echo isset($_POST['PotenzaA']) ? htmlspecialchars($_POST['PotenzaA']) : ''; ?>"><br>
                 <button type="submit" class="btn btn-primary" style="margin-left: 150px; margin-top: 30px; margin-bottom: 30px;">Cerca</button>
             </form>
         </div>

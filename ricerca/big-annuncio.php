@@ -334,30 +334,30 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             echo "<div class='foto'><img src='../vendi/{$annuncio['foto']}' alt='Foto auto' width='500'></div>";
             echo "</td>";
             echo "<td>";
-            echo "<p class='prezzo'>€ Prezzo:  {$annuncio['prezzo']}</p>";
+            echo "<span class='prezzo'>€  {$annuncio['prezzo']}</span>";
             echo "</td>";
             echo "</tr>";
 
             // Terza riga: Chilometraggio, anno, carburante
             echo "<tr>";
             echo "<td>";
-            echo "<p class='caratteristiche'><span style='color: orange;'>km</span> Chilometraggio:  <b>{$annuncio['chilometraggio']}</b></p>";
+            echo "<p class='caratteristiche'><span style='color: orange; font-size: 30px'>km</span>  Chilometraggio:  <b>{$annuncio['chilometraggio']}</b></p>";
             echo "</td>";
             echo "<td>";
-            echo "<p class='caratteristiche'><img src=\"../immagini/calendario.png\" width='20px'>&nbsp;Anno: <b>{$annuncio['anno']}</b></p>";
+            echo "<p class='caratteristiche'><img src=\"../immagini/calendario.png\" width='30px'>&nbsp; Anno: <b>{$annuncio['anno']}</b></p>";
             echo "</td>";
             echo "<td>";
-            echo "<p class='caratteristiche'><img src=\"../immagini/carburante.png\" width='20px'>&nbsp;Carburante: <b>{$annuncio['carburante']}</b></p>";
+            echo "<p class='caratteristiche'><img src=\"../immagini/carburante.png\" width='30px'>&nbsp; Carburante: <b>{$annuncio['carburante']}</b></p>";
             echo "</td>";
             echo "</tr>";
 
             // Quarta riga: Cambio, potenza, aggiungi ai preferiti
             echo "<tr>";
             echo "<td>";
-            echo "<p class='caratteristiche'><img src=\"../immagini/cambio.png\" width='20px'>&nbsp;Cambio: <b>{$annuncio['cambio']}</b></p>";
+            echo "<p class='caratteristiche'><img src=\"../immagini/cambio.png\" width='30px'>&nbsp; Cambio: <b>{$annuncio['cambio']}</b></p>";
             echo "</td>";
             echo "<td>";
-            echo "<p class='caratteristiche'><img src=\"../immagini/potenza.png\" width='20px'>&nbsp;Potenza: <b>{$annuncio['potenza']} CV</b></p>";
+            echo "<p class='caratteristiche'><img src=\"../immagini/potenza.png\" width='30px'>&nbsp; Potenza: <b>{$annuncio['potenza']} CV</b></p>";
             echo "</td>";
             echo "<td>";
             $checked = $annuncio['preferito'] ? 'checked' : '';

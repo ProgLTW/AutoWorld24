@@ -59,4 +59,4 @@ big annuncio:
 IDEA "GIOCO" 
 Simulatore di finanziamento:
 Implementa uno strumento che consente agli utenti di inserire informazioni sul finanziamento desiderato, come il tasso di interesse, la durata del prestito, l'importo del finanziamento, ecc.
-Mostra loro un piano di pagamento approssimativo e calcola le rate mensili per l'acquisto dell'auto usata nel tuo inventario.
+Mostra loro un piano di pagamento approssimativo e calcola le rate mensili per l'acquisto dell'auto usata nel tuo inventario. Da mettere sotto il prezzo in big-annuncio.

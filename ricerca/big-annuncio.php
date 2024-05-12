@@ -294,7 +294,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
         td {
             padding: 20px; /* Aggiunge spazio intorno al contenuto all'interno delle celle */
-            border: 1px solid orange;
+            /*border: 1px solid orange;*/
         }
         td.img-cell {
             width: 800px; /* Imposta una larghezza fissa per la cella contenente l'immagine */
@@ -341,7 +341,8 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             echo "<div class='foto'><img src='../vendi/{$annuncio['foto']}' alt='Foto auto'></div>";
             echo "</td>";
             echo "<td class='price-cell'>";
-            echo "<span class='prezzo'>€  {$annuncio['prezzo']}</span>";
+            $trattabilita = $annuncio['trattabile'] ? "<small style='font-size: 10px;'>-trattabile</small>" : "<small style='font-size: 10px;'>-non trattabile</small>";
+            echo "<p class='prezzo'>€  {$annuncio['prezzo']} {$trattabilita}</p>";
             echo "</td>";
             echo "</tr>";
 

@@ -243,13 +243,12 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
         .foto {
              /* Imposta la larghezza massima al 30% del contenitore */
-            margin-right: 20px;
             white-space: nowrap;
         }
 
         .foto img {
-            margin-top: 20px;
-            width: 60%; /* Immagine al 100% della larghezza del contenitore */
+            
+            width: 100%; /* Immagine al 100% della larghezza del contenitore */
             border-radius: 10px;
             border: 1px solid orange;
         }
@@ -286,6 +285,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         }
         .caratteristiche {
             font-size: 20px;
+            width: auto;
         }
         table {
             border-collapse: collapse;
@@ -294,6 +294,13 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
         td {
             padding: 20px; /* Aggiunge spazio intorno al contenuto all'interno delle celle */
+            border: 1px solid orange;
+        }
+        td.img-cell {
+            width: 800px; /* Imposta una larghezza fissa per la cella contenente l'immagine */
+        }
+        td.price-cell {
+            vertical-align: top; /* Imposta l'allineamento verticale in alto */
         }
 
         tr:not(:last-child) td {
@@ -330,14 +337,17 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
             // Seconda riga: Immagine e prezzo
             echo "<tr>";
-            echo "<td colspan='3'>";
-            echo "<div class='foto'><img src='../vendi/{$annuncio['foto']}' alt='Foto auto' width='500'></div>";
+            echo "<td class='img-cell'>";
+            echo "<div class='foto'><img src='../vendi/{$annuncio['foto']}' alt='Foto auto'></div>";
             echo "</td>";
-            echo "<td>";
+            echo "<td class='price-cell'>";
             echo "<span class='prezzo'>€  {$annuncio['prezzo']}</span>";
             echo "</td>";
             echo "</tr>";
 
+            echo "</table>";
+
+            echo "<table>";
             // Terza riga: Chilometraggio, anno, carburante
             echo "<tr>";
             echo "<td>";

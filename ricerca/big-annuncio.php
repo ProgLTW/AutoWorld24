@@ -129,6 +129,34 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         });
     });
 
+
+    //finanziamento
+    function calcola() {
+    // Prendi i valori di input
+    var prestito = parseFloat(document.getElementById('importo_prestito').value);
+    var interessi_annui = parseFloat(document.getElementById('tasso_interesse').value);
+    var anni = parseFloat(document.getElementById('durata_prestito').value);
+    
+    // Calcola gli interessi totali
+    var interessi_totali = (prestito * interessi_annui * anni) / 100;
+
+    // Calcola il tasso di interesse mensile e il numero totale delle rate
+    var tasso_interesse_mensile = interessi_annui / 12 / 100; // Tasso di interesse mensile
+    var num_rate = anni * 12; // Numero totale delle rate
+
+    // Calcola la rata mensile
+    var rata_mese = (prestito * tasso_interesse_mensile) / (1 - Math.pow(1 + tasso_interesse_mensile, -num_rate));
+
+    // Calcola l'importo totale del prestito
+    var tot_prestito = prestito + interessi_totali;
+
+    // Mostra il risultato
+    document.getElementById('risultato_tot_prestito').innerHTML = tot_prestito.toFixed(2) + "€";
+    document.getElementById('risultato_tot_interessi').innerHTML = interessi_totali.toFixed(2) + "€";
+    document.getElementById('risultato_num_rate').innerHTML = num_rate;
+    document.getElementById('risultato_rata_mese').innerHTML = rata_mese.toFixed(2) + "€";
+}
+
     </script>
     <style> 
         .icon-auto {
@@ -288,16 +316,12 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             font-size: 20px;
             width: auto;
         }
-        .finanzimento{
-            font-size: 30px;
-            background-color: black;
-            border-radius: 10px;
-            
+        table.finanziamento {
+            width: 100%; /* Fai sì che la tabella del finanziamento si espanda su tutta la larghezza disponibile */
+            margin: 0; /* Rimuovi eventuali margini */
+            border-collapse: collapse; /* Assicurati che i bordi delle celle si uniscano correttamente */
         }
-        .form_finanziamento td {
-            text-align: left; /* Imposta il testo a sinistra all'interno delle celle */
-        }
-        
+                
         table {
             border-collapse: collapse;
             width: 100%;
@@ -351,69 +375,55 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             echo "<td class='img-cell'>";
             echo "<div class='foto'><img src='../vendi/{$annuncio['foto']}' alt='Foto auto'></div>";
             echo "</td>";
-            echo "<td class='price-cell'>";
+
+            echo "<td rowspan='2' class='price-cell'>";
             $trattabilita = $annuncio['trattabile'] ? "<small style='font-size: 15px;'>-trattabile</small>" : "<small style='font-size: 15px;'>-non trattabile</small>";
             echo "<p class='prezzo'>€  {$annuncio['prezzo']} {$trattabilita}</p>";
-
+            
+            
+            echo "<table class='finanziamento'>";
             //finanziamento
-           echo "<br>";
-            // Aggiungi lo strumento di finanziamento
+            echo "<tr>";
+            //prima colonna -> input
+            echo "<td>";
             
-           
-            echo "<h3>Calcola il Finanziamento</h3>";
-            echo "<br>";
-            echo "<div class='finanziamento'>";
-            echo "<form action='calcola-rata.php' method='POST' id='form_finanziamento'>";
-            
-            echo "<td>"; // Prima colonna
-            echo "<label for='importo_prestito'>Importo prestito (€):</label><br>";
+            echo "<h3>Calcola la rata del tuo prestito</h3>";
+
+            echo "<label for='importo_prestito'> Importo prestito (€): </label><br>";
             echo "<input type='number' name='importo_prestito' id='importo_prestito' required><br><br>";
 
-            echo "<label for='tasso_interesse'>Tasso di interesse (%):</label><br>";
+            echo "<label for='tasso_interesse'>Tasso di interesse (%): </label><br>";
             echo "<input type='number' name='tasso_interesse' id='tasso_interesse' required><br><br>";
 
-            echo "<label for='durata_prestito'>Durata (anni):</label><br>";
+            echo "<label for='durata_prestito'> Durata (anni): </label><br>";
             echo "<select name='durata_prestito' id='durata_prestito' required>";
-            for ($i = 1; $i <= 10; $i++) { // Loop per generare le opzioni da 1 a 10 anni
-                echo "<option value='$i'>$i</option>";
+            for ($i = 1; $i <= 10; $i++) {
+                    echo "<option value='" . $i . "'>" . $i . "</option>";
             }
             echo "</select><br><br>";
 
-            echo "<label for='rate'>Rate:</label><br>";
+            echo "<label for='rate'>Rate: </label><br>";
             echo "<select name='rate' id='rate' required>";
             echo "<option value='mensili'>Mensili</option>"; // Opzione obbligatoria per le rate mensili
             echo "</select><br><br>";
 
-            echo "<input type='submit' value='Calcola Rata'>";
-            echo "</form>";
+            echo "<button onclick='calcola()'>Calcola Rata</button>";
+            echo "<br>";
+            echo "</td>";
 
-            echo "</td>"; // Fine prima colonna
-
-            echo "<td>"; // Seconda colonna
-            echo "<div id='risultati'>";
-
-            $tot_prestito = "-";
-            $tot_interessi = "-";
-            $num_rate = "-";
-            $rata_mese = "-";
-            echo "<p>Importo totale prestito: <span id='risultato_tot_prestito'>-</span></p>";
-            echo "<p>Totale interessi: <span id='risultato_tot_interessi'>-</span></p>";
-            echo "<p>Numero di rate: <span id='risultato_num_rate'>-</span></p>";
-            echo "<p>Rata mensile: <span id='risultato_rata_mese'>-</span></p>";
-
-
-            
-            echo "</div>";
-            echo "</td>"; // Fine seconda colonna
-
-            echo "</div>";
+            //seconda colonna -> risultati
+            echo "<td>";
+            echo "<p>Importo totale prestito: <span id='risultato_tot_prestito'></span></p>";
+            echo "<p>Totale interessi:<span id='risultato_tot_interessi'></span></p>";
+            echo "<p>Numero di rate: <span id='risultato_num_rate'></span></p>";
+            echo "<p>Rata mensile: <span id='risultato_rata_mese'></span></p>";
 
             echo "</td>";
+           
             echo "</tr>";
 
             echo "</table>";
-
-            echo "<table>";
+            echo "</td>";
             // Terza riga: Chilometraggio, anno, carburante
             echo "<tr>";
             echo "<td>";

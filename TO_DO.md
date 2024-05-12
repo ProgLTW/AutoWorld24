@@ -41,7 +41,9 @@ password dimenticata --FATTO--
 
 Login effettuato
 
-preferiti + stellina
+stella preferiti non si colora bene
+
+preferiti non booleano (compare piu volte lo stesso annuncio)
 
 responsivenss (IMPORTANTE)
 
@@ -54,7 +56,5 @@ big annuncio:
     aggiungere altri dettagli(?)
 
 
-IDEA "GIOCO" 
-Simulatore di finanziamento:
-Implementa uno strumento che consente agli utenti di inserire informazioni sul finanziamento desiderato, come il tasso di interesse, la durata del prestito, l'importo del finanziamento, ecc.
-Mostra loro un piano di pagamento approssimativo e calcola le rate mensili per l'acquisto dell'auto usata nel tuo inventario. Da mettere sotto il prezzo in big-annuncio.
+Finanziamento aggiustare design
+

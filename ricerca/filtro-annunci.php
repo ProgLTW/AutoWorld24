@@ -7,27 +7,78 @@ $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres passw
 if ($dbconn) {
     // Recupera i dati dei filtri inviati dal client
     $marca = isset($_POST['marca']) ? pg_escape_string($_POST['marca']) : null;
-    $prezzoMassimo = isset($_POST['prezzoMassimo']) ? intval($_POST['prezzoMassimo']) : null;
-    $anno = isset($_POST['anno']) ? intval($_POST['anno']) : null;
-    $chilometraggioMassimo = isset($_POST['chilometraggioMassimo']) ? intval($_POST['chilometraggioMassimo']) : null;
+
+    $modello = isset($_POST['modello']) ? pg_escape_string($_POST['modello']) : null;
+
+    $prezzoDa = isset($_POST['prezzoDa']) ? intval($_POST['prezzoDa']) : null;
+    $prezzoA = isset($_POST['prezzoA']) ? intval($_POST['prezzoA']) : null;
+    $carrozzeria = isset($_POST['carrozzeria']) ? pg_escape_string($_POST['carrozzeria']) : null;
+
+    $annoDa = isset($_POST['annoDa']) ? intval($_POST['annoDa']) : null;
+    $annoA = isset($_POST['annoA']) ? intval($_POST['annoA']) : null;
+
+    $chilometraggioDa = isset($_POST['chilometraggioDa']) ? intval($_POST['chilometraggioDa']) : null;
+    $chilometraggioA = isset($_POST['chilometraggioA']) ? intval($_POST['chilometraggioA']) : null;
+
+    $carburante = isset($_POST['carburante']) ? pg_escape_string($_POST['carburante']) : null;
+    
+    $cambio = isset($_POST['cambio']) ? pg_escape_string($_POST['cambio']) : null;
+
+    $potenzaDa = isset($_POST['potenzaDa']) ? intval($_POST['potenzaDa']) : null;
+    $potenzaA = isset($_POST['potenzaA']) ? intval($_POST['potenzaA']) : null;
+
+    $trattabile = isset($_POST['trattabile']) ? ($_POST['trattabile'] === 'true' ? 'TRUE' : 'FALSE') : null;
 
     // Costruisci la query per filtrare gli annunci
     $query = "SELECT * FROM annuncio WHERE 1=1"; // Inizia con una condizione sempre vera
+    
 
+   
+    
     // Aggiungi le condizioni dei filtri, se presenti
     if ($marca) {
         $query .= " AND marca = '$marca'";
     }
-    if ($prezzoMassimo) {
-        $query .= " AND prezzo <= $prezzoMassimo";
+    if ($modello) {
+        $query .= " AND modello = '$modello'";
     }
-    if ($anno) {
-        $query .= " AND anno = $anno";
+    if ($prezzoDa !== null) {
+        $query .= " AND prezzo >= $prezzoDa";
     }
-    if ($chilometraggioMassimo) {
-        $query .= " AND chilometraggio <= $chilometraggioMassimo";
+    if ($prezzoA !== null) {
+        $query .= " AND prezzo <= $prezzoA";
     }
-    // Aggiungi altre condizioni per gli altri filtri...
+    if ($trattabile !== null) {
+        $query .= " AND trattabile = $trattabile";
+    }
+    if ($carrozzeria) {
+        $query .= " AND carrozzeria = '$carrozzeria'";
+    }
+    if ($annoDa !== null) {
+        $query .= " AND anno >= $annoDa";
+    }
+    if ($annoA !== null) {
+        $query .= " AND anno <= $annoA";
+    }
+    if ($chilometraggioDa !== null) {
+        $query .= " AND chilometraggio >= $chilometraggioDa";
+    }
+    if ($chilometraggioA !== null) {
+        $query .= " AND chilometraggio <= $chilometraggioA";
+    }
+    if ($carburante) {
+        $query .= " AND carburante = '$carburante'";
+    }
+    if ($cambio) {
+        $query .= " AND cambio = '$cambio'";
+    }
+    if ($potenzaDa !== null) {
+        $query .= " AND potenza >= $potenzaDa";
+    }
+    if ($potenzaA !== null) {
+        $query .= " AND potenza <= $potenzaA";
+    }
+    
 
     // Esegui la query
     $result = pg_query($dbconn, $query);

@@ -83,7 +83,7 @@ if(isset($_GET['logout'])) {
             background-color: black; /* Colore di sfondo degli annunci */
         }
         .container {
-            margin-top: -250px; /* Riduci il margine superiore per eliminare lo spazio vuoto */
+            margin-top: -10em; /* Riduci il margine superiore per eliminare lo spazio vuoto */
         }
         .details-button {
             background-color: orange;

@@ -16,6 +16,7 @@ body {
 }
 nav {
     position: fixed; /* Rende la navbar fissa */
+    z-index: 1000;
     top: 0;
     width: 100%;
     height: auto;
@@ -178,6 +179,7 @@ nav li:not(:first-child):hover {
 }
 .car-logos-container {
     position: fixed;
+    z-index: 1000;
     overflow-x: hidden;
     overflow-y: hidden; /* Nascondi lo scorrimento verticale */
     white-space: nowrap;

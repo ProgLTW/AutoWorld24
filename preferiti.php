@@ -105,7 +105,12 @@ if(isset($_GET['logout'])) {
 
                 if ($dbconn) {
                     // Query per recuperare tutti gli annunci dalla tabella annuncio
-                    $query = "SELECT * FROM annuncio WHERE preferito is true";
+                    // Assumendo che $email contenga l'email dell'utente attualmente loggato
+                    $email = $_SESSION['email'];
+
+                    // Costruisci la query con l'email della sessione corrente
+                    $query = "SELECT * FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
+
 
                     // Esecuzione della query
                     $result = pg_query($dbconn, $query);

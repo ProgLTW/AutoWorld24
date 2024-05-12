@@ -320,6 +320,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             width: 100%; /* Fai sì che la tabella del finanziamento si espanda su tutta la larghezza disponibile */
             margin: 0; /* Rimuovi eventuali margini */
             border-collapse: collapse; /* Assicurati che i bordi delle celle si uniscano correttamente */
+            background-color: orange;
         }
                 
         table {

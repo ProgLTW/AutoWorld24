@@ -34,20 +34,18 @@ aggiunto pulsante compra in vedi annunci
 ricerca peronalizzata deve ricondurre a vedi annunci coi filtri gia compilati(forse) --FATTO--
 Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato --FATTO--
 password dimenticata ma chiaramente non manda mail --FATTO--
+far funzionare filtri-annunci --FATTO--
+password dimenticata --FATTO--
 
 ---DA FARE---
 
 Login effettuato
-
-far funzionare filtri-annunci
 
 preferiti + stellina
 
 responsivenss (IMPORTANTE)
 
 implementare l'acquisto (e relativa eliminazione annuncio + i miei acquisti)
-
-password dimenticata 
 
 aggiustare pagine errore e dati inseriti correttamente (sono brutti) -> ho messo un alert su vendi
 

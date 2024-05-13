@@ -303,23 +303,5 @@ nav li:not(:first-child):hover {
     right: 0;
 }
 
-.preferito-checkbox {
-    display: none;
-}
-
-/* Stile dell'icona della stella */
-.stella {
-    font-size: 50px;
-    cursor: pointer;
-}
-
-.stella-vuota {
-    color: #ddd; /* Colore della stella non selezionata */
-}
-
-/* Cambia il colore della stella quando il checkbox è selezionato */
-.preferito-checkbox:checked + .stella {
-    color: #ffcc00; /* Cambia il colore della stella quando il checkbox è selezionato */
-}
 
 

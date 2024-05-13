@@ -32,31 +32,31 @@ if(isset($_GET['logout'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function(){
-        // Gestione del clic sull'icona della stella
-        $('.stella').click(function(){
-            var annuncioId = $(this).prev('.preferito-checkbox').data('id'); // ID dell'annuncio
-            var preferito = !$(this).prev('.preferito-checkbox').prop('checked'); // Inverti lo stato del preferito
+        // Gestione del clic sulla checkbox
+        $('.preferito-checkbox').change(function(){
+            var annuncioId = $(this).data('id'); // ID dell'annuncio
+            var preferito = $(this).prop('checked'); // Stato della checkbox
             $.ajax({
                 url: 'aggiorna_preferito.php', // Pagina PHP per l'aggiornamento del database
                 type: 'POST',
                 data: { id: annuncioId, preferito: preferito },
                 success: function(response) {
                     console.log(response); // Stampa eventuali messaggi di successo o errore nella console
-                    // Aggiorna l'icona della stella
-                    if (preferito) {
-                        $(this).addClass('preferito-attivo');
-                    } else {
-                        $(this).removeClass('preferito-attivo');
-                    }
-                    // Aggiorna lo stato del checkbox
-                    $(this).prev('.preferito-checkbox').prop('checked', preferito);
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
                 }
             });
         });
+
+        // Imposta lo stato iniziale delle checkbox in base al valore "preferito" dal database
+        $('.preferito-checkbox').each(function() {
+            var preferito = $(this).data('preferito');
+            $(this).prop('checked', preferito);
+        });
     });
+
+
     </script>
     <style> 
         .icon-auto {
@@ -196,9 +196,10 @@ if(isset($_GET['logout'])) {
                         or die('Could not connect: ' . pg_last_error());
 
                     if ($dbconn) {
+                        $email = $_SESSION['email'];
                         // Query per recuperare tutti gli annunci dalla tabella annuncio
                         $query = "SELECT * FROM annuncio";
-
+                        $query_preferiti = "SELECT id FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
                         // Esecuzione della query
                         $result = pg_query($dbconn, $query);
 
@@ -224,18 +225,23 @@ if(isset($_GET['logout'])) {
                                 // Aggiungi altre caratteristiche dell'annuncio qui...
 
                                 // Aggiunta della stella per contrassegnare come preferito
-                                $checked = $row['preferito'] ? 'checked' : ''; // Se il preferito è true, il checkbox sarà selezionato
-                                $stellaVuota = $row['preferito'] ? '' : 'stella-vuota'; // Se il preferito è false, applica la classe stella-vuota
+                                $preferiti = array(); // Inizializza l'array dei preferiti
+                                $result_preferiti = pg_query_params($dbconn, $query_preferiti, array()); 
+                                if ($result_preferiti) {
+                                    while ($row_preferiti = pg_fetch_assoc($result_preferiti)) {
+                                        $preferiti[] = $row_preferiti['id'];
+                                    }
+                                }
+
                                 echo "<p>";
-                                echo "<input type='checkbox' class='preferito-checkbox' id='preferito{$row['id']}' data-id='{$row['id']}' $checked>"; // Checkbox nascosto
-                                echo "<label for='preferito{$row['id']}' class='stella $stellaVuota'>&#9734;</label>"; // Etichetta personalizzata per l'icona della stella
+                                echo "<input type='checkbox' class='preferito-checkbox' id='preferito{$row['id']}' data-id='{$row['id']}' data-preferito='{$row['preferito']}' " . (in_array($row['id'], $preferiti) ? 'checked' : '') . ">";
+                                echo "<label for='preferito{$row['id']}' class='stella'></label>"; // Etichetta vuota per il design della checkbox
                                 echo "</p>";
-                                echo "</div>";
+
                                 // Fine dell'annuncio
                                 echo "</div>";
-
+                                echo "</div>";
                             }
-
                             // Rilascio della risorsa del risultato
                             pg_free_result($result);
                         } else {

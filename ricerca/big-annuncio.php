@@ -420,7 +420,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             //prima colonna -> input
             echo "<td>";
             
-            echo "<h3 style='width: 400px;'>Calcola la rata del tuo prestito</h3>";
+            echo "<h3 style='width: 400px; margin-bottom: 20px'>Calcola la rata del tuo prestito</h3>";
 
             echo "<label for='importo_prestito'> Importo prestito (€): </label><br>";
             echo "<input type='number' name='importo_prestito' id='importo_prestito' required><br><br>";

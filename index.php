@@ -173,7 +173,7 @@ if(isset($_GET['logout'])) {
         <h1>COSA CERCHI?</h1>
         <div class="box">
             <h2>AUTO</h2>
-            <button class="icon-auto-button" onclick="location.href='ricerca/index.html';">
+            <button class="icon-auto-button" onclick="location.href='ricerca/ricerca-personalizzata.php';">
                 <img src="immagini/iconauto.png" alt="Auto Icon" class="icon-auto">
             </button>
             

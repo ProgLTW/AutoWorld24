@@ -95,6 +95,13 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                 fromSelect.value = toValue;
             }
     }
+    function toggleInfo() {
+    var infoElements = document.querySelectorAll('.info'); // Seleziona tutti gli elementi con la classe 'info'
+    infoElements.forEach(function(element) {
+        element.classList.toggle('hidden'); // Aggiunge o rimuove la classe 'hidden' per nascondere o mostrare le informazioni
+    });
+}
+
 
     document.addEventListener("DOMContentLoaded", function() {
         const form = document.getElementById("searchForm");
@@ -317,10 +324,12 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             width: auto;
         }
         table.finanziamento {
-            width: 100%; /* Fai sì che la tabella del finanziamento si espanda su tutta la larghezza disponibile */
-            margin: 0; /* Rimuovi eventuali margini */
-            border-collapse: collapse; /* Assicurati che i bordi delle celle si uniscano correttamente */
+            width: 100%;
+            margin: 0;
+            border-collapse: collapse;
             background-color: orange;
+            margin-top: 20px;
+            border-radius: 10px; /* Aggiungi il border-radius anche qui */
         }
                 
         table {
@@ -341,6 +350,29 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
         tr:not(:last-child) td {
             margin-bottom: 10px; /* Aggiunge spazio solo alle righe eccetto l'ultima */
+        }
+        input {
+            border-radius: 5px;
+        }
+        select {
+            border-radius: 5px;
+        }
+        button {
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        .info-button {
+            font-size: 20px; /* Imposta la dimensione del carattere */
+            vertical-align: middle; /* Allinea il pulsante verticalmente rispetto al testo */
+            margin-right: 5px; /* Aggiunge uno spazio tra l'icona e il testo */
+            margin-left: 5px;
+        }
+        td.info-column {
+            width: 50%; /* Imposta la larghezza della colonna al 50% della larghezza della tabella */
+            padding-right: 100px; /* Aggiunge un padding a destra per separare questa colonna dalla colonna precedente */
+            text-align: center; /* Allinea il testo a destra all'interno della colonna */
         }
     </style>
 
@@ -388,7 +420,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             //prima colonna -> input
             echo "<td>";
             
-            echo "<h3>Calcola la rata del tuo prestito</h3>";
+            echo "<h3 style='width: 400px;'>Calcola la rata del tuo prestito</h3>";
 
             echo "<label for='importo_prestito'> Importo prestito (€): </label><br>";
             echo "<input type='number' name='importo_prestito' id='importo_prestito' required><br><br>";
@@ -413,18 +445,19 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             echo "</td>";
 
             //seconda colonna -> risultati
-            echo "<td>";
-            echo "<p>Importo totale prestito: <span id='risultato_tot_prestito'></span></p>";
-            echo "<p>Totale interessi:<span id='risultato_tot_interessi'></span></p>";
-            echo "<p>Numero di rate: <span id='risultato_num_rate'></span></p>";
-            echo "<p>Rata mensile: <span id='risultato_rata_mese'></span></p>";
-
+            echo "<td class='info-column'>";
+            
+            echo "<p style='font-size: 25px;'><b><u>Rata mensile: <span id='risultato_rata_mese'></span></u></b><button onclick='toggleInfo()'><span class=\"info-button\"> i</span></button></p>";
+            echo "<p class='info hidden'>Importo totale prestito: <b><span id='risultato_tot_prestito'></span></b></p>";
+            echo "<p class='info hidden'>Totale interessi: <b><span id='risultato_tot_interessi'></span></b></p>";
+            echo "<p class='info hidden'>Numero di rate: <b><span id='risultato_num_rate'></span></b></p>";
             echo "</td>";
            
             echo "</tr>";
 
             echo "</table>";
             echo "</td>";
+            echo "<table>";
             // Terza riga: Chilometraggio, anno, carburante
             echo "<tr>";
             echo "<td>";

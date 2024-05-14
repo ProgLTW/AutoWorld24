@@ -41,25 +41,33 @@ if ($dbconn) {
     $foto = $uploadedFile;
     $descrizione = $_POST['descrizione'];
     $preferito = 0;
+    $tipoVeicolo = $_POST['tipoVeicolo'];
 
     // Ottieni l'email dalla sessione
     $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
 
     // Query SQL per l'inserimento dei dati nella tabella Auto
-    $query = "INSERT INTO annuncio (marca, modello, prezzo, trattabile, carrozzeria, anno, chilometraggio, carburante, cambio, potenza, foto, descrizione, preferito, email) 
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)";
+    $query = "INSERT INTO annuncio (marca, modello, prezzo, trattabile, carrozzeria, anno, chilometraggio, carburante, cambio, potenza, foto, descrizione, preferito, email, tipoVeicolo) 
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)";
 
     // Esecuzione della query con i parametri
-    $result = pg_query_params($dbconn, $query, array($marca, $modello, $prezzo, $trattabile, $carrozzeria, $anno, $chilometraggio, $carburante, $cambio, $potenza, $foto, $descrizione, $preferito, $email));
+    $result = pg_query_params($dbconn, $query, array($marca, $modello, $prezzo, $trattabile, $carrozzeria, $anno, $chilometraggio, $carburante, $cambio, $potenza, $foto, $descrizione, $preferito, $email, $tipoVeicolo));
 
         
     if ($result) {
-        echo "<script>alert('Dati inseriti correttamente nella tabella Auto');</script>";
+        if ($tipoVeicolo === 'auto') {
+            echo "<script>alert('Dati inseriti correttamente nella tabella Auto');</script>";
+        } elseif ($tipoVeicolo === 'moto') {
+            echo "<script>alert('Dati inseriti correttamente nella tabella Moto');</script>";
+        }
         echo "<script>window.location.href = '../index.php';</script>";
     } else {
-        echo "<script>alert('Errore durante l\'inserimento dei dati nella tabella Auto');</script>";
+        if ($tipoVeicolo === 'auto') {
+            echo "<script>alert('Errore durante l\'inserimento dei dati nella tabella Auto');</script>";
+        } elseif ($tipoVeicolo === 'moto') {
+            echo "<script>alert('Errore durante l\'inserimento dei dati nella tabella Moto');</script>";
+        }
         echo "<script>window.location.href = '../index.php';</script>";
     }
-
-}
+}    
 ?>

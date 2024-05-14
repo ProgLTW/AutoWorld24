@@ -27,6 +27,22 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
     <link rel="stylesheet" href="../style.css">
     <script type="application/javascript">
+    window.onload = function() {
+    showAutoForm(); // Mostra il form dell'auto all'avvio
+    };
+
+    function showAutoForm() {
+        document.getElementById("autoForm").style.display = "block";
+        document.getElementById("motoForm").style.display = "none";
+    }
+    
+    function showMotoForm() {
+        document.getElementById("autoForm").style.display = "none";
+        document.getElementById("motoForm").style.display = "block";
+    }
+
+
+
         const modelliPerMarca = {
             "Audi": ["ModelloA1", "ModelloA3", "ModelloA4"],
             "BMW": ["Serie1", "Serie3", "Serie5"],
@@ -100,6 +116,7 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
         .container2{
             border-radius: 30px;
             margin-top: 150px;
+            margin-bottom: 150px;
             font-family: 'Formula1 Display';
         }
         .icon-auto {
@@ -195,8 +212,19 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
             ?>
         </ul>
     </nav>
+
+
+
     <div class="container2">
         <form name="myForm" action="<?php echo isset($_SESSION['loggato']) ? 'vendi.php' : '#'; ?>" method="POST" enctype="multipart/form-data" class="form-signin m-auto" onsubmit="alertRmb()">
+
+        <label for="tipoVeicolo">Seleziona il tipo di veicolo:</label><br>
+        <input type="radio" id="auto" name="tipoVeicolo" value="auto" checked onclick="showAutoForm()">
+        <label for="auto">Auto</label><br>
+        <input type="radio" id="moto" name="tipoVeicolo" value="moto" onclick="showMotoForm()">
+        <label for="moto">Moto</label><br><br>
+
+        <div id="autoForm">
             <label for="marca">Marca:</label>
             <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
                 <option value="">Seleziona</option>
@@ -300,6 +328,81 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
             <textarea name="descrizione" cols="30" rows="6" placeholder="es. tagliandi, stato carrozzeria, stato motore, ecc."></textarea>
             <button type="submit" class="btn btn-primary" style="margin-left: 50px; margin-top: 30px; margin-bottom: 30px; font-size: large;" <?php echo isset($_SESSION['loggato']) ? '' : 'disabled'; ?>>Conferma</button>
             <button type="reset" class="btn btn-secondary" style="margin-left: 10px; font-size: large;">Reset</button>
+            </div>
+
+        <div id="motoForm">
+        <label for="marca">Marca:</label>
+            <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
+                <option value="">Seleziona</option>
+            <option value="Ducati">Ducati</option>
+            <option value="Harley-Davidson">Harley-Davidson</option>
+            <option value="Honda">Honda</option>
+            <option value="Kawasaki">Kawasaki</option>
+            <option value="KTM">KTM</option>
+            <option value="Suzuki">Suzuki</option>
+            <option value="Yamaha">Yamaha</option>
+            <option value="Triumph">Triumph</option>
+            <option value="Aprilia">Aprilia</option>
+            <option value="Piaggio">Piaggio</option>
+            <option value="Vespa">Vespa</option>
+            </select> <br>
+
+            <label for="modello">Modello:</label>
+            <select id="modello" name="modello" disabled required>
+                <option value="">Seleziona</option>
+            </select><br>
+
+            <label for="prezzo">Prezzo:</label>
+            <input id="prezzo" type="number" name="prezzo">
+            <label for="trattabile">Trattabile:</label>
+            <input type="checkbox" name="trattabile" id="trattabile"><br>
+            <label for="carrozzeria">Carrozzeria:</label>
+            <select id="carrozzeria" name="carrozzeria">
+                <option value="">Seleziona</option>
+                <option value="Naked">Naked</option>
+                <option value="Sport">Sport</option>
+                <option value="Touring">Touring</option>
+                <option value="Cruiser">Cruiser</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Dual-Sport">Dual-Sport</option>
+            </select><br>
+            <label for="anno">Anno:</label>
+            <select id="anno" type="number" name="anno">
+                <option value="">Seleziona</option>
+                <script>
+                    for (let i = 2024; i >= 1900; i--) {
+                        document.write(`<option value="${i}">${i}</option>`);
+                    }
+                </script>
+            </select><br>
+            <label for="chilometraggio">Chilometraggio:</label>
+            <input id="chilometraggio" type="number" name="chilometraggio"><br>
+            <label for="carburante">Carburante:</label>
+            <select name="carburante">
+                <option value="">Seleziona</option>
+                <option value="Benzina">Benzina</option>
+                <option value="Elettrico">Elettrico</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Ibrida">Ibrida</option>
+                <option value="GPL">GPL</option>
+            </select><br>
+            <label for="cambio">Cambio:</label>
+            <select name="cambio">
+                <option value="">Seleziona</option>
+                <option value="Manuale">Manuale</option>
+                <option value="Automatico">Automatico</option>
+                <option value="Semiautomatico">Semiautomatico</option>
+            </select><br>
+            <label for="potenza">Potenza (CV):</label>
+            <input id="potenza" type="number" name="potenza"><br>
+            <label for="foto">Inserisci immagini:</label>
+            <input type="file" name="foto" accept="image/*" multiple><br>
+            <label for="descrizione">Inserisci descrizione:</label><br>
+            <textarea name="descrizione" cols="30" rows="6" placeholder="es. tagliandi, stato carrozzeria, stato motore, ecc."></textarea>
+            <button type="submit" class="btn btn-primary" style="margin-left: 50px; margin-top: 30px; margin-bottom: 30px; font-size: large;" <?php echo isset($_SESSION['loggato']) ? '' : 'disabled'; ?>>Conferma</button>
+            <button type="reset" class="btn btn-secondary" style="margin-left: 10px; font-size: large;">Reset</button>
+        </div>
+
         </form>
     </div>
     <div class="car-logos-container">

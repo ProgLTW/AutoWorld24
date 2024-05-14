@@ -314,6 +314,7 @@ window.addEventListener('load', function() {
 <nav>
         <ul>
             <li><a href="../index.php"><b>AUTOWORLD</b></a></li>
+            <li><a href="../ricambi.php"><b>CHI SIAMO</b></a></li>
             <li class="dropdown">
                 <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
                 <div class="dropdown-menu">
@@ -322,7 +323,7 @@ window.addEventListener('load', function() {
                 </div>
             </li>
             <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
-            <li><a href="../ricambi.php"><b>RICAMBI</b></a></li>
+            
             <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
             <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
@@ -477,6 +478,7 @@ window.addEventListener('load', function() {
         <div class="item1">
             <?php
                 // Recupera i valori inviati dal form
+                $tipoVeicolo = isset($_POST['tipoVeicolo']) ? $_POST['tipoVeicolo'] : '';
                 $marca = isset($_POST['marca']) ? $_POST['marca'] : '';
                 $modello = isset($_POST['modello']) ? $_POST['modello'] : '';
                 $prezzoDa = isset($_POST['PrezzoDa']) ? $_POST['PrezzoDa'] : '';
@@ -491,143 +493,306 @@ window.addEventListener('load', function() {
                 $potenzaDa = isset($_POST['PotenzaDa']) ? $_POST['PotenzaDa'] : '';
                 $potenzaA = isset($_POST['PotenzaA']) ? $_POST['PotenzaA'] : '';
             ?>
+
+<script>
+    function showAutoForm() {
+        document.getElementById("autoForm").style.display = "block";
+        document.getElementById("motoForm").style.display = "none";
+    }
+    
+    function showMotoForm() {
+        document.getElementById("autoForm").style.display = "none";
+        document.getElementById("motoForm").style.display = "block";
+    }
+    </script>
+
+
             <form name="searchForm" action="vedi-annunci.php" method="POST" class="form-signin m-auto" style="margin-left: 0;">
+
+            <label for="tipoVeicolo">Seleziona il tipo di veicolo:</label><br>
+                <input type="radio" id="auto" name="tipoVeicolo" value="auto" <?php if (isset($_POST['tipoVeicolo']) && $_POST['tipoVeicolo'] == 'auto') echo 'checked'; ?> onclick="showAutoForm()">
+                <label for="auto">Auto</label><br>
+                <input type="radio" id="moto" name="tipoVeicolo" value="moto" <?php if (isset($_POST['tipoVeicolo']) && $_POST['tipoVeicolo'] == 'moto') echo 'checked'; ?> onclick="showMotoForm()">
+                <label for="moto">Moto</label><br><br>
+            
+                <div id="autoForm">
+                    <label for="marca">Marca:</label>
+                    <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
+                        <option value="" <?php if($marca == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                        <option value="Audi" <?php if($marca == 'Audi') echo 'selected="selected"'; ?>>Audi</option>
+                        <option value="BMW" <?php if($marca == 'BMW') echo 'selected="selected"'; ?>>BMW</option>
+                        <option value="Mercedes" <?php if($marca == 'Mercedes') echo 'selected="selected"'; ?>>Mercedes-Benz</option>
+                        <option value="Volkswagen" <?php if($marca == 'Volkswagen') echo 'selected="selected"'; ?>>Volkswagen</option>
+                        <option value="Toyota" <?php if($marca == 'Toyota') echo 'selected="selected"'; ?>>Toyota</option>
+                        <option value="Honda" <?php if($marca == 'Honda') echo 'selected="selected"'; ?>>Honda</option>
+                        <option value="Ford" <?php if($marca == 'Ford') echo 'selected="selected"'; ?>>Ford</option>
+                        <option value="Chevrolet" <?php if($marca == 'Chevrolet') echo 'selected="selected"'; ?>>Chevrolet</option>
+                        <option value="Nissan" <?php if($marca == 'Nissan') echo 'selected="selected"'; ?>>Nissan</option>
+                        <option value="Hyundai" <?php if($marca == 'Hyundai') echo 'selected="selected"'; ?>>Hyundai</option>
+                        <option value="Mazda" <?php if($marca == 'Mazda') echo 'selected="selected"'; ?>>Mazda</option>
+                    </select> <br>
+                    <label for="modello">Modello:</label>
+                    <select id="modello" name="modello" disabled>
+                        <option value="" <?php if($modello == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                    </select><br>
+                    <label for="prezzo">Prezzo:</label>
+                    <select id="prezzo_da" type="number" name="prezzo_da" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
+                        <!-- Opzione "Da" vuota -->
+                        <option value="" <?php if ($prezzoDa === '') echo 'selected="selected"'; ?>>Da</option>
+                        <!-- Opzioni per il campo "Da" del prezzo -->
+                        <?php
+                        for ($i = 500; $i <= 100000; $i += 500) {
+                            echo '<option value="' . $i . '"';
+                            if ($prezzoDa == $i) {
+                                echo ' selected="selected"';
+                            }
+                            echo '>' . $i . '€</option>';
+                        }
+                        ?>
+                    </select>
+                    <select id="prezzo_a" type="number" name="prezzo_a" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
+                        <!-- Opzione "Da" vuota -->
+                        <option value="" <?php if ($prezzoA === '') echo 'selected="selected"'; ?>>A</option>
+                        <!-- Opzioni per il campo "Da" del prezzo -->
+                        <?php
+                        for ($i = 500; $i <= 100000; $i += 500) {
+                            echo '<option value="' . $i . '"';
+                            if ($prezzoA == $i) {
+                                echo ' selected="selected"';
+                            }
+                            echo '>' . $i . '€</option>';
+                        }
+                        ?>
+                    </select><br>
+                    <label for="carrozzeria">Carrozzeria:</label>
+                    <select id="carrozzeria" name="carrozzeria">
+                        <option value="" <?php if($carrozzeria == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                        <option value="City Car" <?php if($carrozzeria == 'City Car') echo 'selected="selected"'; ?>>City Car</option>
+                        <option value="Cabrio" <?php if($carrozzeria == 'Cabrio') echo 'selected="selected"'; ?>>Cabrio</option>
+                        <option value="Suv/Fuoristrada/Pick-up" <?php if($carrozzeria == 'Suv/Fuoristrada/Pick-up') echo 'selected="selected"'; ?>>Suv/Fuoristrada/Pick-up</option>
+                        <option value="Station Wagon" <?php if($carrozzeria == 'Station Wagon') echo 'selected="selected"'; ?>>Station Wagon</option>
+                        <option value="Berlina" <?php if($carrozzeria == 'Berlina') echo 'selected="selected"'; ?>>Berlina</option>
+                        <option value="Monovolume" <?php if($carrozzeria == 'Monovolume') echo 'selected="selected"'; ?>>Monovolume</option>
+                    </select><br>
+                    <label for="anno">Anno:</label>
+                    <select id="anno_da" type="number" name="anno_da" onchange="updateMassimo('anno_da', 'anno_a')">
+                        <option value="" <?php if($annoDa == '') echo 'selected="selected"'; ?>>Da</option>
+                            <?php
+                            // Loop per generare le opzioni di anno
+                            for ($i = 2024; $i >= 1900; $i--) {
+                                // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
+                                echo '<option value="' . $i . '"';
+                                if ($annoDa == $i) {
+                                    echo ' selected="selected"';
+                                }
+                                echo '>' . $i . '</option>';
+                            }
+                            ?>
+                    </select>
+                    <select id="anno_a" type="number" name="anno_a" style="margin-left: 0%;" onchange="updateMinimo('anno_da', 'anno_a')">
+                        <option value="" <?php if($annoA == '') echo 'selected="selected"'; ?>>A</option>
+                            <?php
+                            // Loop per generare le opzioni di anno
+                            for ($i = 2024; $i >= 1900; $i--) {
+                                // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
+                                echo '<option value="' . $i . '"';
+                                if ($annoA == $i) {
+                                    echo ' selected="selected"';
+                                }
+                                echo '>' . $i . '</option>';
+                            }
+                            ?>
+                    </select><br>
+                    <label for="chilometraggio">Chilometraggio:</label>
+                    <select id="km_da" type="number" name="km_da" onchange="updateMassimo('km_da', 'km_a')">
+                        <option value="" <?php if($kmDa == '') echo 'selected="selected"'; ?>>Da</option>
+                        <?php
+                        // Loop per generare le opzioni di chilometraggio
+                        for ($i = 0; $i <= 200000; $i += 25000) {
+                            // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
+                            echo '<option value="' . $i . '"';
+                            if ($kmDa == $i) {
+                                echo ' selected="selected"';
+                            }
+                            echo '>' . $i . '</option>';
+                        }
+                        ?>
+                    </select>
+                    <select id="km_a" type="number" name="km_a" style="margin-left: 0%;" onchange="updateMinimo('km_da', 'km_a')">
+                        <option value="" <?php if($kmA == '') echo 'selected="selected"'; ?>>A</option>
+                        <?php
+                        // Loop per generare le opzioni di chilometraggio
+                        for ($i = 0; $i <= 200000; $i += 25000) {
+                            // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
+                            echo '<option value="' . $i . '"';
+                            if ($kmA == $i) {
+                                echo ' selected="selected"';
+                            }
+                            echo '>' . $i . '</option>';
+                        }
+                        ?>
+                    </select><br>
+                    <label for="carburante">Carburante:</label>
+                    <select name="carburante">
+                        <option value="" <?php if($carburante == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                        <option value="Benzina" <?php if($carburante == 'Benzina') echo 'selected="selected"'; ?>>Benzina</option>
+                        <option value="Diesel" <?php if($carburante == 'Diesel') echo 'selected="selected"'; ?>>Diesel</option>
+                        <option value="Ibrida" <?php if($carburante == 'Ibrida') echo 'selected="selected"'; ?>>Ibrida</option>
+                        <option value="GPL" <?php if($carburante == 'GPL') echo 'selected="selected"'; ?>>GPL</option>
+                        <option value="Metano" <?php if($carburante == 'Metano') echo 'selected="selected"'; ?>>Metano</option>
+                    </select><br>
+                    <label for="cambio">Cambio:</label>
+                    <select name="cambio">
+                        <option value="" <?php if($cambio == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                        <option value="Manuale" <?php if($cambio == 'Manuale') echo 'selected="selected"'; ?>>Manuale</option>
+                        <option value="Automatico" <?php if($cambio == 'Automatico') echo 'selected="selected"'; ?>>Automatico</option>
+                        <option value="Semiautomatico" <?php if($cambio == 'Semiautomatico') echo 'selected="selected"'; ?>>Semiautomatico</option>
+                    </select><br>
+                    <label for="potenza">Potenza (CV):</label>
+                    <input type="number" id="potenza_da" name="potenza_da" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000" value="<?php echo isset($_POST['PotenzaDa']) ? htmlspecialchars($_POST['PotenzaDa']) : ''; ?>">
+                    <input type="number" id="potenza_a" name="potenza_a" style="margin-left: 0%;" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000" value="<?php echo isset($_POST['PotenzaA']) ? htmlspecialchars($_POST['PotenzaA']) : ''; ?>"><br>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 150px; margin-top: 30px; margin-bottom: 30px;">Cerca</button>
+                </div>
+
+                <div id="motoForm">
                 <label for="marca">Marca:</label>
-                <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
-                    <option value="" <?php if($marca == '') echo 'selected="selected"'; ?>>Seleziona</option>
-                    <option value="Audi" <?php if($marca == 'Audi') echo 'selected="selected"'; ?>>Audi</option>
-                    <option value="BMW" <?php if($marca == 'BMW') echo 'selected="selected"'; ?>>BMW</option>
-                    <option value="Mercedes" <?php if($marca == 'Mercedes') echo 'selected="selected"'; ?>>Mercedes-Benz</option>
-                    <option value="Volkswagen" <?php if($marca == 'Volkswagen') echo 'selected="selected"'; ?>>Volkswagen</option>
-                    <option value="Toyota" <?php if($marca == 'Toyota') echo 'selected="selected"'; ?>>Toyota</option>
-                    <option value="Honda" <?php if($marca == 'Honda') echo 'selected="selected"'; ?>>Honda</option>
-                    <option value="Ford" <?php if($marca == 'Ford') echo 'selected="selected"'; ?>>Ford</option>
-                    <option value="Chevrolet" <?php if($marca == 'Chevrolet') echo 'selected="selected"'; ?>>Chevrolet</option>
-                    <option value="Nissan" <?php if($marca == 'Nissan') echo 'selected="selected"'; ?>>Nissan</option>
-                    <option value="Hyundai" <?php if($marca == 'Hyundai') echo 'selected="selected"'; ?>>Hyundai</option>
-                    <option value="Mazda" <?php if($marca == 'Mazda') echo 'selected="selected"'; ?>>Mazda</option>
-                </select> <br>
-                <label for="modello">Modello:</label>
-                <select id="modello" name="modello" disabled>
-                    <option value="" <?php if($modello == '') echo 'selected="selected"'; ?>>Seleziona</option>
-                </select><br>
-                <label for="prezzo">Prezzo:</label>
-                <select id="prezzo_da" type="number" name="prezzo_da" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
-                    <!-- Opzione "Da" vuota -->
-                    <option value="" <?php if ($prezzoDa === '') echo 'selected="selected"'; ?>>Da</option>
-                    <!-- Opzioni per il campo "Da" del prezzo -->
-                    <?php
-                    for ($i = 500; $i <= 100000; $i += 500) {
-                        echo '<option value="' . $i . '"';
-                        if ($prezzoDa == $i) {
-                            echo ' selected="selected"';
-                        }
-                        echo '>' . $i . '€</option>';
-                    }
-                    ?>
-                </select>
-                <select id="prezzo_a" type="number" name="prezzo_a" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
-                    <!-- Opzione "Da" vuota -->
-                    <option value="" <?php if ($prezzoA === '') echo 'selected="selected"'; ?>>A</option>
-                    <!-- Opzioni per il campo "Da" del prezzo -->
-                    <?php
-                    for ($i = 500; $i <= 100000; $i += 500) {
-                        echo '<option value="' . $i . '"';
-                        if ($prezzoA == $i) {
-                            echo ' selected="selected"';
-                        }
-                        echo '>' . $i . '€</option>';
-                    }
-                    ?>
-                </select><br>
-                <label for="carrozzeria">Carrozzeria:</label>
-                <select id="carrozzeria" name="carrozzeria">
-                    <option value="" <?php if($carrozzeria == '') echo 'selected="selected"'; ?>>Seleziona</option>
-                    <option value="City Car" <?php if($carrozzeria == 'City Car') echo 'selected="selected"'; ?>>City Car</option>
-                    <option value="Cabrio" <?php if($carrozzeria == 'Cabrio') echo 'selected="selected"'; ?>>Cabrio</option>
-                    <option value="Suv/Fuoristrada/Pick-up" <?php if($carrozzeria == 'Suv/Fuoristrada/Pick-up') echo 'selected="selected"'; ?>>Suv/Fuoristrada/Pick-up</option>
-                    <option value="Station Wagon" <?php if($carrozzeria == 'Station Wagon') echo 'selected="selected"'; ?>>Station Wagon</option>
-                    <option value="Berlina" <?php if($carrozzeria == 'Berlina') echo 'selected="selected"'; ?>>Berlina</option>
-                    <option value="Monovolume" <?php if($carrozzeria == 'Monovolume') echo 'selected="selected"'; ?>>Monovolume</option>
-                </select><br>
-                <label for="anno">Anno:</label>
-                <select id="anno_da" type="number" name="anno_da" onchange="updateMassimo('anno_da', 'anno_a')">
-                    <option value="" <?php if($annoDa == '') echo 'selected="selected"'; ?>>Da</option>
+                    <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
+                        <option value="" <?php if($marca == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                        <option value="Ducati" <?php if($marca == 'Ducati') echo 'selected="selected"'; ?>>Ducati</option>
+                        <option value="Harley-Davidson" <?php if($marca == 'Harley-Davidson') echo 'selected="selected"'; ?>>Harley-Davidson</option>
+                        <option value="Honda" <?php if($marca == 'Honda') echo 'selected="selected"'; ?>>Honda</option>
+                        <option value="Kawasaki" <?php if($marca == 'Kawasaki') echo 'selected="selected"'; ?>>Kawasaki</option>
+                        <option value="KTM" <?php if($marca == 'KTM') echo 'selected="selected"'; ?>>KTM</option>
+                        <option value="Suzuki" <?php if($marca == 'Suzuki') echo 'selected="selected"'; ?>>Suzuki</option>
+                        <option value="Yamaha" <?php if($marca == 'Yamaha') echo 'selected="selected"'; ?>>Yamaha</option>
+                        <option value="Triumph" <?php if($marca == 'Triumph') echo 'selected="selected"'; ?>>Triumph</option>
+                        <option value="Aprilia" <?php if($marca == 'Aprilia') echo 'selected="selected"'; ?>>Aprilia</option>
+                        <option value="Piaggio" <?php if($marca == 'Piaggio') echo 'selected="selected"'; ?>>Piaggio</option>
+                        <option value="Vespa" <?php if($marca == 'Vespa') echo 'selected="selected"'; ?>>Vespa</option>
+                    </select> <br>
+                    <label for="modello">Modello:</label>
+                    <select id="modello" name="modello" disabled>
+                        <option value="" <?php if($modello == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                    </select><br>
+                    <label for="prezzo">Prezzo:</label>
+                    <select id="prezzo_da" type="number" name="prezzo_da" onchange="updateMassimo('prezzo_da', 'prezzo_a')">
+                        <!-- Opzione "Da" vuota -->
+                        <option value="" <?php if ($prezzoDa === '') echo 'selected="selected"'; ?>>Da</option>
+                        <!-- Opzioni per il campo "Da" del prezzo -->
                         <?php
-                        // Loop per generare le opzioni di anno
-                        for ($i = 2024; $i >= 1900; $i--) {
+                        for ($i = 500; $i <= 100000; $i += 500) {
+                            echo '<option value="' . $i . '"';
+                            if ($prezzoDa == $i) {
+                                echo ' selected="selected"';
+                            }
+                            echo '>' . $i . '€</option>';
+                        }
+                        ?>
+                    </select>
+                    <select id="prezzo_a" type="number" name="prezzo_a" style="margin-left: 0%;" onchange="updateMinimo('prezzo_da', 'prezzo_a')">
+                        <!-- Opzione "Da" vuota -->
+                        <option value="" <?php if ($prezzoA === '') echo 'selected="selected"'; ?>>A</option>
+                        <!-- Opzioni per il campo "Da" del prezzo -->
+                        <?php
+                        for ($i = 500; $i <= 100000; $i += 500) {
+                            echo '<option value="' . $i . '"';
+                            if ($prezzoA == $i) {
+                                echo ' selected="selected"';
+                            }
+                            echo '>' . $i . '€</option>';
+                        }
+                        ?>
+                    </select><br>
+                    <label for="carrozzeria">Carrozzeria:</label>
+                    <select id="carrozzeria" name="carrozzeria">
+                        <option value="" <?php if($carrozzeria == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                        <option value="Naked" <?php if($carrozzeria == 'Naked') echo 'selected="selected"'; ?>>Naked</option>
+                        <option value="Sport" <?php if($carrozzeria == 'Sport') echo 'selected="selected"'; ?>>Sport</option>
+                        <option value="Touring" <?php if($carrozzeria == 'Touring') echo 'selected="selected"'; ?>>Touring</option>
+                        <option value="Cruiser" <?php if($carrozzeria == 'Cruiser') echo 'selected="selected"'; ?>>Cruiser</option>
+                        <option value="Adventure" <?php if($carrozzeria == 'Adventure') echo 'selected="selected"'; ?>>Adventure</option>
+                        <option value="Dual-Sport" <?php if($carrozzeria == 'Dual-Sport') echo 'selected="selected"'; ?>>Dual-Sport</option>
+                    </select><br>
+                    <label for="anno">Anno:</label>
+                    <select id="anno_da" type="number" name="anno_da" onchange="updateMassimo('anno_da', 'anno_a')">
+                        <option value="" <?php if($annoDa == '') echo 'selected="selected"'; ?>>Da</option>
+                            <?php
+                            // Loop per generare le opzioni di anno
+                            for ($i = 2024; $i >= 1900; $i--) {
+                                // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
+                                echo '<option value="' . $i . '"';
+                                if ($annoDa == $i) {
+                                    echo ' selected="selected"';
+                                }
+                                echo '>' . $i . '</option>';
+                            }
+                            ?>
+                    </select>
+                    <select id="anno_a" type="number" name="anno_a" style="margin-left: 0%;" onchange="updateMinimo('anno_da', 'anno_a')">
+                        <option value="" <?php if($annoA == '') echo 'selected="selected"'; ?>>A</option>
+                            <?php
+                            // Loop per generare le opzioni di anno
+                            for ($i = 2024; $i >= 1900; $i--) {
+                                // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
+                                echo '<option value="' . $i . '"';
+                                if ($annoA == $i) {
+                                    echo ' selected="selected"';
+                                }
+                                echo '>' . $i . '</option>';
+                            }
+                            ?>
+                    </select><br>
+                    <label for="chilometraggio">Chilometraggio:</label>
+                    <select id="km_da" type="number" name="km_da" onchange="updateMassimo('km_da', 'km_a')">
+                        <option value="" <?php if($kmDa == '') echo 'selected="selected"'; ?>>Da</option>
+                        <?php
+                        // Loop per generare le opzioni di chilometraggio
+                        for ($i = 0; $i <= 200000; $i += 25000) {
                             // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
                             echo '<option value="' . $i . '"';
-                            if ($annoDa == $i) {
+                            if ($kmDa == $i) {
                                 echo ' selected="selected"';
                             }
                             echo '>' . $i . '</option>';
                         }
                         ?>
-                </select>
-                <select id="anno_a" type="number" name="anno_a" style="margin-left: 0%;" onchange="updateMinimo('anno_da', 'anno_a')">
-                    <option value="" <?php if($annoA == '') echo 'selected="selected"'; ?>>A</option>
+                    </select>
+                    <select id="km_a" type="number" name="km_a" style="margin-left: 0%;" onchange="updateMinimo('km_da', 'km_a')">
+                        <option value="" <?php if($kmA == '') echo 'selected="selected"'; ?>>A</option>
                         <?php
-                        // Loop per generare le opzioni di anno
-                        for ($i = 2024; $i >= 1900; $i--) {
+                        // Loop per generare le opzioni di chilometraggio
+                        for ($i = 0; $i <= 200000; $i += 25000) {
                             // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
                             echo '<option value="' . $i . '"';
-                            if ($annoA == $i) {
+                            if ($kmA == $i) {
                                 echo ' selected="selected"';
                             }
                             echo '>' . $i . '</option>';
                         }
                         ?>
-                </select><br>
-                <label for="chilometraggio">Chilometraggio:</label>
-                <select id="km_da" type="number" name="km_da" onchange="updateMassimo('km_da', 'km_a')">
-                    <option value="" <?php if($kmDa == '') echo 'selected="selected"'; ?>>Da</option>
-                    <?php
-                    // Loop per generare le opzioni di chilometraggio
-                    for ($i = 0; $i <= 200000; $i += 25000) {
-                        // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
-                        echo '<option value="' . $i . '"';
-                        if ($kmDa == $i) {
-                            echo ' selected="selected"';
-                        }
-                        echo '>' . $i . '</option>';
-                    }
-                    ?>
-                </select>
-                <select id="km_a" type="number" name="km_a" style="margin-left: 0%;" onchange="updateMinimo('km_da', 'km_a')">
-                    <option value="" <?php if($kmA == '') echo 'selected="selected"'; ?>>A</option>
-                    <?php
-                    // Loop per generare le opzioni di chilometraggio
-                    for ($i = 0; $i <= 200000; $i += 25000) {
-                        // Imposta l'attributo selected per l'opzione corrispondente al valore inviato
-                        echo '<option value="' . $i . '"';
-                        if ($kmA == $i) {
-                            echo ' selected="selected"';
-                        }
-                        echo '>' . $i . '</option>';
-                    }
-                    ?>
-                </select><br>
-                <label for="carburante">Carburante:</label>
-                <select name="carburante">
-                    <option value="" <?php if($carburante == '') echo 'selected="selected"'; ?>>Seleziona</option>
-                    <option value="Benzina" <?php if($carburante == 'Benzina') echo 'selected="selected"'; ?>>Benzina</option>
-                    <option value="Diesel" <?php if($carburante == 'Diesel') echo 'selected="selected"'; ?>>Diesel</option>
-                    <option value="Ibrida" <?php if($carburante == 'Ibrida') echo 'selected="selected"'; ?>>Ibrida</option>
-                    <option value="GPL" <?php if($carburante == 'GPL') echo 'selected="selected"'; ?>>GPL</option>
-                    <option value="Metano" <?php if($carburante == 'Metano') echo 'selected="selected"'; ?>>Metano</option>
-                </select><br>
-                <label for="cambio">Cambio:</label>
-                <select name="cambio">
-                    <option value="" <?php if($cambio == '') echo 'selected="selected"'; ?>>Seleziona</option>
-                    <option value="Manuale" <?php if($cambio == 'Manuale') echo 'selected="selected"'; ?>>Manuale</option>
-                    <option value="Automatico" <?php if($cambio == 'Automatico') echo 'selected="selected"'; ?>>Automatico</option>
-                    <option value="Semiautomatico" <?php if($cambio == 'Semiautomatico') echo 'selected="selected"'; ?>>Semiautomatico</option>
-                </select><br>
-                <label for="potenza">Potenza (CV):</label>
-                <input type="number" id="potenza_da" name="potenza_da" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000" value="<?php echo isset($_POST['PotenzaDa']) ? htmlspecialchars($_POST['PotenzaDa']) : ''; ?>">
-                <input type="number" id="potenza_a" name="potenza_a" style="margin-left: 0%;" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000" value="<?php echo isset($_POST['PotenzaA']) ? htmlspecialchars($_POST['PotenzaA']) : ''; ?>"><br>
-                <button type="submit" class="btn btn-primary" style="margin-left: 150px; margin-top: 30px; margin-bottom: 30px;">Cerca</button>
+                    </select><br>
+                    <label for="carburante">Carburante:</label>
+                    <select name="carburante">
+                        <option value="" <?php if($carburante == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                        <option value="Benzina" <?php if($carburante == 'Benzina') echo 'selected="selected"'; ?>>Benzina</option>
+                        <option value="Elettrico" <?php if($carburante == 'Elettrico') echo 'selected="selected"'; ?>>Elettrico</option>
+                        <option value="Diesel" <?php if($carburante == 'Diesel') echo 'selected="selected"'; ?>>Diesel</option>
+                        <option value="Ibrida" <?php if($carburante == 'Ibrida') echo 'selected="selected"'; ?>>Ibrida</option>
+                        <option value="GPL" <?php if($carburante == 'GPL') echo 'selected="selected"'; ?>>GPL</option>
+                        
+                    </select><br>
+                    <label for="cambio">Cambio:</label>
+                    <select name="cambio">
+                        <option value="" <?php if($cambio == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                        <option value="Manuale" <?php if($cambio == 'Manuale') echo 'selected="selected"'; ?>>Manuale</option>
+                        <option value="Automatico" <?php if($cambio == 'Automatico') echo 'selected="selected"'; ?>>Automatico</option>
+                        <option value="Semiautomatico" <?php if($cambio == 'Semiautomatico') echo 'selected="selected"'; ?>>Semiautomatico</option>
+                    </select><br>
+                    <label for="potenza">Potenza (CV):</label>
+                    <input type="number" id="potenza_da" name="potenza_da" onchange="updateMassimo('potenza_da', 'potenza_a')" placeholder="Da" min="0" max="1000" value="<?php echo isset($_POST['PotenzaDa']) ? htmlspecialchars($_POST['PotenzaDa']) : ''; ?>">
+                    <input type="number" id="potenza_a" name="potenza_a" style="margin-left: 0%;" onchange="updateMinimo('potenza_da', 'potenza_a')" placeholder="A" min="0" max="1000" value="<?php echo isset($_POST['PotenzaA']) ? htmlspecialchars($_POST['PotenzaA']) : ''; ?>"><br>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 150px; margin-top: 30px; margin-bottom: 30px;">Cerca</button>
+                </div>
             </form>
         </div>
 
@@ -641,8 +806,8 @@ window.addEventListener('load', function() {
 
                     if ($dbconn) {
                         // Query per recuperare gli annunci dalla tabella annuncio in base ai filtri
-                        $query = "SELECT * FROM annuncio WHERE 1=1"; // Inizia la query con un'istruzione true
-
+                        $query = "SELECT * FROM annuncio WHERE tipoVeicolo = '$tipoVeicolo'"; 
+                        
                         // Aggiungi filtri sulla marca e sul modello solo se sono stati specificati
                         if (!empty($marca)) {
                             $query .= " AND marca = '$marca'";
@@ -704,47 +869,92 @@ window.addEventListener('load', function() {
                         }
 
                         if ($result) {
-                            // Iterazione sui risultati della query per visualizzare gli annunci
-                            while ($row = pg_fetch_assoc($result)) {
-                                // Inizio di un nuovo annuncio
-                                echo "<div class='container3'>";
-                                // Visualizzazione dell'immagine dell'annuncio
-                                echo "<div class='foto'>";
-                                echo "<img src='../vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
-                                echo "</div>";
+                            if ($tipoVeicolo == 'auto') {
+                                // Iterazione sui risultati della query per visualizzare gli annunci
+                                while ($row = pg_fetch_assoc($result)) {
+                                    // Inizio di un nuovo annuncio
+                                    echo "<div class='container3'>";
+                                    // Visualizzazione dell'immagine dell'annuncio
+                                    echo "<div class='foto'>";
+                                    echo "<img src='../vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
+                                    echo "</div>";
 
-                                // Inizio delle caratteristiche dell'annuncio
-                                echo "<div class='caratteristiche'>";
-                                echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
-                                echo "<p>Chilometraggio:  {$row['chilometraggio']}</p>";
-                                echo "<p>Prezzo:  {$row['prezzo']}</p>";
-                                echo "<p>Anno: {$row['anno']}</p>";
-                                echo "<p>Carburante: {$row['carburante']}</p>";
-                                echo "<p>Cambio: {$row['cambio']}</p>";
-                                echo "<p>Potenza: {$row['potenza']} CV</p>";
-                                // Aggiungi altre caratteristiche dell'annuncio qui...
+                                    // Inizio delle caratteristiche dell'annuncio
+                                    echo "<div class='caratteristiche'>";
+                                    echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
+                                    echo "<p>Chilometraggio:  {$row['chilometraggio']}</p>";
+                                    echo "<p>Prezzo:  {$row['prezzo']}</p>";
+                                    echo "<p>Anno: {$row['anno']}</p>";
+                                    echo "<p>Carburante: {$row['carburante']}</p>";
+                                    echo "<p>Cambio: {$row['cambio']}</p>";
+                                    echo "<p>Potenza: {$row['potenza']} CV</p>";
+                                    // Aggiungi altre caratteristiche dell'annuncio qui...
 
-                                // Aggiunta della stella per contrassegnare come preferito
-                                if (isset($preferiti_array) && is_array($preferiti_array)) {
-                                    // Controllo se l'annuncio è nei preferiti
-                                    $isFavorite = in_array($row['id'], $preferiti_array);
-                                } else {
-                                    // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
-                                    $isFavorite = false;
+                                    // Aggiunta della stella per contrassegnare come preferito
+                                    if (isset($preferiti_array) && is_array($preferiti_array)) {
+                                        // Controllo se l'annuncio è nei preferiti
+                                        $isFavorite = in_array($row['id'], $preferiti_array);
+                                    } else {
+                                        // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
+                                        $isFavorite = false;
+                                    }
+
+                                    echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span><br>";
+
+                                    echo "<a href='../ricerca/big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
+
+                                    echo "<a href='#' class='btn btn-primary btn-lg buy-button' role='button'>COMPRA</a>";
+                                    
+                                
+                                    echo "</div>";                    
+                                    
+                                    // Fine dell'annuncio
+                                    echo "</div>";
                                 }
+                            } elseif ($tipoVeicolo == 'moto') {
 
-                                echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span><br>";
+                                while ($row = pg_fetch_assoc($result)) {
+                                    // Inizio di un nuovo annuncio
+                                    echo "<div class='container3'>";
+                                    // Visualizzazione dell'immagine dell'annuncio
+                                    echo "<div class='foto'>";
+                                    echo "<img src='../vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
+                                    echo "</div>";
 
-                                echo "<a href='../ricerca/big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
+                                    // Inizio delle caratteristiche dell'annuncio
+                                    echo "<div class='caratteristiche'>";
+                                    echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
+                                    echo "<p>Chilometraggio:  {$row['chilometraggio']}</p>";
+                                    echo "<p>Prezzo:  {$row['prezzo']}</p>";
+                                    echo "<p>Anno: {$row['anno']}</p>";
+                                    echo "<p>Carburante: {$row['carburante']}</p>";
+                                    echo "<p>Cambio: {$row['cambio']}</p>";
+                                    echo "<p>Potenza: {$row['potenza']} CV</p>";
+                                    // Aggiungi altre caratteristiche dell'annuncio qui...
 
-                                echo "<a href='#' class='btn btn-primary btn-lg buy-button' role='button'>COMPRA</a>";
+                                    // Aggiunta della stella per contrassegnare come preferito
+                                    if (isset($preferiti_array) && is_array($preferiti_array)) {
+                                        // Controllo se l'annuncio è nei preferiti
+                                        $isFavorite = in_array($row['id'], $preferiti_array);
+                                    } else {
+                                        // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
+                                        $isFavorite = false;
+                                    }
+
+                                    echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span><br>";
+
+                                    echo "<a href='../ricerca/big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
+
+                                    echo "<a href='#' class='btn btn-primary btn-lg buy-button' role='button'>COMPRA</a>";
+                                    
                                 
-                              
-                                echo "</div>";                    
-                                
-                                // Fine dell'annuncio
-                                echo "</div>";
+                                    echo "</div>";                    
+                                    
+                                    // Fine dell'annuncio
+                                    echo "</div>";
+                                }
                             }
+
 
                             // Rilascio della risorsa del risultato
                             pg_free_result($result);

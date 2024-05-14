@@ -29,6 +29,20 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
     <link rel="stylesheet" href="sign-in.css">
     <link rel="stylesheet" href="../style.css">
     <script type="application/javascript">
+         window.onload = function() {
+    showAutoForm(); // Mostra il form dell'auto all'avvio
+    };
+    function showAutoForm() {
+        document.getElementById("autoForm").style.display = "block";
+        document.getElementById("motoForm").style.display = "none";
+    }
+    
+    function showMotoForm() {
+        document.getElementById("autoForm").style.display = "none";
+        document.getElementById("motoForm").style.display = "block";
+    }
+    
+
         const modelliPerMarca = {
             "Audi": ["ModelloA1", "ModelloA3", "ModelloA4"],
             "BMW": ["Serie1", "Serie3", "Serie5"],
@@ -472,18 +486,6 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         
         </form>
     </div>
-
-    <script>
-    function showAutoForm() {
-        document.getElementById("autoForm").style.display = "block";
-        document.getElementById("motoForm").style.display = "none";
-    }
-    
-    function showMotoForm() {
-        document.getElementById("autoForm").style.display = "none";
-        document.getElementById("motoForm").style.display = "block";
-    }
-    </script>
 
 
 

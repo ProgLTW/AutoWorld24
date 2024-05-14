@@ -15,15 +15,7 @@
             <option value="Aprilia">Aprilia</option>
             <option value="Piaggio">Piaggio</option>
             <option value="Vespa">Vespa</option>
-            <option value="MotoGuzzi">Moto Guzzi</option>
-            <option value="BMWMotorrad">BMW Motorrad</option>
-            <option value="IndianMotorcycle">Indian Motorcycle</option>
-            <option value="RoyalEnfield">Royal Enfield</option>
-            <option value="Husqvarna">Husqvarna</option>
-            <option value="CFMoto">CFMoto</option>
-            <option value="MVAgusta">MV Agusta</option>
-            <option value="Benelli">Benelli</option>
-            <option value="ZeroMotorcycles">Zero Motorcycles</option>
+            
             
         </select> <br>
         

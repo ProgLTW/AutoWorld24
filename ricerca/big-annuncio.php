@@ -227,7 +227,8 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
         // Cambia lo stato del cuore (pieno o vuoto)
         $(this).toggleClass('filled');
-
+        var newText = isFavorite ? 'Aggiungi ai preferiti' : 'Rimuovi dai preferiti';
+        $('#preferitiText').text(newText);
         // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
         $.ajax({
             url: '../aggiorna_preferito.php',
@@ -573,14 +574,14 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             if (isset($preferiti_array) && is_array($preferiti_array)) {
                 // Controllo se l'annuncio è nei preferiti
                 $isFavorite = in_array($annuncio['id'], $preferiti_array);
-                echo $isFavorite;
             } else {
                 // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
                 $isFavorite = false;
-                echo $isFavorite;
             }
 
-            echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$annuncio['id']}'></span>";
+            echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$annuncio['id']}'></span><p class='caratteristiche'><b id='preferitiText'>" . ($isFavorite ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti') . "</b></p>";
+
+       
             echo "</td>";
             echo "</tr>";
 

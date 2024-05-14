@@ -75,6 +75,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
     <link rel="stylesheet" href="../style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="application/javascript">
+
         const modelliPerMarca = {
             "Audi": ["ModelloA1", "ModelloA3", "ModelloA4"],
             "BMW": ["Serie1", "Serie3", "Serie5"],
@@ -243,6 +244,18 @@ window.addEventListener('load', function() {
             });
         });
     });*/
+    window.onload = function() {
+    showAutoForm(); // Mostra il form dell'auto all'avvio
+    };
+    function showAutoForm() {
+        document.getElementById("autoForm").style.display = "block";
+        document.getElementById("motoForm").style.display = "none";
+    }
+    
+    function showMotoForm() {
+        document.getElementById("autoForm").style.display = "none";
+        document.getElementById("motoForm").style.display = "block";
+    }
 
     </script>
     <script>
@@ -494,26 +507,16 @@ window.addEventListener('load', function() {
                 $potenzaA = isset($_POST['PotenzaA']) ? $_POST['PotenzaA'] : '';
             ?>
 
-<script>
-    function showAutoForm() {
-        document.getElementById("autoForm").style.display = "block";
-        document.getElementById("motoForm").style.display = "none";
-    }
-    
-    function showMotoForm() {
-        document.getElementById("autoForm").style.display = "none";
-        document.getElementById("motoForm").style.display = "block";
-    }
-    </script>
-
 
             <form name="searchForm" action="vedi-annunci.php" method="POST" class="form-signin m-auto" style="margin-left: 0;">
 
             <label for="tipoVeicolo">Seleziona il tipo di veicolo:</label><br>
-                <input type="radio" id="auto" name="tipoVeicolo" value="auto" <?php if (isset($_POST['tipoVeicolo']) && $_POST['tipoVeicolo'] == 'auto') echo 'checked'; ?> onclick="showAutoForm()">
-                <label for="auto">Auto</label><br>
-                <input type="radio" id="moto" name="tipoVeicolo" value="moto" <?php if (isset($_POST['tipoVeicolo']) && $_POST['tipoVeicolo'] == 'moto') echo 'checked'; ?> onclick="showMotoForm()">
-                <label for="moto">Moto</label><br><br>
+
+            <input type="radio" id="auto" name="tipoVeicolo" value="auto" <?php if (!isset($_POST['tipoVeicolo']) || $_POST['tipoVeicolo'] == 'Auto') echo 'checked'; ?> onclick="showAutoForm()">
+            <label for="auto">Auto</label>
+
+            <input type="radio" id="moto" name="tipoVeicolo" value="moto" <?php if (isset($_POST['tipoVeicolo']) && $_POST['tipoVeicolo'] == 'Moto') echo 'checked'; ?> onclick="showMotoForm()">
+            <label for="moto">Moto</label>
             
                 <div id="autoForm">
                     <label for="marca">Marca:</label>
@@ -973,7 +976,25 @@ window.addEventListener('load', function() {
         </div>
         </div>
     </div>
-
+<script>
+    window.onload = function() {
+            <?php if (isset($_POST['tipoVeicolo']) && $_POST['tipoVeicolo'] == 'moto') { ?>
+                showMotoForm();
+            <?php } else { ?>
+                showAutoForm();
+            <?php } ?>
+        };
+        
+    function showAutoForm() {
+        document.getElementById("autoForm").style.display = "block";
+        document.getElementById("motoForm").style.display = "none";
+    }
+    
+    function showMotoForm() {
+        document.getElementById("autoForm").style.display = "none";
+        document.getElementById("motoForm").style.display = "block";
+    }
+</script>
 
     <div class="car-logos-container">
             <div class="car-logos animation">

@@ -219,10 +219,10 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
         <form name="myForm" action="<?php echo isset($_SESSION['loggato']) ? 'vendi.php' : '#'; ?>" method="POST" enctype="multipart/form-data" class="form-signin m-auto" onsubmit="alertRmb()">
 
         <label for="tipoVeicolo">Seleziona il tipo di veicolo:</label><br>
-        <input type="radio" id="auto" name="tipoVeicolo" value="auto" checked onclick="showAutoForm()">
-        <label for="auto">Auto</label><br>
-        <input type="radio" id="moto" name="tipoVeicolo" value="moto" onclick="showMotoForm()">
-        <label for="moto">Moto</label><br><br>
+        <input type="radio" id="auto" name="tipoVeicolo" value="Auto" checked onclick="showAutoForm()">
+        <label for="Auto">Auto</label><br>
+        <input type="radio" id="moto" name="tipoVeicolo" value="Moto" onclick="showMotoForm()">
+        <label for="Moto">Moto</label><br><br>
 
         <div id="autoForm">
             <label for="marca">Marca:</label>

@@ -37,7 +37,8 @@ password dimenticata ma chiaramente non manda mail --FATTO--
 far funzionare filtri-annunci --FATTO--
 password dimenticata --FATTO--
 Finanziamento aggiustare design --FATTO--
-iplementare cuore preferiti in tutte le pagine --FATTO--
+implementare cuore preferiti in tutte le pagine --FATTO--
+Scelta auto-moto messa
 
 ---DA FARE---
 
@@ -52,7 +53,7 @@ big annuncio:
     aggiungere altri dettagli(?)
 
 
-
+warning in vendi
 
 
 responsivenss (IMPORTANTE)-----------------------------------------------------------

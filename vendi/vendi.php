@@ -55,19 +55,18 @@ if ($dbconn) {
 
         
     if ($result) {
-        if ($tipoVeicolo === 'auto') {
+        if ($tipoVeicolo === 'Auto') {
             echo "<script>alert('Dati inseriti correttamente nella tabella Auto');</script>";
-        } elseif ($tipoVeicolo === 'moto') {
+        } elseif ($tipoVeicolo === 'Moto') {
             echo "<script>alert('Dati inseriti correttamente nella tabella Moto');</script>";
         }
         echo "<script>window.location.href = '../index.php';</script>";
     } else {
-        if ($tipoVeicolo === 'auto') {
-            echo "<script>alert('Errore durante l\'inserimento dei dati nella tabella Auto');</script>";
-        } elseif ($tipoVeicolo === 'moto') {
-            echo "<script>alert('Errore durante l\'inserimento dei dati nella tabella Moto');</script>";
-        }
-        echo "<script>window.location.href = '../index.php';</script>";
+        // Debugging dell'errore
+        $error = pg_last_error($dbconn);
+        header("Location: " . $_SERVER['PHP_SELF'] . "?error=" . urlencode($error));
+        exit;
+        //Warning: pg_query_params(): Query failed: ERROR: invalid input syntax for type numeric: "" CONTEXT: unnamed portal parameter $3 = '' in /home/lilith/Linguaggi/AutoWorld24/vendi/vendi.php on line 54
     }
 }    
 ?>

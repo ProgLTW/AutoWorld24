@@ -15,7 +15,52 @@ if(isset($_GET['logout'])) {
 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
     // URL a cui reindirizzare l'utente
     $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
+    if ($loggato) {
+        // Recupera l'email dell'utente in sessione
+        $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
     
+        // Controlla se l'email è stata recuperata correttamente
+        if ($email) {
+            // Connettiti al database
+            $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+                or die('Could not connect: ' . pg_last_error());
+    
+            // Verifica la connessione al database
+            if ($dbconn) {
+                // Esegui la query per recuperare gli annunci preferiti dell'utente
+                $query_preferiti = "SELECT preferiti FROM utente WHERE email = $1";
+                $result_preferiti = pg_query_params($dbconn, $query_preferiti, array($email));
+    
+                // Controlla se la query è stata eseguita correttamente
+                if ($result_preferiti) {
+                    // Estrai l'array degli ID degli annunci preferiti
+                    $row_preferiti = pg_fetch_assoc($result_preferiti);
+                    $preferiti = $row_preferiti['preferiti'];
+    
+                    // Trasforma la stringa JSON in un array PHP se non è vuota
+                    if ($preferiti) {
+                        $preferiti_array = json_decode($preferiti, true);
+                        var_dump($preferiti_array);
+                    } else {
+                        // Se l'array dei preferiti è vuoto, inizializza un array vuoto
+                        $preferiti_array = array();
+                    }
+                } else {
+                    // Gestisci eventuali errori nella query
+                    echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
+                }
+    
+                // Chiudi la connessione al database
+                pg_close($dbconn);
+            } else {
+                // Gestisci eventuali errori nella connessione al database
+                echo "Connessione al database non riuscita.";
+            }
+        } else {
+            // Gestisci il caso in cui l'email dell'utente non è stata recuperata correttamente dalla sessione
+            echo "Email dell'utente non trovata nella sessione.";
+        }
+    }
     
 ?>
 <!DOCTYPE html> 
@@ -27,6 +72,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
     <link rel="stylesheet" href="sign-in.css">
     <link rel="stylesheet" href="../style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="application/javascript">
         const modelliPerMarca = {
             "Audi": ["ModelloA1", "ModelloA3", "ModelloA4"],
@@ -165,6 +211,39 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 }
 
     </script>
+    <script>
+        $(document).ready(function() {
+    $('.heart-icon').click(function() {
+        console.log($(this));
+        var annuncioId = $(this).data('annuncio-id');
+        var isFavorite = $(this).hasClass('filled');
+        var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
+        
+        // Se l'utente non è loggato, reindirizzalo alla pagina di login
+        if (!isLogged) {
+            window.location.href = 'login/index.html';
+            return;
+        }
+
+        // Cambia lo stato del cuore (pieno o vuoto)
+        $(this).toggleClass('filled');
+
+        // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
+        $.ajax({
+            url: '../aggiorna_preferito.php',
+            type: 'POST',
+            data: { id: annuncioId, checked: !isFavorite }, // Inverti lo stato del preferito
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
+
+    </script>
     <style> 
         .icon-auto {
             width: 150px; /* Larghezza desiderata */
@@ -195,68 +274,6 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             font-family: 'Formula1 Display';
             font-size: 16px;
         }
-
-
-    </style>
-</head>
-<body class="text-center">
-<nav>
-        <ul>
-            <li><a href="../index.php"><b>AUTOWORLD</b></a></li>
-            <li class="dropdown">
-                <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
-                <div class="dropdown-menu">
-                    <a href="../ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
-                    <a href="../ricerca/vedi-annunci.php">Vedi Annunci</a>
-                </div>
-            </li>
-            <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
-            <li><a href="../ricambi.php"><b>RICAMBI</b></a></li>
-            <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
-            <?php
-                $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
-                $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-                if ($loggato) {
-                    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
-                        or die('Could not connect: ' . pg_last_error());
-
-                    if ($dbconn) {             
-                        $query = "SELECT nome FROM utente WHERE email = $1";
-                        $result = pg_query_params($dbconn, $query, array($email));
-
-                        if ($result) {
-                            $num_rows = pg_num_rows($result);
-                            if ($num_rows > 0) {
-                                $row = pg_fetch_assoc($result);
-                                echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
-                                // Qui inizia la sezione del dropdown
-                                echo "<div class='dropdown-menu'>";
-                                echo "<a href='#'>I miei annunci</a>";
-                                echo "<a href='../preferiti.php'>Preferiti</a>";
-                                echo "<a href='../modifica-password.php'>Modifica password</a>";
-                                echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
-                                echo "</div>"; // Chiudi dropdown-content
-                                echo "</li>"; // Chiudi dropdown
-                            } else {
-                                echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
-                            }
-                        } else {
-                            echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
-                        }
-                    } else {
-                        echo "Connessione al database non riuscita.";
-                    }
-                    pg_close($dbconn);
-                } else {
-                    echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
-                    echo "<li><a href='../registrazione/index.html' class='btn btn-primary btn-lg' role='button'>REGISTRATI</a></li>";
-                }
-            ?>
-        </ul>
-    </nav>
-
-    <style>
-
         .page2 {
             width: 80%;
             margin: 100px auto; /* Questo imposta i margini superiori e inferiori a 100px e i margini laterali a 'auto', che centrerà l'elemento */
@@ -374,8 +391,65 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             padding-right: 100px; /* Aggiunge un padding a destra per separare questa colonna dalla colonna precedente */
             text-align: center; /* Allinea il testo a destra all'interno della colonna */
         }
+
     </style>
 
+</head>
+<body class="text-center">
+<nav>
+        <ul>
+            <li><a href="../index.php"><b>AUTOWORLD</b></a></li>
+            <li class="dropdown">
+                <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
+                <div class="dropdown-menu">
+                    <a href="../ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
+                    <a href="../ricerca/vedi-annunci.php">Vedi Annunci</a>
+                </div>
+            </li>
+            <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
+            <li><a href="../ricambi.php"><b>RICAMBI</b></a></li>
+            <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
+            <?php
+                $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+                $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+                if ($loggato) {
+                    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+                        or die('Could not connect: ' . pg_last_error());
+
+                    if ($dbconn) {             
+                        $query = "SELECT nome FROM utente WHERE email = $1";
+                        $result = pg_query_params($dbconn, $query, array($email));
+
+                        if ($result) {
+                            $num_rows = pg_num_rows($result);
+                            if ($num_rows > 0) {
+                                $row = pg_fetch_assoc($result);
+                                echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
+                                // Qui inizia la sezione del dropdown
+                                echo "<div class='dropdown-menu'>";
+                                echo "<a href='../miei-annunci.php'>I miei annunci</a>";
+                                echo "<a href='../preferiti.php'>Preferiti</a>";
+                                echo "<a href='../modifica-password.php'>Modifica password</a>";
+                                echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
+                                echo "</div>"; // Chiudi dropdown-content
+                                echo "</li>"; // Chiudi dropdown
+                            } else {
+                                echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                            }
+                        } else {
+                            echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+                        }
+                    } else {
+                        echo "Connessione al database non riuscita.";
+                    }
+                    pg_close($dbconn);
+                } else {
+                    echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
+                    echo "<li><a href='../registrazione/index.html' class='btn btn-primary btn-lg' role='button'>REGISTRATI</a></li>";
+                }
+            ?>
+        </ul>
+    </nav>
 <div class="page2">
     <?php
     // Verifica se è stato passato un ID di annuncio come parametro nell'URL
@@ -389,7 +463,23 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         // Query per recuperare l'annuncio dal database utilizzando l'ID fornito
         $query = "SELECT * FROM annuncio WHERE id = $1";
         $result = pg_query_params($dbconn, $query, array($annuncio_id));
+        $query_preferiti = "SELECT id FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
+        $result_preferiti = pg_query($dbconn, $query_preferiti);
+        if ($result_preferiti) {
+            // Inizializza un array per memorizzare gli ID degli annunci preferiti
+            $preferiti_array = array();
 
+            // Itera sui risultati della query e aggiungi gli ID all'array dei preferiti
+            while ($row_preferiti = pg_fetch_assoc($result_preferiti)) {
+                $preferiti_array[] = $row_preferiti['id'];
+            }
+
+            // Libera la memoria del risultato della query
+            pg_free_result($result_preferiti);
+        } else {
+            // Gestisci eventuali errori nella query per recuperare gli annunci preferiti
+            echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
+        }
         // Verifica se la query ha restituito un risultato valido
         if ($result && pg_num_rows($result) > 0) {
             $annuncio = pg_fetch_assoc($result);
@@ -480,11 +570,17 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             echo "<p class='caratteristiche'><img src=\"../immagini/potenza.png\" width='30px'>&nbsp; Potenza: <b>{$annuncio['potenza']} CV</b></p>";
             echo "</td>";
             echo "<td>";
-            $checked = $annuncio['preferito'] ? 'checked' : '';
-            $stellaVuota = $annuncio['preferito'] ? '' : 'stella-vuota';
-            echo "<p class='caratteristiche'><input type='checkbox' class='preferito-checkbox' id='preferito{$annuncio['id']}' data-id='{$annuncio['id']}' $checked>";
-            echo "<label for='preferito{$annuncio['id']}' class='stella $stellaVuota'>&#9734;</label>";
-            echo " <u>Aggiungi ai preferiti</u></p>";
+            if (isset($preferiti_array) && is_array($preferiti_array)) {
+                // Controllo se l'annuncio è nei preferiti
+                $isFavorite = in_array($annuncio['id'], $preferiti_array);
+                echo $isFavorite;
+            } else {
+                // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
+                $isFavorite = false;
+                echo $isFavorite;
+            }
+
+            echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$annuncio['id']}'></span>";
             echo "</td>";
             echo "</tr>";
 

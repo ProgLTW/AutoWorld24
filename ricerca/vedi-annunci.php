@@ -73,6 +73,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
     <link rel="stylesheet" href="sign-in.css">
     <link rel="stylesheet" href="../style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="application/javascript">
         const modelliPerMarca = {
             "Audi": ["ModelloA1", "ModelloA3", "ModelloA4"],
@@ -343,7 +344,7 @@ window.addEventListener('load', function() {
                                 echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
                                 // Qui inizia la sezione del dropdown
                                 echo "<div class='dropdown-menu'>";
-                                echo "<a href='#'>I miei annunci</a>";
+                                echo "<a href='../miei-annunci.php'>I miei annunci</a>";
                                 echo "<a href='../preferiti.php'>Preferiti</a>";
                                 echo "<a href='../modifica-password.php'>Modifica password</a>";
                                 echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
@@ -806,7 +807,7 @@ window.addEventListener('load', function() {
 
                     if ($dbconn) {
                         // Query per recuperare gli annunci dalla tabella annuncio in base ai filtri
-                        $query = "SELECT * FROM annuncio WHERE tipoVeicolo = '$tipoVeicolo'"; 
+                        $query = "SELECT * FROM annuncio WHERE tipoVeicolo = 'Auto'"; 
                         
                         // Aggiungi filtri sulla marca e sul modello solo se sono stati specificati
                         if (!empty($marca)) {
@@ -901,7 +902,7 @@ window.addEventListener('load', function() {
 
                                     echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span><br>";
 
-                                    echo "<a href='../ricerca/big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
+                                    echo "<a href='big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
 
                                     echo "<a href='#' class='btn btn-primary btn-lg buy-button' role='button'>COMPRA</a>";
                                     

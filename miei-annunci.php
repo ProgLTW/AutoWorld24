@@ -16,7 +16,52 @@ session_start();
    $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
    // URL a cui reindirizzare l'utente
    $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
+   if ($loggato) {
+    // Recupera l'email dell'utente in sessione
+    $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
 
+    // Controlla se l'email è stata recuperata correttamente
+    if ($email) {
+        // Connettiti al database
+        $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+            or die('Could not connect: ' . pg_last_error());
+
+        // Verifica la connessione al database
+        if ($dbconn) {
+            // Esegui la query per recuperare gli annunci preferiti dell'utente
+            $query_preferiti = "SELECT preferiti FROM utente WHERE email = $1";
+            $result_preferiti = pg_query_params($dbconn, $query_preferiti, array($email));
+
+            // Controlla se la query è stata eseguita correttamente
+            if ($result_preferiti) {
+                // Estrai l'array degli ID degli annunci preferiti
+                $row_preferiti = pg_fetch_assoc($result_preferiti);
+                $preferiti = $row_preferiti['preferiti'];
+
+                // Trasforma la stringa JSON in un array PHP se non è vuota
+                if ($preferiti) {
+                    $preferiti_array = json_decode($preferiti, true);
+                    var_dump($preferiti_array);
+                } else {
+                    // Se l'array dei preferiti è vuoto, inizializza un array vuoto
+                    $preferiti_array = array();
+                }
+            } else {
+                // Gestisci eventuali errori nella query
+                echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
+            }
+
+            // Chiudi la connessione al database
+            pg_close($dbconn);
+        } else {
+            // Gestisci eventuali errori nella connessione al database
+            echo "Connessione al database non riuscita.";
+        }
+    } else {
+        // Gestisci il caso in cui l'email dell'utente non è stata recuperata correttamente dalla sessione
+        echo "Email dell'utente non trovata nella sessione.";
+    }
+}
 ?>
 
 <!DOCTYPE html> 
@@ -28,7 +73,38 @@ session_start();
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
     <link rel="stylesheet" href="style.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    $('.heart-icon').click(function() {
+        var annuncioId = $(this).data('annuncio-id');
+        var isFavorite = $(this).hasClass('filled');
+        var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
+        
+        // Se l'utente non è loggato, reindirizzalo alla pagina di login
+        if (!isLogged) {
+            window.location.href = 'login/index.html';
+            return;
+        }
 
+        // Cambia lo stato del cuore (pieno o vuoto)
+        $(this).toggleClass('filled');
+
+        // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
+        $.ajax({
+            url: 'aggiorna_preferito.php',
+            type: 'POST',
+            data: { id: annuncioId, checked: !isFavorite }, // Inverti lo stato del preferito
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
+
+    </script>
     <style>
         .annunci{
             width: 80%;
@@ -143,65 +219,79 @@ session_start();
     <div class="annunci">
     
     <?php
-        $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
-            or die('Could not connect: ' . pg_last_error());
+                    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+                        or die('Could not connect: ' . pg_last_error());
+                    if ($dbconn) {
+                        $query = "SELECT * FROM annuncio WHERE email = '$email'";
+                        $result = pg_query($dbconn, $query);
+                        // Esegui la query per recuperare gli ID degli annunci preferiti dell'utente loggato
+                        $query_preferiti = "SELECT id FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
+                        $result_preferiti = pg_query($dbconn, $query_preferiti);
+                        if ($result_preferiti) {
+                            // Inizializza un array per memorizzare gli ID degli annunci preferiti
+                            $preferiti_array = array();
 
-        if ($dbconn) {
-            // Query per recuperare tutti gli annunci dalla tabella annuncio
-            $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-        if ($email) {
-            // Eseguire la query per recuperare gli annunci dell'utente corrente
-            $query = "SELECT * FROM annuncio WHERE email = $1";
-            $result = pg_query_params($dbconn, $query, array($email));
-            if ($result) {
-                // Visualizza gli annunci recuperati
-                while ($row = pg_fetch_assoc($result)) {
-                    echo "<div class='container3'>";
-                    // Visualizzazione dell'immagine dell'annuncio
-                    echo "<div class='foto'>";
-                    echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
-                    echo "</div>";
+                            // Itera sui risultati della query e aggiungi gli ID all'array dei preferiti
+                            while ($row_preferiti = pg_fetch_assoc($result_preferiti)) {
+                                $preferiti_array[] = $row_preferiti['id'];
+                            }
 
-                    // Inizio delle caratteristiche dell'annuncio
-                    echo "<div class='caratteristiche'>";
-                    echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
-                    echo "<p>Chilometri: {$row['chilometraggio']}</p>";
-                    echo "<p>Prezzo: {$row['prezzo']}</p>";
-                    echo "<p>Anno: {$row['anno']}</p>";
-                    echo "<p>Carburante: {$row['carburante']}</p>";
-                    echo "<p>Cambio: {$row['cambio']}</p>";
-                    echo "<p>Potenza: {$row['potenza']} CV</p>";
-                    // Aggiungi altre caratteristiche dell'annuncio qui...
+                            // Libera la memoria del risultato della query
+                            pg_free_result($result_preferiti);
+                        } else {
+                            // Gestisci eventuali errori nella query per recuperare gli annunci preferiti
+                            echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
+                        }
+                        if ($result) {
+                            // Iterazione sui risultati della query per visualizzare gli annunci
+                            // Dentro il loop degli annunci
+                            while ($row = pg_fetch_assoc($result)) {
+                                // Inizio di un nuovo annuncio
+                                echo "<div class='container3'>";
+                                // Visualizzazione dell'immagine dell'annuncio
+                                echo "<div class='foto'>";
+                                echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
+                                echo "</div>";
 
-                    // Aggiunta della stella per contrassegnare come preferito
-                    $checked = $row['preferito'] ? 'checked' : ''; // Se il preferito è true, il checkbox sarà selezionato
-                    $stellaVuota = $row['preferito'] ? '' : 'stella-vuota'; // Se il preferito è false, applica la classe stella-vuota
-                    echo "<p>";
-                    echo "<input type='checkbox' class='preferito-checkbox' id='preferito{$row['id']}' data-id='{$row['id']}' $checked>"; // Checkbox nascosto
-                    echo "<label for='preferito{$row['id']}' class='stella $stellaVuota'>&#9734;</label>"; // Etichetta personalizzata per l'icona della stella
-                    echo "</p>";
+                                // Inizio delle caratteristiche dell'annuncio
+                                echo "<div class='caratteristiche'>";
+                                echo "<h2><u><a href='../ricerca/big-annuncio.php?id={$row['id']}' style='color: orange;'>{$row['marca']} {$row['modello']}</a></u></h2><br>";
+                                echo "<p>km {$row['chilometraggio']}</p>";
+                                echo "<p>€ {$row['prezzo']}</p>";
+                                echo "<p><img src=\"immagini/calendario.png\" width='20px'>&nbsp;{$row['anno']}</p>";
+                                echo "<p><img src=\"immagini/carburante.png\" width='20px'>&nbsp;{$row['carburante']}</p>";
+                                echo "<p><img src=\"immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
+                                echo "<p><img src=\"immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
+                                
+                                // Checkbox per il preferito
+                                // Controllo se l'array dei preferiti è stato correttamente inizializzato
+                                if (isset($preferiti_array) && is_array($preferiti_array)) {
+                                    // Controllo se l'annuncio è nei preferiti
+                                    $isFavorite = in_array($row['id'], $preferiti_array);
+                                } else {
+                                    // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
+                                    $isFavorite = false;
+                                }
 
-                    echo "</div>";
+                                echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span>";
 
-                    // Fine dell'annuncio
-                    echo "</div>";
-                }
-                pg_free_result($result);
+                                // Fine dell'annuncio
+                                echo "</div>";
+                                echo "</div>";
+                            }
 
-            } else {
-                echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
-            }
-        } else {
-            // Gestisci il caso in cui l'utente non è autenticato
-            echo "L'utente non è autenticato.";
-        }
-        // Inizio di un nuovo annuncio
-                    
+                            // Rilascio della risorsa del risultato
+                            pg_free_result($result);
+                        } else {
+                            echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+                        }
+                    } else {
+                        echo "Connessione al database non riuscita.";
+                    }
 
-    }// Rilascio della risorsa del risultato
-   
-    pg_close($dbconn);
-?>  
+                    // Chiusura della connessione al database
+                    pg_close($dbconn);
+                ?> 
         
     </div>
 </main>

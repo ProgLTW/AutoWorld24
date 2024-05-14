@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 // Logout logic
 if(isset($_GET['logout'])) {

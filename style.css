@@ -302,6 +302,18 @@ nav li:not(:first-child):hover {
 .scroll-right {
     right: 0;
 }
+/* CSS */
+.heart-icon {
+    display: inline-block;
+    width: 24px; /* Regola la dimensione dell'icona */
+    height: 24px;
+    background-image: url('immagini/cuore-vuoto.png'); /* Immagine del cuore vuoto */
+    background-size: cover;
+}
+
+.heart-icon.filled {
+    background-image: url('immagini/cuore-pieno.png'); /* Immagine del cuore pieno */
+}
 
 
 

@@ -77,33 +77,35 @@ if(isset($_GET['logout'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-        $('input[type="checkbox"][name="preferito"]').change(function() {
-            var annuncioId = $(this).val();
-            console.log($(this).val());
-            var isChecked = $(this).prop('checked');
-            console.log(isChecked);
-            var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
-            // Se l'utente non è loggato, reindirizzalo alla pagina di login
-            if (!isLogged) {
-                window.location.href = 'login/index.html';
-                return;
+    $('.heart-icon').click(function() {
+        var annuncioId = $(this).data('annuncio-id');
+        var isFavorite = $(this).hasClass('filled');
+        var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
+        
+        // Se l'utente non è loggato, reindirizzalo alla pagina di login
+        if (!isLogged) {
+            window.location.href = 'login/index.html';
+            return;
+        }
+
+        // Cambia lo stato del cuore (pieno o vuoto)
+        $(this).toggleClass('filled');
+
+        // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
+        $.ajax({
+            url: 'aggiorna_preferito.php',
+            type: 'POST',
+            data: { id: annuncioId, checked: !isFavorite }, // Inverti lo stato del preferito
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
             }
-            // Invia una richiesta AJAX al server per aggiungere o rimuovere l'annuncio dai preferiti
-            $.ajax({
-                url: 'aggiorna_preferito.php', // Imposta il percorso del file PHP per l'aggiunta/rimozione dei preferiti
-                type: 'POST',
-                data: { id: annuncioId, checked: isChecked },
-                success: function(response) {
-                    // Aggiorna la pagina o esegui altre azioni in base alla risposta del server
-                    location.reload(); // Aggiorna la pagina dopo l'aggiunta o la rimozione del preferito
-                    console.log(response)
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
         });
     });
+});
+
     </script>
     <style> 
         .icon-auto {
@@ -293,7 +295,7 @@ if(isset($_GET['logout'])) {
                                     $isFavorite = false;
                                 }
 
-                                echo "<input type='checkbox' name='preferito' value='{$row['id']}'" . ($isFavorite ? "checked" : "") . "> Preferito";
+                                echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span>";
 
                                 // Fine dell'annuncio
                                 echo "</div>";

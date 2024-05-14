@@ -36,15 +36,13 @@ Preferiti deve ricondurre ai preferiti se loggato, al login se non loggato --FAT
 password dimenticata ma chiaramente non manda mail --FATTO--
 far funzionare filtri-annunci --FATTO--
 password dimenticata --FATTO--
+Finanziamento aggiustare design --FATTO--
 
 ---DA FARE---
 
 Login effettuato
 
-stella preferiti non si colora bene
-
-preferiti non booleano (compare piu volte lo stesso annuncio)
-in preferiti la stellina dovrebbe essere impostata su checked
+iplementare cuore preferiti in tutte le pagine
 
 implementare l'acquisto (e relativa eliminazione annuncio + i miei acquisti)
 
@@ -54,7 +52,7 @@ big annuncio:
     gestire foto multiple
     aggiungere altri dettagli(?)
 
-Finanziamento aggiustare design
+
 
 
 

@@ -447,7 +447,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             //seconda colonna -> risultati
             echo "<td class='info-column'>";
             
-            echo "<p style='font-size: 25px;'><b><u>Rata mensile: <span id='risultato_rata_mese'></span></u></b><button onclick='toggleInfo()'><span class=\"info-button\"> i</span></button></p>";
+            echo "<p style='font-size: 25px;'><b><u>Rata mensile: <span id='risultato_rata_mese'></span></u></b><button onclick='toggleInfo()'><span class=\"info-button\"> info </span></button></p>";
             echo "<p class='info hidden'>Importo totale prestito: <b><span id='risultato_tot_prestito'></span></b></p>";
             echo "<p class='info hidden'>Totale interessi: <b><span id='risultato_tot_interessi'></span></b></p>";
             echo "<p class='info hidden'>Numero di rate: <b><span id='risultato_num_rate'></span></b></p>";

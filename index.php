@@ -75,6 +75,7 @@ if(isset($_GET['logout'])) {
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
     <link rel="stylesheet" href="style.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
     $('.heart-icon').click(function() {
@@ -148,12 +149,16 @@ if(isset($_GET['logout'])) {
             margin-bottom: 30px;
         }
 
+       
+
     </style>
 </head>
 <body class="text-center">
     <nav>
         <ul>
             <li><a href="index.php"><b>AUTOWORLD</b></a></li>
+
+            <li><a href="ricambi.php"><b>CHI SIAMO</b></a></li>
             <li class="dropdown">
                 <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
                 <div class="dropdown-menu">
@@ -162,7 +167,7 @@ if(isset($_GET['logout'])) {
                 </div>
             </li>
             <li><a href="vendi/index.php"><b>VENDI</b></a></li>
-            <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
+            
             <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
             <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
@@ -228,7 +233,7 @@ if(isset($_GET['logout'])) {
             
         </div>
         <div class="box">
-            <h2>RICAMBI</h2>
+            <h2>MOTO</h2>
             <button class="icon-auto-button" onclick="location.href='link_to_auto_page.html';">
                 <img src="immagini/iconaruota.png" alt="Auto Icon" class="icon-auto">
             </button>

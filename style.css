@@ -177,6 +177,16 @@ nav li:not(:first-child):hover {
     text-align: center;
     margin-top: 120px;
 }
+
+.container-contattaci{
+    background-color: orange;
+    position: relative;
+    width: 100%;
+    height: auto;
+    bottom: 70px;
+}
+
+
 .car-logos-container {
     position: fixed;
     z-index: 1000;

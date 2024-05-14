@@ -315,7 +315,6 @@ window.addEventListener('load', function() {
 <nav>
         <ul>
             <li><a href="../index.php"><b>AUTOWORLD</b></a></li>
-            <li><a href="../ricambi.php"><b>CHI SIAMO</b></a></li>
             <li class="dropdown">
                 <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
                 <div class="dropdown-menu">
@@ -324,7 +323,7 @@ window.addEventListener('load', function() {
                 </div>
             </li>
             <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
-            
+            <li><a href="ricambi.php"><b>CHI SIAMO</b></a></li>
             <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
             <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;

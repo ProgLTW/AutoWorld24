@@ -164,7 +164,7 @@ session_start();
                 </div>
             </li>
             <li><a href="vendi/index.php"><b>VENDI</b></a></li>
-            <li><a href="ricambi.php"><b>RICAMBI</b></a></li>
+            <li><a href="ricambi.php"><b>CHI SIAMO</b></a></li>
             <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
             <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;

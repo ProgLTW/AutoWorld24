@@ -37,12 +37,11 @@ password dimenticata ma chiaramente non manda mail --FATTO--
 far funzionare filtri-annunci --FATTO--
 password dimenticata --FATTO--
 Finanziamento aggiustare design --FATTO--
+iplementare cuore preferiti in tutte le pagine --FATTO--
 
 ---DA FARE---
 
 Login effettuato
-
-iplementare cuore preferiti in tutte le pagine
 
 implementare l'acquisto (e relativa eliminazione annuncio + i miei acquisti)
 

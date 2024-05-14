@@ -16,7 +16,53 @@ if(isset($_GET['logout'])) {
 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
     // URL a cui reindirizzare l'utente
     $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
-    
+    // Controlla se l'utente è loggato e recupera l'email
+    if ($loggato) {
+        // Recupera l'email dell'utente in sessione
+        $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+
+        // Controlla se l'email è stata recuperata correttamente
+        if ($email) {
+            // Connettiti al database
+            $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+                or die('Could not connect: ' . pg_last_error());
+
+            // Verifica la connessione al database
+            if ($dbconn) {
+                // Esegui la query per recuperare gli annunci preferiti dell'utente
+                $query_preferiti = "SELECT preferiti FROM utente WHERE email = $1";
+                $result_preferiti = pg_query_params($dbconn, $query_preferiti, array($email));
+
+                // Controlla se la query è stata eseguita correttamente
+                if ($result_preferiti) {
+                    // Estrai l'array degli ID degli annunci preferiti
+                    $row_preferiti = pg_fetch_assoc($result_preferiti);
+                    $preferiti = $row_preferiti['preferiti'];
+
+                    // Trasforma la stringa JSON in un array PHP se non è vuota
+                    if ($preferiti) {
+                        $preferiti_array = json_decode($preferiti, true);
+                        var_dump($preferiti_array);
+                    } else {
+                        // Se l'array dei preferiti è vuoto, inizializza un array vuoto
+                        $preferiti_array = array();
+                    }
+                } else {
+                    // Gestisci eventuali errori nella query
+                    echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
+                }
+
+                // Chiudi la connessione al database
+                pg_close($dbconn);
+            } else {
+                // Gestisci eventuali errori nella connessione al database
+                echo "Connessione al database non riuscita.";
+            }
+        } else {
+            // Gestisci il caso in cui l'email dell'utente non è stata recuperata correttamente dalla sessione
+            echo "Email dell'utente non trovata nella sessione.";
+        }
+    }
 ?>
 <!DOCTYPE html> 
 <html>
@@ -196,6 +242,38 @@ window.addEventListener('load', function() {
             });
         });
     });*/
+
+    </script>
+    <script>
+        $(document).ready(function() {
+    $('.heart-icon').click(function() {
+        var annuncioId = $(this).data('annuncio-id');
+        var isFavorite = $(this).hasClass('filled');
+        var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
+        
+        // Se l'utente non è loggato, reindirizzalo alla pagina di login
+        if (!isLogged) {
+            window.location.href = 'login/index.html';
+            return;
+        }
+
+        // Cambia lo stato del cuore (pieno o vuoto)
+        $(this).toggleClass('filled');
+
+        // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
+        $.ajax({
+            url: '../aggiorna_preferito.php',
+            type: 'POST',
+            data: { id: annuncioId, checked: !isFavorite }, // Inverti lo stato del preferito
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
 
     </script>
     <style> 
@@ -607,6 +685,23 @@ window.addEventListener('load', function() {
                         }
                         // Esecuzione della query
                         $result = pg_query($dbconn, $query);
+                        $query_preferiti = "SELECT id FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
+                        $result_preferiti = pg_query($dbconn, $query_preferiti);
+                        if ($result_preferiti) {
+                            // Inizializza un array per memorizzare gli ID degli annunci preferiti
+                            $preferiti_array = array();
+
+                            // Itera sui risultati della query e aggiungi gli ID all'array dei preferiti
+                            while ($row_preferiti = pg_fetch_assoc($result_preferiti)) {
+                                $preferiti_array[] = $row_preferiti['id'];
+                            }
+
+                            // Libera la memoria del risultato della query
+                            pg_free_result($result_preferiti);
+                        } else {
+                            // Gestisci eventuali errori nella query per recuperare gli annunci preferiti
+                            echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
+                        }
 
                         if ($result) {
                             // Iterazione sui risultati della query per visualizzare gli annunci
@@ -630,12 +725,15 @@ window.addEventListener('load', function() {
                                 // Aggiungi altre caratteristiche dell'annuncio qui...
 
                                 // Aggiunta della stella per contrassegnare come preferito
-                                $checked = $row['preferito'] ? 'checked' : ''; // Se il preferito è true, il checkbox sarà selezionato
-                                $stellaVuota = $row['preferito'] ? '' : 'stella-vuota'; // Se il preferito è false, applica la classe stella-vuota
-                                echo "<p>";
-                                echo "<input type='checkbox' class='preferito-checkbox' id='preferito{$row['id']}' data-id='{$row['id']}' $checked>"; // Checkbox nascosto
-                                echo "<label for='preferito{$row['id']}' class='stella $stellaVuota'>&#9734;</label>"; // Etichetta personalizzata per l'icona della stella
-                                echo "</p>";
+                                if (isset($preferiti_array) && is_array($preferiti_array)) {
+                                    // Controllo se l'annuncio è nei preferiti
+                                    $isFavorite = in_array($row['id'], $preferiti_array);
+                                } else {
+                                    // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
+                                    $isFavorite = false;
+                                }
+
+                                echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span><br>";
 
                                 echo "<a href='../ricerca/big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
 

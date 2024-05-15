@@ -105,6 +105,23 @@ if(isset($_GET['logout'])) {
 });
 
     </script>
+    <script>
+$(document).ready(function() {
+    // Gestisci il clic sul link "Chi siamo" nella navbar
+    $('a[href="#footer"]').click(function(event) {
+        // Previene il comportamento predefinito del link
+        event.preventDefault();
+        
+        // Calcola la posizione verticale del footer
+        var targetOffset = $('#footer').offset().top;
+        
+        // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
+        $('html, body').animate({
+            scrollTop: targetOffset
+        }, 1000);
+    });
+});
+</script>
     <style> 
         .icon-auto {
             width: 150px; /* Larghezza desiderata */
@@ -112,6 +129,25 @@ if(isset($_GET['logout'])) {
         }
         .small-logo {
             margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
+        }
+        .container-contattaci {
+            display: flex;
+            flex-wrap: wrap;
+            font-family: 'Formula1 Display';
+            padding-top: 50px; /* Aumenta lo spazio sopra il footer */
+            padding-bottom: 50px; /* Aumenta lo spazio sotto il footer */
+        }
+
+        .footer-column {
+            flex: 1;
+            margin-right: 100px;
+            margin-bottom: 20px;
+            margin-left: 100px;
+            
+        }
+        .footer-column a {
+            color: black; /* Imposta il colore del testo dei link su nero */
+            text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
         }
     </style>
 </head>
@@ -127,7 +163,7 @@ if(isset($_GET['logout'])) {
                 </div>
             </li>
             <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
-            <li><a href="ricambi.php"><b>CHI SIAMO</b></a></li>
+            <li><a href="#footer"><b>CHI SIAMO</b></a></li>
             <li><a href="../preferiti.php"><b>PREFERITI</b></a></li>
             <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
@@ -180,30 +216,13 @@ if(isset($_GET['logout'])) {
                     $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
                         or die('Could not connect: ' . pg_last_error());
                     if ($dbconn) {
-                        $query = "SELECT * FROM annuncio";
-                        $result = pg_query($dbconn, $query);
                         // Esegui la query per recuperare gli ID degli annunci preferiti dell'utente loggato
-                        $query_preferiti = "SELECT id FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
+                        $query_preferiti = "SELECT * FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
                         $result_preferiti = pg_query($dbconn, $query_preferiti);
                         if ($result_preferiti) {
-                            // Inizializza un array per memorizzare gli ID degli annunci preferiti
-                            $preferiti_array = array();
-
-                            // Itera sui risultati della query e aggiungi gli ID all'array dei preferiti
-                            while ($row_preferiti = pg_fetch_assoc($result_preferiti)) {
-                                $preferiti_array[] = $row_preferiti['id'];
-                            }
-
-                            // Libera la memoria del risultato della query
-                            pg_free_result($result_preferiti);
-                        } else {
-                            // Gestisci eventuali errori nella query per recuperare gli annunci preferiti
-                            echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
-                        }
-                        if ($result) {
                             // Iterazione sui risultati della query per visualizzare gli annunci
                             // Dentro il loop degli annunci
-                            while ($row = pg_fetch_assoc($result)) {
+                            while ($row = pg_fetch_assoc($result_preferiti)) {
                                 // Inizio di un nuovo annuncio
                                 echo "<div class='container3'>";
                                 // Visualizzazione dell'immagine dell'annuncio
@@ -223,13 +242,7 @@ if(isset($_GET['logout'])) {
                                 
                                 // Checkbox per il preferito
                                 // Controllo se l'array dei preferiti è stato correttamente inizializzato
-                                if (isset($preferiti_array) && is_array($preferiti_array)) {
-                                    // Controllo se l'annuncio è nei preferiti
-                                    $isFavorite = in_array($row['id'], $preferiti_array);
-                                } else {
-                                    // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
-                                    $isFavorite = false;
-                                }
+                                $isFavorite = 1;
 
                                 echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span>";
 
@@ -257,20 +270,25 @@ if(isset($_GET['logout'])) {
                 <img src="immagini/rightarrow.png" alt="Scroll Right">
             </button>
     </div>
-    <div class="container-contattaci">
-        <h2>Indirizzo Email</h2>
-        <p>Puoi contattarci inviando un'email a:</p>
-        <a href="mailto:info@autoworld.com">info@autoworld.com</a>
-        <h2>Seguici sui Social</h2>
-        <div class="social-icons">
-            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-            <!-- Aggiungi altre icone dei social secondo necessità -->
+    <div class="container-contattaci" id="footer">
+        <div class="footer-column">
+            <h2>Chi siamo</h2>
+            <p>Our commitment is to provide you with the highest quality products and the best value in the mobile tool industry. Thank you for your continued support of Cornwell Quality Tools and our franchise owners.</p><br><br>
+            <p><b>© 2024 Autoworld. All Rights Reserved.</b></p>
         </div>
-    </div> 
-
-
+        <div class="footer-column">
+            <h2>Contatti</h2>
+            <p>Indirizzo: Via delle Stelle, 123</p>
+            <p>Telefono: 0123-456789</p>
+            <p>Email: <a href="mailto:info@autoworld.com">info@autoworld.com</a></p>
+        </div>
+        <div class="footer-column">
+            <h2>SEGUICI:</h2>
+            <p><a href="https://www.instagram.com/"><img src="immagini/instagram.png" alt="Instagram" style="width: 20px; height: 20px;">&nbsp;INSTAGRAM</a></p>
+            <p><a href="https://twitter.com/"><img src="immagini/twitter.png" alt="Twitter" style="width: 20px; height: 20px;">&nbsp;TWITTER</a></p>
+            <p><a href="https://www.facebook.com/"><img src="immagini/facebook.png" alt="Facebook" style="width: 20px; height: 20px;">&nbsp;FACEBOOK</a></p>
+        </div>
+    </div>
     <div class="car-logos-container">
             <div class="car-logos animation">
                 <img src="../immagini/loghiauto/audi.png">

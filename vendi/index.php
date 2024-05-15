@@ -26,6 +26,7 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
     <link rel="stylesheet" href="../style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="application/javascript">
 
         const modelliPerMarca = {
@@ -96,6 +97,23 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
             }
     }
     </script>
+    <script>
+$(document).ready(function() {
+    // Gestisci il clic sul link "Chi siamo" nella navbar
+    $('a[href="#footer"]').click(function(event) {
+        // Previene il comportamento predefinito del link
+        event.preventDefault();
+        
+        // Calcola la posizione verticale del footer
+        var targetOffset = $('#footer').offset().top;
+        
+        // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
+        $('html, body').animate({
+            scrollTop: targetOffset
+        }, 1000);
+    });
+});
+</script>
     <style> 
 
         
@@ -141,6 +159,25 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
         input[type=file]::-webkit-file-upload-button {
             font-family: 'Formula1 Display'; 
         }
+        .container-contattaci {
+            display: flex;
+            flex-wrap: wrap;
+            font-family: 'Formula1 Display';
+            padding-top: 50px; /* Aumenta lo spazio sopra il footer */
+            padding-bottom: 50px; /* Aumenta lo spazio sotto il footer */
+        }
+
+        .footer-column {
+            flex: 1;
+            margin-right: 100px;
+            margin-bottom: 20px;
+            margin-left: 100px;
+            
+        }
+        .footer-column a {
+            color: black; /* Imposta il colore del testo dei link su nero */
+            text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
+        }
     </style>
 </head>
 <body class="text-center">
@@ -155,7 +192,7 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
                 </div>
             </li>
             <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
-            <li><a href="ricambi.php"><b>CHI SIAMO</b></a></li>
+            <li><a href="#footer"><b>CHI SIAMO</b></a></li>
             <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
             <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
@@ -424,7 +461,25 @@ autoForm.style.display = 'block';
 // Nascondi il modulo moto all'avvio
 motoForm.style.display = 'none';
     </script>
-
+    <div class="container-contattaci" id="footer">
+        <div class="footer-column">
+            <h2>Chi siamo</h2>
+            <p>Our commitment is to provide you with the highest quality products and the best value in the mobile tool industry. Thank you for your continued support of Cornwell Quality Tools and our franchise owners.</p><br><br>
+            <p><b>© 2024 Autoworld. All Rights Reserved.</b></p>
+        </div>
+        <div class="footer-column">
+            <h2>Contatti</h2>
+            <p>Indirizzo: Via delle Stelle, 123</p>
+            <p>Telefono: 0123-456789</p>
+            <p>Email: <a href="mailto:info@autoworld.com">info@autoworld.com</a></p>
+        </div>
+        <div class="footer-column">
+            <h2>SEGUICI:</h2>
+            <p><a href="https://www.instagram.com/"><img src="../immagini/instagram.png" alt="Instagram" style="width: 20px; height: 20px;">&nbsp;INSTAGRAM</a></p>
+            <p><a href="https://twitter.com/"><img src="../immagini/twitter.png" alt="Twitter" style="width: 20px; height: 20px;">&nbsp;TWITTER</a></p>
+            <p><a href="https://www.facebook.com/"><img src="../immagini/facebook.png" alt="Facebook" style="width: 20px; height: 20px;">&nbsp;FACEBOOK</a></p>
+        </div>
+    </div>
 
     <div class="car-logos-container">
             <div class="car-logos animation">

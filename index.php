@@ -256,18 +256,17 @@ $(document).ready(function() {
         </div>
     </div>
     <div class="container">
-        <h1>COSA CERCHI?</h1>
+        <h1 class="title">BENVENUTO!</h1>
         <div class="box">
-            <h2>AUTO</h2>
+            <h2>COSA CERCHI?</h2>
             <button class="icon-auto-button" onclick="location.href='ricerca/ricerca-personalizzata.php';">
                 <img src="immagini/iconauto.png" alt="Auto Icon" class="icon-auto">
             </button>
-            
         </div>
         <div class="box">
-            <h2>MOTO</h2>
-            <button class="icon-auto-button" onclick="location.href='ricerca/ricerca-personalizzata.php';">
-                <img src="immagini/iconamoto.png" alt="Auto Icon" class="icon-auto">
+            <h2>VENDI</h2>
+            <button class="icon-auto-button" onclick="location.href='vendi/index.php';">
+                <img src="immagini/iconaeuro.png" alt="Auto Icon" class="icon-auto">
             </button>
         </div>
     </div>

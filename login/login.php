@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             if ($tuple = pg_fetch_array($data, null, PGSQL_ASSOC)) {
                 $_SESSION['loggato'] = true; // Imposta il valore di 'loggato' nella sessione
                 $_SESSION['email'] = $_POST['inputEmail']; // Memorizza l'email dell'utente nella sessione
-                //header("Location: ../index.php"); // Reindirizza alla homepage
+                header("Location: ../index.php"); // Reindirizza alla homepage
                 //exit();
             }
             else {

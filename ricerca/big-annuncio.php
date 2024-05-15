@@ -246,6 +246,25 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 });
 
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Aggiungi un evento click al pulsante "CONTATTA VENDITORE"
+        document.querySelector('.buy-button').addEventListener("click", function(event) {
+            // Verifica se l'utente è loggato
+            event.preventDefault();
+            var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
+
+            // Se l'utente non è loggato, reindirizzalo alla pagina di login
+            if (!isLogged) {
+                window.location.href = '../login/index.html';
+            } else {
+                // Mostra l'email con un effetto di dissolvenza
+                $('#emailVenditore').fadeIn(1000);
+            }
+        });
+    });
+</script>
+
     <style> 
         .icon-auto {
             width: 150px; /* Larghezza desiderata */
@@ -393,8 +412,9 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             padding-right: 100px; /* Aggiunge un padding a destra per separare questa colonna dalla colonna precedente */
             text-align: center; /* Allinea il testo a destra all'interno della colonna */
         }
-
-
+        #emailVenditore {
+            display: none; /* Assicura che l'email sia inizialmente nascosta */
+        }
     </style>
 
 </head>
@@ -598,9 +618,15 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
             // Sesta riga: Bottone
             echo "<tr>";
-            echo "<td colspan='2'><a href='#' class='btn btn-primary btn-lg buy-button' role='button'>COMPRA</a></td>";
+            echo "<td colspan='2'><a href='#' class='btn btn-primary btn-lg buy-button' role='button'>CONTATTA VENDITORE</a></td>";
             echo "</tr>";
-
+            $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+            if ($loggato) {
+                // Mostra l'email del venditore solo se l'utente è loggato
+                echo "<tr>";
+                echo "<td colspan='2' id='emailVenditore' style='display: none;'>Email del venditore: <b>{$annuncio['email']}</b></td>";
+                echo "</tr>";
+            }
             echo "</table>";
             echo "</div>";
 

@@ -1,17 +1,18 @@
 <?php
 session_start();
-    // Logout logic
-    if(isset($_GET['logout'])) {
-        // Unset all of the session variables
-        $_SESSION = array();
+// Logout logic
+if(isset($_GET['logout'])) {
+    // Unset all of the session variables
+    $_SESSION = array();
 
-        // Destroy the session
-        session_destroy();
+    // Destroy the session
+    session_destroy();
 
-        // Redirect to the homepage
-        header("Location: ../index.php");
-        exit();
-    }
+    // Redirect to the homepage
+    header("Location: ../index.php");
+    exit();
+}
+
    // Verifica se l'utente è loggato
    $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
    // URL a cui reindirizzare l'utente
@@ -63,7 +64,6 @@ session_start();
     }
 }
 ?>
-
 <!DOCTYPE html> 
 <html>
 <head>
@@ -105,67 +105,123 @@ session_start();
 });
 
     </script>
-    <style>
-        .annunci{
-            width: 80%;
-            background-color: #2c2c2c96;
-            border-radius: 10px;
-            font-family: 'Formula1 Display';
-            font-size: 20px;
-            margin-top: 100px;
-            text-align: left;
-            color: white;
-            z-index: 2;
-            flex: 1;
-            padding: 20px;
-            border: 1px solid orange;
-            margin-left: 50px;
-        }
+    <script>
+$(document).ready(function() {
+    // Gestisci il clic sul link "Chi siamo" nella navbar
+    $('a[href="#footer"]').click(function(event) {
+        // Previene il comportamento predefinito del link
+        event.preventDefault();
+        
+        // Calcola la posizione verticale del footer
+        var targetOffset = $('#footer').offset().top;
+        
+        // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
+        $('html, body').animate({
+            scrollTop: targetOffset
+        }, 1000);
+    });
+});
+</script>
+<script>
+    $(document).ready(function() {
+        $('.contrassegna-venduto').click(function() {
+            var annuncioId = $(this).data('annuncio-id');
+            
+            // Invia una richiesta AJAX per contrassegnare l'annuncio come venduto
+            $.ajax({
+                url: 'contrassegna_venduto.php',
+                type: 'POST',
+                data: { id: annuncioId, nascosto: "t" },
+                success: function(response) {
+                    // Se l'aggiornamento ha avuto successo, esegui le azioni desiderate
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+    $(document).ready(function() {
+        $('.rendi-visibile').click(function() {
+            var annuncioId = $(this).data('annuncio-id');
+            
+            // Invia una richiesta AJAX per contrassegnare l'annuncio come visibile
+            $.ajax({
+                url: 'contrassegna_venduto.php',
+                type: 'POST',
+                data: { id: annuncioId, nascosto: "f" }, // Imposta lo stato di nascosto a false
+                success: function(response) {
+                    // Aggiorna la pagina o esegui altre azioni necessarie
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
 
-        .container3 {
+</script>
+
+    <style> 
+        .icon-auto {
+            width: 150px; /* Larghezza desiderata */
+            height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
+        }
+        .small-logo {
+            margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
+        }
+        .container-contattaci {
             display: flex;
-            border-radius: 10px;
-            background-color: white;
+            flex-wrap: wrap;
             font-family: 'Formula1 Display';
-            font-size: 32px;
-            color: orange;
-            margin: 0 auto;
-            background-color: #2c2c2c96;
+            padding-top: 50px; /* Aumenta lo spazio sopra il footer */
+            padding-bottom: 50px; /* Aumenta lo spazio sotto il footer */
         }
 
-
-        .foto {
-            width: 400px; /* Imposta la larghezza massima al 30% del contenitore */
-            margin-right: 20px;
+        .footer-column {
+            flex: 1;
+            margin-right: 100px;
+            margin-bottom: 20px;
+            margin-left: 100px;
+            
         }
-
-        .foto img {
-            margin-top: 20px;
-            width: 100%; /* Immagine al 100% della larghezza del contenitore */
-            border-radius: 10px;
+        .footer-column a {
+            color: black; /* Imposta il colore del testo dei link su nero */
+            text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
         }
-
-        .caratteristiche {
-            flex: 1; /* Le caratteristiche occupano il 50% dello spazio */
-            padding: 50px;
+        .details-button {
+            background-color: orange;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            position: relative;
         }
-
     </style>
 </head>
 <body class="text-center">
-    <nav>
+<nav>
         <ul>
             <li><a href="index.php"><b>AUTOWORLD</b></a></li>
             <li class="dropdown">
                 <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
                 <div class="dropdown-menu">
-                    <a href="ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
-                    <a href="ricerca/vedi-annunci.php">Vedi Annunci</a>
+                    <a href="../ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
+                    <a href="../ricerca/vedi-annunci.php">Vedi Annunci</a>
                 </div>
             </li>
-            <li><a href="vendi/index.php"><b>VENDI</b></a></li>
-            <li><a href="ricambi.php"><b>CHI SIAMO</b></a></li>
-            <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
+            <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
+            <li><a href="#footer"><b>CHI SIAMO</b></a></li>
+            <li><a href="../preferiti.php"><b>PREFERITI</b></a></li>
             <?php
                 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                 $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
@@ -184,7 +240,7 @@ session_start();
                                 echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
                                 // Qui inizia la sezione del dropdown
                                 echo "<div class='dropdown-menu'>";
-                                echo "<a href='#'>I miei annunci</a>";
+                                echo "<a href='miei-annunci.php'>I miei annunci</a>";
                                 echo "<a href='../preferiti.php'>Preferiti</a>";
                                 echo "<a href='../modifica-password.php'>Modifica password</a>";
                                 echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
@@ -207,18 +263,13 @@ session_start();
             ?>
         </ul>
     </nav>
-
-
-<header>
-    <!-- Intestazione della pagina -->
-    <h1>I Miei Annunci</h1>
-</header>
-
-<main>
-    <!-- Elenco degli annunci -->
-    <div class="annunci">
-    
-    <?php
+    <div class="scroll-big-container">
+        <button class="scroll-button scroll-left">
+            <img src="immagini/leftarrow.png" alt="Scroll Left">
+        </button>
+        <div class="scroll-container">
+            <div class="scroll-content">
+            <?php
                     $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
                         or die('Could not connect: ' . pg_last_error());
                     if ($dbconn) {
@@ -262,19 +313,18 @@ session_start();
                                 echo "<p><img src=\"immagini/carburante.png\" width='20px'>&nbsp;{$row['carburante']}</p>";
                                 echo "<p><img src=\"immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
                                 echo "<p><img src=\"immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
-                                
-                                // Checkbox per il preferito
-                                // Controllo se l'array dei preferiti è stato correttamente inizializzato
-                                if (isset($preferiti_array) && is_array($preferiti_array)) {
-                                    // Controllo se l'annuncio è nei preferiti
-                                    $isFavorite = in_array($row['id'], $preferiti_array);
-                                } else {
-                                    // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
-                                    $isFavorite = false;
+                                $nascosto = filter_var($row['nascosto'], FILTER_VALIDATE_BOOLEAN);
+                                echo "$nascosto";
+                                echo "<p>{$row['nascosto']}</p>";
+                                if (isset($row['nascosto'])) {
+                                    if ($row['nascosto'] == 'f') {
+                                        // Se l'annuncio non è contrassegnato come venduto, mostra il pulsante "CONTRASSEGNA COME VENDUTO"
+                                        echo "<a class='btn btn-primary btn-lg details-button contrassegna-venduto' role='button' data-annuncio-id='{$row['id']}'>CONTRASSEGNA COME VENDUTO</a>";
+                                    } else {
+                                        // Se l'annuncio è contrassegnato come venduto, mostra un messaggio diverso
+                                        echo "<a class='btn btn-primary btn-lg details-button rendi-visibile' role='button' data-annuncio-id='{$row['id']}'>RENDI VISIBILE</a>";
+                                    }
                                 }
-
-                                echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span>";
-
                                 // Fine dell'annuncio
                                 echo "</div>";
                                 echo "</div>";
@@ -291,61 +341,97 @@ session_start();
 
                     // Chiusura della connessione al database
                     pg_close($dbconn);
-                ?> 
-        
+                ?>
+                
+            </div>
+        </div>
+            <button class="scroll-button scroll-right">
+                <img src="immagini/rightarrow.png" alt="Scroll Right">
+            </button>
     </div>
-</main>
-<div class="car-logos-container">
-    <div class="car-logos animation">
-        <img src="../immagini/loghiauto/audi.png">
-        <img src="../immagini/loghiauto/bmw.png">
-        <img src="../immagini/loghiauto/ford.png">
-        <img src="../immagini/loghiauto/honda.png">
-        <img src="../immagini/loghiauto/kia.png">
-        <img src="../immagini/loghiauto/mazda.png">
-        <img src="../immagini/loghiauto/mercedes.png">
-        <img src="../immagini/loghiauto/toyota.png">
-        <img src="../immagini/loghiauto/volkswagen.png">
-        <img src="../immagini/loghiauto/hyundai.png">
-        <img src="../immagini/loghiauto/fiat.png">
-        <img src="../immagini/loghiauto/mg.png">
-        <img src="../immagini/loghiauto/peugeot.png">
-        <img src="../immagini/loghiauto/opel.png">
-        <img src="../immagini/loghiauto/nissan.png">
-        <img src="../immagini/loghiauto/renault.png">
-        <img src="../immagini/loghiauto/audi.png">
-        <img src="../immagini/loghiauto/bmw.png">
-        <img src="../immagini/loghiauto/ford.png">
-        <img src="../immagini/loghiauto/honda.png">
-        <img src="../immagini/loghiauto/kia.png">
-        <img src="../immagini/loghiauto/mazda.png">
-        <img src="../immagini/loghiauto/mercedes.png">
-        <img src="../immagini/loghiauto/toyota.png">
-        <img src="../immagini/loghiauto/volkswagen.png">
-        <img src="../immagini/loghiauto/hyundai.png">
-        <img src="../immagini/loghiauto/fiat.png">
-        <img src="../immagini/loghiauto/mg.png">
-        <img src="../immagini/loghiauto/peugeot.png">
-        <img src="../immagini/loghiauto/opel.png">
-        <img src="../immagini/loghiauto/nissan.png">
-        <img src="../immagini/loghiauto/renault.png">
-        <img src="../immagini/loghiauto/audi.png">
-        <img src="../immagini/loghiauto/bmw.png">
-        <img src="../immagini/loghiauto/ford.png">
-        <img src="../immagini/loghiauto/honda.png">
-        <img src="../immagini/loghiauto/kia.png">
-        <img src="../immagini/loghiauto/mazda.png">
-        <img src="../immagini/loghiauto/mercedes.png">
-        <img src="../immagini/loghiauto/toyota.png">
-        <img src="../immagini/loghiauto/volkswagen.png">
-        <img src="../immagini/loghiauto/hyundai.png">
-        <img src="../immagini/loghiauto/fiat.png">
-        <img src="../immagini/loghiauto/mg.png">
-        <img src="../immagini/loghiauto/peugeot.png">
-        <img src="../immagini/loghiauto/opel.png">
-        <img src="../immagini/loghiauto/nissan.png">
-        <img src="../immagini/loghiauto/renault.png">
+    <div class="container-contattaci" id="footer">
+        <div class="footer-column">
+            <h2>Chi siamo</h2>
+            <p>Our commitment is to provide you with the highest quality products and the best value in the mobile tool industry. Thank you for your continued support of Cornwell Quality Tools and our franchise owners.</p><br><br>
+            <p><b>© 2024 Autoworld. All Rights Reserved.</b></p>
+        </div>
+        <div class="footer-column">
+            <h2>Contatti</h2>
+            <p>Indirizzo: Via delle Stelle, 123</p>
+            <p>Telefono: 0123-456789</p>
+            <p>Email: <a href="mailto:info@autoworld.com">info@autoworld.com</a></p>
+        </div>
+        <div class="footer-column">
+            <h2>SEGUICI:</h2>
+            <p><a href="https://www.instagram.com/"><img src="immagini/instagram.png" alt="Instagram" style="width: 20px; height: 20px;">&nbsp;INSTAGRAM</a></p>
+            <p><a href="https://twitter.com/"><img src="immagini/twitter.png" alt="Twitter" style="width: 20px; height: 20px;">&nbsp;TWITTER</a></p>
+            <p><a href="https://www.facebook.com/"><img src="immagini/facebook.png" alt="Facebook" style="width: 20px; height: 20px;">&nbsp;FACEBOOK</a></p>
+        </div>
     </div>
-</div>
+    <div class="car-logos-container">
+            <div class="car-logos animation">
+                <img src="../immagini/loghiauto/audi.png">
+                <img src="../immagini/loghiauto/bmw.png">
+                <img src="../immagini/loghiauto/ford.png">
+                <img src="../immagini/loghiauto/honda.png">
+                <img src="../immagini/loghiauto/kia.png">
+                <img src="../immagini/loghiauto/mazda.png">
+                <img src="../immagini/loghiauto/mercedes.png">
+                <img src="../immagini/loghiauto/toyota.png">
+                <img src="../immagini/loghiauto/volkswagen.png">
+                <img src="../immagini/loghiauto/hyundai.png">
+                <img src="../immagini/loghiauto/fiat.png">
+                <img src="../immagini/loghiauto/mg.png">
+                <img src="../immagini/loghiauto/peugeot.png">
+                <img src="../immagini/loghiauto/opel.png">
+                <img src="../immagini/loghiauto/nissan.png">
+                <img src="../immagini/loghiauto/renault.png">
+                <img src="../immagini/loghiauto/audi.png">
+                <img src="../immagini/loghiauto/bmw.png">
+                <img src="../immagini/loghiauto/ford.png">
+                <img src="../immagini/loghiauto/honda.png">
+                <img src="../immagini/loghiauto/kia.png">
+                <img src="../immagini/loghiauto/mazda.png">
+                <img src="../immagini/loghiauto/mercedes.png">
+                <img src="../immagini/loghiauto/toyota.png">
+                <img src="../immagini/loghiauto/volkswagen.png">
+                <img src="../immagini/loghiauto/hyundai.png">
+                <img src="../immagini/loghiauto/fiat.png">
+                <img src="../immagini/loghiauto/mg.png">
+                <img src="../immagini/loghiauto/peugeot.png">
+                <img src="../immagini/loghiauto/opel.png">
+                <img src="../immagini/loghiauto/nissan.png">
+                <img src="../immagini/loghiauto/renault.png">
+                <img src="../immagini/loghiauto/audi.png">
+                <img src="../immagini/loghiauto/bmw.png">
+                <img src="../immagini/loghiauto/ford.png">
+                <img src="../immagini/loghiauto/honda.png">
+                <img src="../immagini/loghiauto/kia.png">
+                <img src="../immagini/loghiauto/mazda.png">
+                <img src="../immagini/loghiauto/mercedes.png">
+                <img src="../immagini/loghiauto/toyota.png">
+                <img src="../immagini/loghiauto/volkswagen.png">
+                <img src="../immagini/loghiauto/hyundai.png">
+                <img src="../immagini/loghiauto/fiat.png">
+                <img src="../immagini/loghiauto/mg.png">
+                <img src="../immagini/loghiauto/peugeot.png">
+                <img src="../immagini/loghiauto/opel.png">
+                <img src="../immagini/loghiauto/nissan.png">
+                <img src="../immagini/loghiauto/renault.png">
+            </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $(".scroll-left").click(function() {
+                console.log("clicked left");
+                $(".scroll-container").animate({scrollLeft: "-=100px"}, "slow");
+            });
+
+            $(".scroll-right").click(function() {
+                console.log("clicked right");
+                $(".scroll-container").animate({scrollLeft: "+=100px"}, "slow");
+            });
+        });
+    </script>     
 </body>
 </html>

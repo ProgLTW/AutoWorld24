@@ -280,7 +280,7 @@ $(document).ready(function() {
                     $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
                         or die('Could not connect: ' . pg_last_error());
                     if ($dbconn) {
-                        $query = "SELECT * FROM annuncio";
+                        $query = "SELECT * FROM annuncio WHERE nascosto is false";
                         $result = pg_query($dbconn, $query);
                         // Esegui la query per recuperare gli ID degli annunci preferiti dell'utente loggato
                         $query_preferiti = "SELECT id FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";

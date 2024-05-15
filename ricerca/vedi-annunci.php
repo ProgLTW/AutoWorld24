@@ -648,7 +648,7 @@ window.addEventListener('load', function() {
 
                     if ($dbconn) {
                         // Query per recuperare gli annunci dalla tabella annuncio in base ai filtri
-                        $query = "SELECT * FROM annuncio WHERE 1=1"; // Inizia la query con un'istruzione true 
+                        $query = "SELECT * FROM annuncio WHERE nascosto is false"; // Inizia la query con un'istruzione true 
                         
                         // Aggiungi filtri sulla marca e sul modello solo se sono stati specificati
                         if (!empty($marca)) {
@@ -690,6 +690,7 @@ window.addEventListener('load', function() {
                         if (!empty($potenzaA)) {
                             $query .= " AND potenza <= $potenzaA";
                         }
+                        $query .= " AND nascosto IS not true";
                         // Esecuzione della query
                         $result = pg_query($dbconn, $query);
                         $query_preferiti = "SELECT id FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";

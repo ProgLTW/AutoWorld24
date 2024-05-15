@@ -217,7 +217,7 @@ $(document).ready(function() {
                         or die('Could not connect: ' . pg_last_error());
                     if ($dbconn) {
                         // Esegui la query per recuperare gli ID degli annunci preferiti dell'utente loggato
-                        $query_preferiti = "SELECT * FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
+                        $query_preferiti = "SELECT * FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email') and nascosto is false";
                         $result_preferiti = pg_query($dbconn, $query_preferiti);
                         if ($result_preferiti) {
                             // Iterazione sui risultati della query per visualizzare gli annunci

@@ -49,8 +49,8 @@ implementare l'acquisto (e relativa eliminazione annuncio + i miei acquisti)
 aggiustare pagine errore e dati inseriti correttamente (sono brutti) -> ho messo un alert su vendi
 
 big annuncio: 
-    gestire foto multiple
-    aggiungere altri dettagli(?)
+    gestire foto multiple da testare
+
 
 
 warning in vendi

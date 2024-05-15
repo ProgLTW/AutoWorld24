@@ -491,7 +491,7 @@ window.addEventListener('load', function() {
         <div class="item1">
             <?php
                 // Recupera i valori inviati dal form
-                $tipoVeicolo = isset($_POST['tipoVeicolo']) ? $_POST['tipoVeicolo'] : '';
+                $tipoVeicolo = isset($_POST['tipoVeicolo']) ? $_POST['tipoVeicolo'] : 'Auto'; // Default to Auto if not set
                 $marca = isset($_POST['marca']) ? $_POST['marca'] : '';
                 $modello = isset($_POST['modello']) ? $_POST['modello'] : '';
                 $prezzoDa = isset($_POST['PrezzoDa']) ? $_POST['PrezzoDa'] : '';
@@ -512,10 +512,10 @@ window.addEventListener('load', function() {
 
             <label for="tipoVeicolo">Seleziona il tipo di veicolo:</label><br>
 
-            <input type="radio" id="auto" name="tipoVeicolo" value="auto" <?php if (!isset($_POST['tipoVeicolo']) || $_POST['tipoVeicolo'] == 'Auto') echo 'checked'; ?> onclick="showAutoForm()">
+            <input type="radio" id="auto" name="tipoVeicolo" value="auto" <?php if (!isset($_POST['tipoVeicolo']) || $_POST['tipoVeicolo'] == 'Auto') echo 'checked'; echo 'selected="selected"'; ?> onclick="showAutoForm()">
             <label for="auto">Auto</label>
 
-            <input type="radio" id="moto" name="tipoVeicolo" value="moto" <?php if (isset($_POST['tipoVeicolo']) && $_POST['tipoVeicolo'] == 'Moto') echo 'checked'; ?> onclick="showMotoForm()">
+            <input type="radio" id="moto" name="tipoVeicolo" value="moto" <?php if (isset($_POST['tipoVeicolo']) && $_POST['tipoVeicolo'] == 'Moto') echo 'checked'; echo 'selected="selected"'; ?> onclick="showMotoForm()">
             <label for="moto">Moto</label>
             
                 <div id="autoForm">
@@ -809,7 +809,7 @@ window.addEventListener('load', function() {
 
                     if ($dbconn) {
                         // Query per recuperare gli annunci dalla tabella annuncio in base ai filtri
-                        $query = "SELECT * FROM annuncio WHERE tipoVeicolo = 'Auto'"; 
+                        $query = "SELECT * FROM annuncio WHERE tipoVeicolo = '$tipoVeicolo'"; 
                         
                         // Aggiungi filtri sulla marca e sul modello solo se sono stati specificati
                         if (!empty($marca)) {

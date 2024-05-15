@@ -27,21 +27,6 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
     <link rel="shortcut icon" href="./assets/favicon-32x32.png"/>
     <link rel="stylesheet" href="../style.css">
     <script type="application/javascript">
-    window.onload = function() {
-    showAutoForm(); // Mostra il form dell'auto all'avvio
-    };
-
-    function showAutoForm() {
-        document.getElementById("autoForm").style.display = "block";
-        document.getElementById("motoForm").style.display = "none";
-    }
-    
-    function showMotoForm() {
-        document.getElementById("autoForm").style.display = "none";
-        document.getElementById("motoForm").style.display = "block";
-    }
-
-
 
         const modelliPerMarca = {
             "Audi": ["ModelloA1", "ModelloA3", "ModelloA4"],
@@ -113,6 +98,7 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
     </script>
     <style> 
 
+        
         .container2{
             border-radius: 30px;
             margin-top: 150px;
@@ -124,7 +110,6 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
             height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
         }
         form {
-            
             margin: auto;
             font-family: 'Formula1 Display';
             width: 120%;
@@ -137,6 +122,7 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
         form select {
             margin-top: 5px; /* Sposta la casella di selezione verso l'alto */
         }
+
         select {
             font-family: 'Formula1 Display', sans-serif; /* Cambia il font delle caselle di selezione */
             font-size: 16px; /* Regola la dimensione del font se necessario */
@@ -216,13 +202,17 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
 
 
     <div class="container2">
+
         <form name="myForm" action="<?php echo isset($_SESSION['loggato']) ? 'vendi.php' : '#'; ?>" method="POST" enctype="multipart/form-data" class="form-signin m-auto" onsubmit="alertRmb()">
 
-        <label for="tipoVeicolo">Seleziona il tipo di veicolo:</label><br>
-        <input type="radio" id="auto" name="tipoVeicolo" value="Auto" checked onclick="showAutoForm()">
-        <label for="Auto">Auto</label><br>
-        <input type="radio" id="moto" name="tipoVeicolo" value="Moto" onclick="showMotoForm()">
-        <label for="Moto">Moto</label><br><br>
+        <!-- radio buttons -->
+        <div class="radio">
+            <label for="tipoVeicolo">Seleziona il tipo di veicolo:</label><br>
+            <input type="radio" id="auto" name="tipoVeicolo" value="Auto" checked>
+            <label for="Auto">Auto</label><br>
+            <input type="radio" id="moto" name="tipoVeicolo" value="Moto">
+            <label for="Moto">Moto</label><br><br>
+        </div>
 
         <div id="autoForm">
             <label for="marca">Marca:</label>
@@ -326,14 +316,13 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
             <input type="file" name="foto" accept="image/*" multiple><br>
             <label for="descrizione">Inserisci descrizione:</label><br>
             <textarea name="descrizione" cols="30" rows="6" placeholder="es. tagliandi, stato carrozzeria, stato motore, ecc."></textarea>
-            <button type="submit" class="btn btn-primary" style="margin-left: 50px; margin-top: 30px; margin-bottom: 30px; font-size: large;" <?php echo isset($_SESSION['loggato']) ? '' : 'disabled'; ?>>Conferma</button>
-            <button type="reset" class="btn btn-secondary" style="margin-left: 10px; font-size: large;">Reset</button>
-            </div>
+            
+        </div>
 
         <div id="motoForm">
-        <label for="marca">Marca:</label>
+            <label for="marca">Marca:</label>
             <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
-                <option value="">Seleziona</option>
+            <option value="">Seleziona</option>
             <option value="Ducati">Ducati</option>
             <option value="Harley-Davidson">Harley-Davidson</option>
             <option value="Honda">Honda</option>
@@ -399,12 +388,44 @@ $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
             <input type="file" name="foto" accept="image/*" multiple><br>
             <label for="descrizione">Inserisci descrizione:</label><br>
             <textarea name="descrizione" cols="30" rows="6" placeholder="es. tagliandi, stato carrozzeria, stato motore, ecc."></textarea>
+            
+        </div>
+
             <button type="submit" class="btn btn-primary" style="margin-left: 50px; margin-top: 30px; margin-bottom: 30px; font-size: large;" <?php echo isset($_SESSION['loggato']) ? '' : 'disabled'; ?>>Conferma</button>
             <button type="reset" class="btn btn-secondary" style="margin-left: 10px; font-size: large;">Reset</button>
-        </div>
 
         </form>
     </div>
+
+    <script>
+    // Function to update the selected option value
+    function updateSelectedOption() {
+        var selectedOption = document.querySelector('input[name="options"]:checked').value;
+        document.getElementById('selectedOption').value = selectedOption;
+    }
+
+    // Event listeners to toggle forms and update selected option value
+    // Event listeners to toggle forms and update selected option value
+    document.getElementById('auto').addEventListener('change', function() {
+        document.getElementById('autoForm').style.display = 'block';
+        document.getElementById('motoForm').style.display = 'none';
+        updateSelectedOption();
+    });
+
+    document.getElementById('moto').addEventListener('change', function() {
+        document.getElementById('autoForm').style.display = 'none';
+        document.getElementById('motoForm').style.display = 'block';
+        updateSelectedOption();
+    });
+
+
+    // Mostra il modulo auto all'avvio
+autoForm.style.display = 'block';
+// Nascondi il modulo moto all'avvio
+motoForm.style.display = 'none';
+    </script>
+
+
     <div class="car-logos-container">
             <div class="car-logos animation">
                 <img src="../immagini/loghiauto/audi.png">

@@ -180,28 +180,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             });
         });
 
-            document.querySelectorAll('.slider-container').forEach(function(container) {
-            let slides = container.querySelectorAll('.slide');
-            let currentIndex = 0;
-
-            function showSlide(index) {
-                slides.forEach((slide, i) => {
-                    slide.style.display = (i === index) ? 'block' : 'none';
-                });
-            }
-
-            container.querySelector('.prev').addEventListener('click', function() {
-                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
-                showSlide(currentIndex);
-            });
-
-            container.querySelector('.next').addEventListener('click', function() {
-                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
-                showSlide(currentIndex);
-            });
-
-            showSlide(currentIndex); // Initialize the first slide
-        });
+            
     });
 
 
@@ -415,42 +394,6 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             text-align: center; /* Allinea il testo a destra all'interno della colonna */
         }
 
-            
-        .slider-container {
-            position: relative;
-            width: 300px;
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .slider {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-
-        .slide {
-            min-width: 100%;
-            box-sizing: border-box;
-        }
-
-        .prev, .next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        .prev {
-            left: 0;
-        }
-
-        .next {
-            right: 0;
-        }
 
     </style>
 
@@ -553,24 +496,11 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             echo "<td colspan='2'><h1><u>{$annuncio['marca']} {$annuncio['modello']}</u></h1></td>";
             echo "</tr>";
 
-            
-            $images = explode(',', $annuncio['foto']);
+        
             // Seconda riga: Immagine e prezzo
             echo "<tr>";
-            echo "<div class='slider-container' style='position: relative; width: 300px; height: 200px;'>";
-            echo "<div class='slider'>";
-            foreach ($images as $index => $image) {
-                echo "<div class='slide' style='display: " . ($index === 0 ? 'block' : 'none') . ";'>";
-                echo "<img src='../vendi/" . $image . "' alt='Foto auto' style='width: 100%; height: 100%;'>";
-                echo "</div>";
-            }
-            echo "</div>";
-
-            if (count($images) > 1):
-            echo "<button class='prev' style='position: absolute; top: 50%; left: 0; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); color: white; border: none; cursor: pointer;'>&#10094;</button>";
-            echo "<button class='next' style='position: absolute; top: 50%; right: 0; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); color: white; border: none; cursor: pointer;'>&#10095;</button>";
-        endif;
-        echo "</div>";
+            echo "<td class='img-cell'>";
+            echo "<div class='foto'><img src='../vendi/{$annuncio['foto']}' alt='Foto auto'></div>";
             echo "</td>";
 
             echo "<td rowspan='2' class='price-cell'>";

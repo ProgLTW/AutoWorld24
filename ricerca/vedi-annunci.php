@@ -212,7 +212,7 @@ window.addEventListener('load', function() {
 
 
 
-    /*document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
         const form = document.getElementById("searchForm");
         const searchResult = document.getElementById("searchResult");
 
@@ -243,7 +243,7 @@ window.addEventListener('load', function() {
                 console.error("Errore durante la richiesta:", error);
             });
         });
-    });*/
+    });
     
 
     </script>

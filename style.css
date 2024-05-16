@@ -327,3 +327,39 @@ nav li:not(:first-child):hover {
 
 
 
+@media only screen and (max-width: 1550px) {
+    /* Stili per schermi con larghezza massima di 768px */
+    nav ul {
+        justify-content: center;
+    }
+    nav li {
+        padding: 0 20px;
+    }
+    nav a {
+        font-size: 16px;
+    }
+    .container {
+        margin: 50px 33vw;
+    }
+    .container2 {
+        margin: 50px 10px;
+    }
+    .container3 {
+        margin: 20px;
+    }
+    .row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .col {
+        width: 90%; /* Occupa il 90% della larghezza del contenitore genitore */
+        margin: 10px auto; /* Aggiunge spazio tra le colonne */
+    }
+    .ad {
+        flex-direction: column; /* Imposta il layout dei componenti ad uno sopra l'altro */
+        gap: 20px; /* Aggiunge spazio tra i componenti */
+    }
+    .scroll-content {
+        margin-left: 20px;
+    }
+}

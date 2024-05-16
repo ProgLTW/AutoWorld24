@@ -143,75 +143,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                 fromSelect.value = toValue;
             }
     }
-    // Funzione per catturare i valori dei campi "Da" e "A" prima dell'invio del modulo
-// Funzione per catturare i valori dei campi "Da" e "A" prima dell'invio del modulo
-function salvaValoriDaA() {
-    var prezzoDa = document.getElementById('prezzo_da').value;
-    var prezzoA = document.getElementById('prezzo_a').value;
-    var annoDa = document.getElementById('anno_da').value;
-    var annoA = document.getElementById('anno_a').value;
-    var kmDa = document.getElementById('km_da').value;
-    var kmA = document.getElementById('km_a').value;
-    var potenzaDa = document.getElementById('potenza_da').value;
-    var potenzaA = document.getElementById('potenza_a').value;
-
-    // Memorizza i valori nei cookie o in localStorage
-    // Ad esempio, puoi utilizzare localStorage per memorizzare i valori temporaneamente
-    localStorage.setItem('prezzoDa', prezzoDa);
-    localStorage.setItem('prezzoA', prezzoA);
-    localStorage.setItem('annoDa', annoDa);
-    localStorage.setItem('annoA', annoA);
-    localStorage.setItem('kmDa', kmDa);
-    localStorage.setItem('kmA', kmA);
-    localStorage.setItem('potenzaDa', potenzaDa);
-    localStorage.setItem('potenzaA', potenzaA);
-}
-
-// Funzione per ripristinare i valori dei campi "Da" e "A" dopo l'invio del modulo
-function ripristinaValoriDaA() {
-    var prezzoDa = localStorage.getItem('prezzoDa');
-    var prezzoA = localStorage.getItem('prezzoA');
-    var annoDa = localStorage.getItem('annoDa');
-    var annoA = localStorage.getItem('annoA');
-    var kmDa = localStorage.getItem('kmDa');
-    var kmA = localStorage.getItem('kmA');
-    var potenzaDa = localStorage.getItem('potenzaDa');
-    var potenzaA = localStorage.getItem('potenzaA');
-
-    // Ripristina i valori nei rispettivi campi
-    document.getElementById('prezzo_da').value = prezzoDa;
-    document.getElementById('prezzo_a').value = prezzoA;
-    document.getElementById('anno_da').value = annoDa;
-    document.getElementById('anno_a').value = annoA;
-    document.getElementById('km_da').value = kmDa;
-    document.getElementById('km_a').value = kmA;
-    document.getElementById('potenza_da').value = potenzaDa;
-    document.getElementById('potenza_a').value = potenzaA;
-
-    // Cancella i valori memorizzati
-    localStorage.removeItem('prezzoDa');
-    localStorage.removeItem('prezzoA');
-    localStorage.removeItem('annoDa');
-    localStorage.removeItem('annoA');
-    localStorage.removeItem('kmDa');
-    localStorage.removeItem('kmA');
-    localStorage.removeItem('potenzaDa');
-    localStorage.removeItem('potenzaA');
-}
-
-// Aggiungi event listener per il submit del modulo
-document.getElementById('searchForm').addEventListener('submit', function() {
-    salvaValoriDaA(); // Salva i valori prima dell'invio
-});
-
-// Aggiungi event listener per il caricamento della pagina
-window.addEventListener('load', function() {
-    ripristinaValoriDaA(); // Ripristina i valori dopo il caricamento della pagina
-});
-
-
-
-
+    
     document.addEventListener("DOMContentLoaded", function() {
         const form = document.getElementById("searchForm");
         const searchResult = document.getElementById("searchResult");

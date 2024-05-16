@@ -9,9 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 }
 
 if ($dbconn) {
-    // Gestione dell'upload delle immagini
-    $targetDirectory = "uploads/"; // Directory di destinazione per le immagini
+    $uniqueCode = uniqid(); // Genera un codice casuale univoco
+    $targetDirectory = "uploads/" . (isset($_SESSION['email']) ? $_SESSION['email'] : null) . "/" . $uniqueCode . "/";
     $uploadedFile = ""; // Percorso del file caricato
+    // Verifica se la directory esiste, altrimenti creala
+    if (!file_exists($targetDirectory)) {
+        mkdir($targetDirectory, 0777, true); // Crea la directory con i permessi 0777 (rwxrwxrwx)
+    }
 
     // Ottieni il nome del file e il percorso temporaneo del primo file caricato
     $fileName = $_FILES["foto"]["name"];
@@ -44,13 +48,14 @@ if ($dbconn) {
 
     // Ottieni l'email dalla sessione
     $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+    $nascosto = 0;
 
     // Query SQL per l'inserimento dei dati nella tabella Auto
-    $query = "INSERT INTO annuncio (marca, modello, prezzo, trattabile, carrozzeria, anno, chilometraggio, carburante, cambio, potenza, foto, descrizione, preferito, email) 
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)";
+    $query = "INSERT INTO annuncio (marca, modello, prezzo, trattabile, carrozzeria, anno, chilometraggio, carburante, cambio, potenza, foto, descrizione, preferito, email, nascosto) 
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)";
 
     // Esecuzione della query con i parametri
-    $result = pg_query_params($dbconn, $query, array($marca, $modello, $prezzo, $trattabile, $carrozzeria, $anno, $chilometraggio, $carburante, $cambio, $potenza, $foto, $descrizione, $preferito, $email));
+    $result = pg_query_params($dbconn, $query, array($marca, $modello, $prezzo, $trattabile, $carrozzeria, $anno, $chilometraggio, $carburante, $cambio, $potenza, $foto, $descrizione, $preferito, $email, $nascosto));
 
         
     if ($result) {

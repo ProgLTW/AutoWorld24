@@ -212,7 +212,7 @@ $(document).ready(function() {
                                 echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
                                 // Qui inizia la sezione del dropdown
                                 echo "<div class='dropdown-menu'>";
-                                echo "<a href='#'>I miei annunci</a>";
+                                echo "<a href='../miei-annunci.php'>I miei annunci</a>";
                                 echo "<a href='../preferiti.php'>Preferiti</a>";
                                 echo "<a href='../modifica-password.php'>Modifica password</a>";
                                 echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";

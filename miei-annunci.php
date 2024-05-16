@@ -313,9 +313,6 @@ $(document).ready(function() {
                                 echo "<p><img src=\"immagini/carburante.png\" width='20px'>&nbsp;{$row['carburante']}</p>";
                                 echo "<p><img src=\"immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
                                 echo "<p><img src=\"immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
-                                $nascosto = filter_var($row['nascosto'], FILTER_VALIDATE_BOOLEAN);
-                                echo "$nascosto";
-                                echo "<p>{$row['nascosto']}</p>";
                                 if (isset($row['nascosto'])) {
                                     if ($row['nascosto'] == 'f') {
                                         // Se l'annuncio non è contrassegnato come venduto, mostra il pulsante "CONTRASSEGNA COME VENDUTO"

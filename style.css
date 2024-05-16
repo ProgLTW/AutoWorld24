@@ -32,12 +32,12 @@ nav ul {
     align-items: center;
 }
 nav li {
-    height: 70px;
-    padding: 0 40px;
+    height: 7.5vh;
+    padding: 0 2vw;
 }
 nav a {
     height: 100%;
-    padding: 0 30px;
+    padding: 0 1vw;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -45,7 +45,7 @@ nav a {
     /*font-size: 16px; /* Adjust the value to your desired font size */
 }
 nav li:not(:first-child) {
-    font-size: 18px; /* Adjust the value to your desired font size */
+    font-size: 1.2em; /* Adjust the value to your desired font size */
 }
 nav li:first-child {
     margin-right: auto;
@@ -55,8 +55,8 @@ nav li:first-child {
 nav li:last-child {
     background-color: orange;
     justify-content: flex-end;
-    margin-left: -30px;
-    margin-right: -90px;
+    margin-left: -2vw;
+    margin-right: -5vw;
 }
 nav li:nth-child(-n+5) {
     position: sticky;
@@ -91,7 +91,7 @@ nav li:not(:first-child):hover {
   
   .dropdown-menu a {
     color: black;
-    padding: 12px 16px;
+    padding: 1vh 1vw;
     text-decoration: none;
     
   }
@@ -100,22 +100,8 @@ nav li:not(:first-child):hover {
     background-color: orange; /* Cambia il colore del testo delle opzioni del dropdown menu quando passi sopra */
 }
 
+.dropdown:hover .dropdown-menu {display: block;}
   
-
-  .dropdown:hover .dropdown-menu {display: block;}
-  
-
-
-
-
-
-
-
-
-
-
-
-
 .icon-auto-button {
     border: none;
     background: none;
@@ -129,14 +115,15 @@ nav li:not(:first-child):hover {
 }
 .container {
     border-radius: 30px;
-    margin-top: 100px;
     text-align: center; /* Allinea il contenuto al centro */
     background-color: #2c2c2c96;
-    margin-left: 600px;
-    margin-right: 600px;
+    margin-left: 30vw;
+    margin-right: 30vw;
     font-family: 'Formula1 Display';
     color: orange;
+    margin-top: -10em;
 }
+
 .container2 {
     border-radius: 30px;
     margin-top: 150px;
@@ -170,12 +157,16 @@ nav li:not(:first-child):hover {
 }
 .box {
     display: inline-block; /* Imposta i riquadri come blocchi inline */
-    width: 200px;
-    height: 200px;
-    margin: 20px;
-    padding: 20px;
+    width: 15vw;
+    height: 10vh;
+    padding: 2em;
     text-align: center;
-    margin-top: 120px;
+    margin-top: 10vh;
+    margin-bottom: 20vh;
+}
+.box h2 {
+    font-size: 1.5em; /* Modifica la grandezza del testo in modo relativo rispetto alla grandezza del testo di base */
+    /* Puoi regolare il valore di '2em' a seconda delle tue preferenze di dimensione del testo */
 }
 
 .container-contattaci{
@@ -183,7 +174,7 @@ nav li:not(:first-child):hover {
     position: relative;
     width: 100%;
     height: auto;
-    bottom: 70px;
+    bottom: 7vh;
 }
 
 
@@ -194,14 +185,14 @@ nav li:not(:first-child):hover {
     overflow-y: hidden; /* Nascondi lo scorrimento verticale */
     white-space: nowrap;
     background-color: black;
-    height: 70px;
+    height: 8vh;
     bottom: 0;
     width: 100%;
 }
 .car-logos {
     width: auto;
     white-space: nowrap;
-    padding: 10px 0;
+    padding: 1vh 0;
     background-color: transparent;
 }
 .animation {
@@ -216,9 +207,9 @@ nav li:not(:first-child):hover {
     }
 }
 .car-logos img {
-    width: 50px;
+    width: 3vw;
     height: auto;
-    margin-right: 10px;
+    margin-right: 0.5vw;
 }
 .form-signin input[type="text"],
 .form-signin input[type="number"],
@@ -258,35 +249,19 @@ nav li:not(:first-child):hover {
     white-space: nowrap; /* Fai sì che il contenuto non vada a capo */
     margin: 20px;
     margin-left: 50px;
-    
-
 }
-
 
 .ad {
     display: flex; /* Utilizza flexbox per allineare l'immagine e il testo */
     align-items: center; /* Allinea verticalmente il contenuto */
     gap: 80px; /* Aggiungi spazio tra l'immagine e il testo */
-    background-color: #333; /* Colore di sfondo per migliorare la leggibilità del testo */
     padding: 0px; /* Aggiungi padding */
     margin-right: 30px;
 }
 
 .ad img {
-    max-width: auto; /* Imposta la larghezza massima dell'immagine */
+    width: auto; /* Imposta la larghezza massima dell'immagine */
     height: auto;
-}
-
-.ad .text {
-    flex: 1; /* Fai sì che il testo occupi tutto lo spazio rimanente */
-}
-
-.ad h2, .ad p {
-    background-color: black; /* Colore di sfondo per migliorare la leggibilità del testo */
-    color: white; /* Colore del testo */
-    font-family: 'Formula1 Display';
-    margin: auto; /* Rimuovi il margine interno */
-    
 }
 
 .scroll-button {
@@ -327,8 +302,7 @@ nav li:not(:first-child):hover {
 
 
 
-@media only screen and (max-width: 1550px) {
-    /* Stili per schermi con larghezza massima di 768px */
+/*@media only screen and (max-width: 1550px) {
     nav ul {
         justify-content: center;
     }
@@ -339,7 +313,7 @@ nav li:not(:first-child):hover {
         font-size: 16px;
     }
     .container {
-        margin: 50px 33vw;
+        margin: 10vh 33vw;
     }
     .container2 {
         margin: 50px 10px;
@@ -352,14 +326,18 @@ nav li:not(:first-child):hover {
         justify-content: center;
     }
     .col {
-        width: 90%; /* Occupa il 90% della larghezza del contenitore genitore */
-        margin: 10px auto; /* Aggiunge spazio tra le colonne */
+        width: 90%; 
+        margin: 10px auto;
     }
     .ad {
-        flex-direction: column; /* Imposta il layout dei componenti ad uno sopra l'altro */
-        gap: 20px; /* Aggiunge spazio tra i componenti */
+        flex-direction: column; 
+        
+    }
+    .ad img {
+        height: auto; 
+        width: auto;
     }
     .scroll-content {
         margin-left: 20px;
     }
-}
+}*/

@@ -128,14 +128,12 @@ $(document).ready(function() {
 
     <style> 
         .icon-auto {
-            width: 150px; /* Larghezza desiderata */
+            width: 8vw; /* Larghezza desiderata */
             height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
         }
         .small-logo {
             margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
         }
-        
-
         /* Aggiungi stili per gli annunci pubblicitari */
         .ad-container {
             margin-top: 120px;
@@ -144,14 +142,6 @@ $(document).ready(function() {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px; /* Aggiungi spazio tra gli annunci e il contenuto principale */
-        }
-        .ad {
-            width: 200px; /* Modifica la larghezza degli annunci in base alle tue esigenze */
-            height: 200px; /* Modifica l'altezza degli annunci in base alle tue esigenze */
-            background-color: black; /* Colore di sfondo degli annunci */
-        }
-        .container {
-            margin-top: -10em; /* Riduci il margine superiore per eliminare lo spazio vuoto */
         }
         .details-button {
             background-color: orange;
@@ -242,16 +232,15 @@ $(document).ready(function() {
             ?>
         </ul>
     </nav>
-
     <div class="ad-container">
         <div class="ad">
             <a href="https://auto-esperienza.com/2024/03/05/controllare-auto-usata-allacquisto/" target="_blank">
-                <img src="immagini/pubblicita1.jpg" alt="Pubblicità 1" style="height: 200px; width: 245px;">
+                <img src="immagini/pubblicita1.jpg" alt="Pubblicità 1" style="height: 25vh; width: 20vw;">
             </a>
         </div>
         <div class="ad">
             <a href="https://auto-esperienza.com/2023/08/09/come-vendere-la-propria-auto-usata-facilmente-velocemente-a-buon-prezzo-e-in-sicurezza-tutti-i-metodi-noicompriamoauto-concessionaria-online-tra-privati-passaggio-proprieta-pagamento-preparazione/" target="_blank">
-                <img src="immagini/pubblicita2.jpg" alt="Pubblicità 2" style="height: 200px; width: 245px;">
+                <img src="immagini/pubblicita2.jpg" alt="Pubblicità 2" style="height: 25vh; width: 20vw;">
             </a>
         </div>
     </div>

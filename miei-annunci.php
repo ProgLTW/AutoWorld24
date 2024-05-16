@@ -316,10 +316,10 @@ $(document).ready(function() {
                                 if (isset($row['nascosto'])) {
                                     if ($row['nascosto'] == 'f') {
                                         // Se l'annuncio non è contrassegnato come venduto, mostra il pulsante "CONTRASSEGNA COME VENDUTO"
-                                        echo "<a class='btn btn-primary btn-lg details-button contrassegna-venduto' role='button' data-annuncio-id='{$row['id']}'>CONTRASSEGNA COME VENDUTO</a>";
+                                        echo "<a class='btn btn-primary btn-lg details-button contrassegna-venduto' role='button' style='margin-bottom: 0px' data-annuncio-id='{$row['id']}'>CONTRASSEGNA COME VENDUTO</a>";
                                     } else {
                                         // Se l'annuncio è contrassegnato come venduto, mostra un messaggio diverso
-                                        echo "<a class='btn btn-primary btn-lg details-button rendi-visibile' role='button' data-annuncio-id='{$row['id']}'>RENDI VISIBILE</a>";
+                                        echo "<a class='btn btn-primary btn-lg details-button rendi-visibile' role='button' style='margin-bottom: 0px' data-annuncio-id='{$row['id']}'>RENDI VISIBILE</a>";
                                     }
                                 }
                                 // Fine dell'annuncio

@@ -223,7 +223,7 @@ nav li:not(:first-child):hover {
     padding: 10px; /* Aggiungi spazio intorno al contenuto */
     margin-bottom: 10px; /* Aggiungi spazio tra le caselle */
     border: 1px solid #ccc; /* Aggiungi un bordo */
-    margin-left: 30px;
+    margin-left: 1em;
 }
 .annunci-container {
     position: fixed;
@@ -299,8 +299,6 @@ nav li:not(:first-child):hover {
 .heart-icon.filled {
     background-image: url('immagini/cuore-pieno.png'); /* Immagine del cuore pieno */
 }
-
-
 
 /*@media only screen and (max-width: 1550px) {
     nav ul {

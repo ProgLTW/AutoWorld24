@@ -193,11 +193,10 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         }
         form select {
             margin-top: 5px; /* Sposta la casella di selezione verso l'alto */
+            font-size: 1em;
+            font-family: 'Formula1 Display', sans-serif;
         }
-        select {
-            font-family: 'Formula1 Display', sans-serif; /* Cambia il font delle caselle di selezione */
-            font-size: 16px; /* Regola la dimensione del font se necessario */
-        }
+       
         input {
             font-family: 'Formula1 Display';
             font-size: 16px;
@@ -220,11 +219,11 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
         .item1{
             font-family: 'Formula1 Display';
-            font-size: 20px;
+            font-size: 15px;
             margin-top: 100px;
             text-align: left;
             color: black;
-            width: 400px; /* Larghezza fissa per la colonna sinistra */
+            width: 25em; /* Larghezza fissa per la colonna sinistra */
             padding: 20px;
             background-color: orange;
             border-radius: 10px;
@@ -252,18 +251,16 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         .container3 {
             display: flex;
             border-radius: 10px;
-            background-color: white;
             font-family: 'Formula1 Display';
             color: orange;
             margin: 0 auto;
-            background-color: #2c2c2c96;
+            background-color: #2c2c2cea;
             border: 1px solid orange;
         }
 
-
         .foto {
-            width: 400px; /* Imposta la larghezza massima al 30% del contenitore */
-            margin-right: 20px;
+            /* Imposta la larghezza massima al 30% del contenitore */
+            margin-right: 1vw;
         }
 
         .foto img {
@@ -274,7 +271,8 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 
         .caratteristiche {
             flex: 1; /* Le caratteristiche occupano il 50% dello spazio */
-            padding: 10px;
+            padding: 1vh;
+            font-size: 1em;
         }
         
 
@@ -310,6 +308,37 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             cursor: pointer;
             border-radius: 5px;
             position: relative;
+        }
+        @media only screen and (max-width: 768px) {
+            .form-signin input[type="text"],
+            .form-signin input[type="number"],
+            .form-signin input[type="email"],
+            .form-signin input[type="password"],
+            .form-signin textarea,
+            .form-signin select, 
+            .form-signin button[type="submit"],
+            .form-signin button[type="reset"] {
+                border-radius: 10px; /* Imposta il raggio dell'arrotondamento del bordo */
+                padding: 10px; /* Aggiungi spazio intorno al contenuto */
+                margin-bottom: 10px; /* Aggiungi spazio tra le caselle */
+                border: 1px solid #ccc; /* Aggiungi un bordo */
+                margin-left: 0;
+                font-family: 'Formula1 Display', sans-serif;
+                font-size: 0.5em;
+                margin-top: 5px;
+            }
+            .form-signin label {
+                font-size: 0.5em;
+            }
+            .item1{
+                width: 5em; /* Larghezza fissa per la colonna sinistra */
+            }
+            .form-signin option {
+                width: 0.5vw;
+            }
+            .caratteristiche { /* Le caratteristiche occupano il 50% dello spazio */
+                font-size: 0.5em;
+            }
         }
     </style>
 </head>
@@ -391,7 +420,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             <form name="searchForm" action="vedi-annunci.php" method="POST" class="form-signin m-auto" style="margin-left: 0;">
 
                     <label for="marca">Marca:</label>
-                    <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
+                    <select id="marca" name="marca" onchange="updateModelloOptions(this.value)" style="width: 12vw">
                         <option value="" <?php if($marca == '') echo 'selected="selected"'; ?>>Seleziona</option>
                         <option value="Audi" <?php if($marca == 'Audi') echo 'selected="selected"'; ?>>Audi</option>
                         <option value="BMW" <?php if($marca == 'BMW') echo 'selected="selected"'; ?>>BMW</option>
@@ -442,7 +471,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                         <?php echo $prezzoAOptions; ?>
                     </select><br>
                     <label for="carrozzeria">Carrozzeria:</label>
-                    <select id="carrozzeria" name="carrozzeria">
+                    <select id="carrozzeria" name="carrozzeria" style="width: 12vw">
                         <option value="" <?php if($carrozzeria == '') echo 'selected="selected"'; ?>>Seleziona</option>
                         <option value="City Car" <?php if($carrozzeria == 'City Car') echo 'selected="selected"'; ?>>City Car</option>
                         <option value="Cabrio" <?php if($carrozzeria == 'Cabrio') echo 'selected="selected"'; ?>>Cabrio</option>
@@ -527,7 +556,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                         <option value="Metano" <?php if($carburante == 'Metano') echo 'selected="selected"'; ?>>Metano</option>
                     </select><br>
                     <label for="cambio">Cambio:</label>
-                    <select name="cambio">
+                    <select name="cambio" style="width: 12vw">
                         <option value="" <?php if($cambio == '') echo 'selected="selected"'; ?>>Seleziona</option>
                         <option value="Manuale" <?php if($cambio == 'Manuale') echo 'selected="selected"'; ?>>Manuale</option>
                         <option value="Automatico" <?php if($cambio == 'Automatico') echo 'selected="selected"'; ?>>Automatico</option>
@@ -651,7 +680,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                                     echo "<div class='container3'>";
                                     // Visualizzazione dell'immagine dell'annuncio
                                     echo "<div class='foto'>";
-                                    echo "<img src='../vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px; margin-left:1vw; margin-bottom:1vh;'>";
+                                    echo "<img src='../vendi/{$row['foto']}' alt='Foto auto' style='border-top-left-radius: 10px; border-top-right-radius: 10px; margin-left:1vw; margin-bottom:1vh; width:20vw'>";
                                     echo "</div>";
 
                                     // Inizio delle caratteristiche dell'annuncio
@@ -664,7 +693,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                                     echo "<p>Cambio: {$row['cambio']}</p>";
                                     echo "<p>Potenza: {$row['potenza']} CV</p>";
                                     // Aggiungi altre caratteristiche dell'annuncio qui...
-                                    echo "<a href='big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
+                                    echo "<a href='big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button' style='width: 8vw; height: 2.4vh; font-size: 0.8em'>VEDI DETTAGLI</a>";
                                     echo "</div>";                   
                                     echo "<div class='preferito' style='margin-right: 1vw; margin-top: 1vh'>";
                                     // Aggiunta della stella per contrassegnare come preferito

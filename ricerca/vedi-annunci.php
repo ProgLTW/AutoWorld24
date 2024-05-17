@@ -63,6 +63,55 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             echo "Email dell'utente non trovata nella sessione.";
         }
     }
+
+
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+
+$navbarContent = "";
+
+if ($loggato) {
+    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+        or die('Could not connect: ' . pg_last_error());
+
+    if ($dbconn) {
+        $query = "SELECT nome FROM utente WHERE email = $1";
+        $result = pg_query_params($dbconn, $query, array($email));
+
+        if ($result) {
+            $num_rows = pg_num_rows($result);
+            if ($num_rows > 0) {
+                $row = pg_fetch_assoc($result);
+                $nome = htmlspecialchars($row["nome"], ENT_QUOTES, 'UTF-8');
+                $navbarContent = "
+                    <div class='dropdown'>
+                        <a href='#' class='dropdown-toggle'>Ciao, $nome</a>
+                        <div class='dropdown-menu'>
+                            <a href='../miei-annunci.php'>I miei annunci</a>
+                            <a href='../preferiti.php'>Preferiti</a>
+                            <a href='../modifica-password.php'>Modifica password</a>
+                            <a href='?logout=true' class='btn btn-primary btn-lg' role='button'>Esci</a>
+                        </div>
+                    </div>
+                ";
+            } else {
+                $navbarContent = "
+                    <a href='../login/index.html' class='navbar-item'>LOGIN</a>
+                    
+                ";
+            }
+        } else {
+            $navbarContent = "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+        }
+        
+    } else {
+        $navbarContent = "Connessione al database non riuscita.";
+    }pg_close($dbconn);
+} else {
+    $navbarContent = "
+        <a href='../login/index.html' class='navbar-item'>LOGIN</a>
+        <a href='../registrazione/index.html' class='navbar-item'>REGISTRATI</a>
+    ";
+}
 ?>
 <!DOCTYPE html> 
 <html>
@@ -174,7 +223,14 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         });
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
 
+            navbarToggle.addEventListener('click', () => {
+                navbarMenu.classList.toggle('active');
+            });
+        });
     </script>
     <style> 
         .icon-auto {
@@ -346,60 +402,36 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
     </style>
 </head>
 <body class="text-center">
-<nav>
-        <ul>
-            <li><a href="../index.php"><b>AUTOWORLD</b></a></li>
-            <li class="dropdown">
-                <a class="btn btn-primary btn-lg dropbtn" role="button"><b>RICERCA</b></a>
-                <div class="dropdown-menu">
-                    <a href="../ricerca/ricerca-personalizzata.php">Ricerca Personalizzata</a>
-                    <a href="../ricerca/vedi-annunci.php">Vedi Annunci</a>
+
+<nav class="navbar">
+        <div class="navbar-container">
+            <a href="../index.php" class="navbar-logo"><b>AUTOWORLD</b></a>
+            <div class="navbar-menu" id="navbar-menu">
+                <div class="navbar-item dropdown">
+                    <a class="dropdown-toggle"><b>RICERCA</b></a>
+                    <div class="dropdown-menu">
+                        <a href="../ricerca/ricerca-personalizzata.php">Ricerca personalizzata</a>
+                        <a href="../ricerca/vedi.annunci.php">Vedi annunci</a>
+                    </div>
                 </div>
-            </li>
-            <li><a href="../vendi/index.php"><b>VENDI</b></a></li>
-            <li><a href="ricambi.php"><b>CHI SIAMO</b></a></li>
-            <li><a href="<?php echo $redirectURL; ?>"><b>PREFERITI</b></a></li>
-            <?php
-                $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
-                $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-                if ($loggato) {
-                    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
-                        or die('Could not connect: ' . pg_last_error());
-
-                    if ($dbconn) {             
-                        $query = "SELECT nome FROM utente WHERE email = $1";
-                        $result = pg_query_params($dbconn, $query, array($email));
-
-                        if ($result) {
-                            $num_rows = pg_num_rows($result);
-                            if ($num_rows > 0) {
-                                $row = pg_fetch_assoc($result);
-                                echo "<li class='dropdown'><a href='#' class='btn btn-primary btn-lg' role='button'><b>Ciao, " . $row["nome"] . "</b></a>";
-                                // Qui inizia la sezione del dropdown
-                                echo "<div class='dropdown-menu'>";
-                                echo "<a href='../miei-annunci.php'>I miei annunci</a>";
-                                echo "<a href='../preferiti.php'>Preferiti</a>";
-                                echo "<a href='../modifica-password.php'>Modifica password</a>";
-                                echo "<a href='?logout=true' class='btn btn-primary btn-lg' role='button'>ESCI</a>";
-                                echo "</div>"; // Chiudi dropdown-content
-                                echo "</li>"; // Chiudi dropdown
-                            } else {
-                                echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
-                            }
-                        } else {
-                            echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
-                        }
-                    } else {
-                        echo "Connessione al database non riuscita.";
-                    }
-                    pg_close($dbconn);
-                } else {
-                    echo "<li><a href='../login/index.html' class='btn btn-primary btn-lg' role='button'>LOGIN</a></li>";
-                    echo "<li><a href='../registrazione/index.html' class='btn btn-primary btn-lg' role='button'>REGISTRATI</a></li>";
-                }
-            ?>
-        </ul>
+                <a href="../vendi/index.php" class="navbar-item"><b>VENDI</b></a>
+                <a href="#footer" class="navbar-item"><b>CHI SIAMO</b></a>
+                <a href="<?php echo $redirectURL; ?>" class="navbar-item"><b>PREFERITI</b></a>
+                <div class="navbar-item dropdown" id="auth-menu">
+                    <?php echo $navbarContent; ?>
+                </div>
+            </div>
+            <div class="navbar-toggle" id="navbar-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
     </nav>
+
+    <script src="script.js"></script>
+
+
     <div class="col-container">
         <div class="item1">
             <?php

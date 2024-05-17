@@ -192,7 +192,7 @@ nav li:not(:first-child):hover {
 .car-logos {
     width: auto;
     white-space: nowrap;
-    padding: 1vh 0;
+    padding: 1vh 1vw;
     background-color: transparent;
 }
 .animation {

@@ -153,7 +153,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         
         // Se l'utente non è loggato, reindirizzalo alla pagina di login
         if (!isLogged) {
-            window.location.href = 'login/index.html';
+            window.location.href = '../login/index.html';
             return;
         }
 
@@ -212,7 +212,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
         .col-container {
             display: flex;
             gap: 10px;
-            background-color: #2c2c2c96;
+            /*background-color: #2c2c2c96;*/
             padding: 10px;
             margin-top: 50px;
             margin: 30px;
@@ -651,7 +651,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                                     echo "<div class='container3'>";
                                     // Visualizzazione dell'immagine dell'annuncio
                                     echo "<div class='foto'>";
-                                    echo "<img src='../vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
+                                    echo "<img src='../vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px; margin-left:1vw; margin-bottom:1vh;'>";
                                     echo "</div>";
 
                                     // Inizio delle caratteristiche dell'annuncio
@@ -664,7 +664,9 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                                     echo "<p>Cambio: {$row['cambio']}</p>";
                                     echo "<p>Potenza: {$row['potenza']} CV</p>";
                                     // Aggiungi altre caratteristiche dell'annuncio qui...
-
+                                    echo "<a href='big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
+                                    echo "</div>";                   
+                                    echo "<div class='preferito' style='margin-right: 1vw; margin-top: 1vh'>";
                                     // Aggiunta della stella per contrassegnare come preferito
                                     if (isset($preferiti_array) && is_array($preferiti_array)) {
                                         // Controllo se l'annuncio è nei preferiti
@@ -675,14 +677,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                                     }
 
                                     echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span><br>";
-
-                                    echo "<a href='big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button'>VEDI DETTAGLI</a>";
-
-                                    echo "<a href='#' class='btn btn-primary btn-lg buy-button' role='button'>COMPRA</a>";
-                                    
-                                
-                                    echo "</div>";                    
-                                    
+                                    echo "</div>";
                                     // Fine dell'annuncio
                                     echo "</div>";
                                 

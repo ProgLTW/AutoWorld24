@@ -3,105 +3,129 @@
     padding: 0;
 }
 body {
-    min-height: 100vh;
-    background-image: url(immagini/auto.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; /* Impedisce la ripetizione dello sfondo */
-    background-attachment: fixed;
-}
-@font-face {
-    font-family: 'Formula1 Display';
-    src: url('C:\Windows\Fonts\Formula1-Display.ttf') format('truetype'); /* Imposta il percorso al file del font */
-}
-nav {
-    position: fixed; /* Rende la navbar fissa */
-    z-index: 1000;
-    top: 0;
-    width: 100%;
-    height: auto;
-    background-color: #ffa500;
-    font-family: 'Formula1 Display';
-    
-}
-nav ul {
-    width: 90%;
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-nav li {
-    height: 7.5vh;
-    padding: 0 2vw;
-}
-nav a {
-    height: 100%;
-    padding: 0 1vw;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: black;
-    /*font-size: 16px; /* Adjust the value to your desired font size */
-}
-nav li:not(:first-child) {
-    font-size: 1.2em; /* Adjust the value to your desired font size */
-}
-nav li:first-child {
-    margin-right: auto;
-    font-size: xx-large;
-    background-color: orange;
-}
-nav li:last-child {
-    background-color: orange;
-    justify-content: flex-end;
-    margin-left: -2vw;
-    margin-right: -5vw;
-}
-nav li:nth-child(-n+5) {
-    position: sticky;
-    z-index: 1;
-    margin-right: auto;
-    justify-content: flex-end;
-    background-color: orange;
-}
-nav li:not(:first-child):hover {
-    background-color: white;
-    transform: scale(1.15);
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-.dropbtn {
-    border: none;
-  }
-  
-  .dropdown {
+.navbar {
+    background-color: orange;
+    padding: 10px;
     position: relative;
-    display: inline-block;
-  }
-  
-  .dropdown-menu {
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    font-size: 24px;
+    color: black;
+    text-decoration: none;
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-item {
+    margin: 0 10px;
+    color: black;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.navbar-item:hover {
+    color: white;
+    transform: scale(1.1);
+}
+
+.dropdown-menu {
     display: none;
     position: absolute;
-    background-color: #f1f1f1;
-    width: auto; /* Imposta la larghezza del menu a tendina */
-    right: 0; /* Allinea il menu a tendina verso destra */
-    left: 0; /* Resetta la posizione sinistra */
-    z-index: 10000;
-  }
-  
-  .dropdown-menu a {
-    color: black;
-    padding: 1vh 1vw;
-    text-decoration: none;
-    
-  }
-  
-  .dropdown-menu a:hover {
-    background-color: orange; /* Cambia il colore del testo delle opzioni del dropdown menu quando passi sopra */
+    top: 100%;
+    left: 0;
+    background-color: orange;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
-.dropdown:hover .dropdown-menu {display: block;}
-  
+.dropdown-menu a {
+    color: black;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: white;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.navbar-toggle span {
+    background-color: black;
+    height: 3px;
+    margin: 4px 0;
+    width: 25px;
+}
+
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: orange;
+    }
+
+    .navbar-menu.active {
+        display: flex;
+    }
+
+    .navbar-toggle {
+        display: flex;
+    }
+
+    .navbar-item {
+        margin: 10px 0;
+    }
+
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        background-color: inherit;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 .icon-auto-button {
     border: none;
     background: none;

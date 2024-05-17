@@ -65,9 +65,6 @@ if(isset($_GET['logout'])) {
         }
     }
 
-
-
-$loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
 
 $navbarContent = "";
@@ -98,21 +95,21 @@ if ($loggato) {
                 ";
             } else {
                 $navbarContent = "
-                    <a href='../login/index.html' class='navbar-item'>Login</a>
-                    <a href='../registrazione/index.html' class='navbar-item'>Registrati</a>
+                    <a href='../login/index.html' class='navbar-item'>LOGIN</a>
+                    
                 ";
             }
         } else {
             $navbarContent = "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
         }
-        pg_close($dbconn);
+        
     } else {
         $navbarContent = "Connessione al database non riuscita.";
-    }
+    }pg_close($dbconn);
 } else {
     $navbarContent = "
-        <a href='../login/index.html' class='navbar-item'>Login</a>
-        <a href='../registrazione/index.html' class='navbar-item'>Registrati</a>
+        <a href='../login/index.html' class='navbar-item'>LOGIN</a>
+        <a href='../registrazione/index.html' class='navbar-item'>REGISTRATI</a>
     ";
 }
 ?>
@@ -129,106 +126,50 @@ if ($loggato) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
-    $('.heart-icon').click(function() {
-        var annuncioId = $(this).data('annuncio-id');
-        var isFavorite = $(this).hasClass('filled');
-        var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
-        
-        // Se l'utente non è loggato, reindirizzalo alla pagina di login
-        if (!isLogged) {
-            window.location.href = 'login/index.html';
-            return;
-        }
+            $('.heart-icon').click(function() {
+                var annuncioId = $(this).data('annuncio-id');
+                var isFavorite = $(this).hasClass('filled');
+                var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
+                
+                // Se l'utente non è loggato, reindirizzalo alla pagina di login
+                if (!isLogged) {
+                    window.location.href = 'login/index.html';
+                    return;
+                }
 
-        // Cambia lo stato del cuore (pieno o vuoto)
-        $(this).toggleClass('filled');
+                // Cambia lo stato del cuore (pieno o vuoto)
+                $(this).toggleClass('filled');
 
-        // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
-        $.ajax({
-            url: 'aggiorna_preferito.php',
-            type: 'POST',
-            data: { id: annuncioId, checked: !isFavorite }, // Inverti lo stato del preferito
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
+                // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
+                $.ajax({
+                    url: 'aggiorna_preferito.php',
+                    type: 'POST',
+                    data: { id: annuncioId, checked: !isFavorite }, // Inverti lo stato del preferito
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
         });
-    });
-});
 
-    </script>
-    <script>
-$(document).ready(function() {
-    // Gestisci il clic sul link "Chi siamo" nella navbar
-    $('a[href="#footer"]').click(function(event) {
-        // Previene il comportamento predefinito del link
-        event.preventDefault();
-        
-        // Calcola la posizione verticale del footer
-        var targetOffset = $('#footer').offset().top;
-        
-        // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
-        $('html, body').animate({
-            scrollTop: targetOffset
-        }, 1000);
-    });
-});
-</script>
-
-    <style> 
-        .icon-auto {
-            width: 8vw; /* Larghezza desiderata */
-            height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
-        }
-        .small-logo {
-            margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
-        }
-        /* Aggiungi stili per gli annunci pubblicitari */
-        .ad-container {
-            margin-top: 120px;
-            margin-left: 20px;
-            margin-right: 20px;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px; /* Aggiungi spazio tra gli annunci e il contenuto principale */
-        }
-        .details-button {
-            background-color: orange;
-            border: none;
-            color: black;
-            padding: 10px 20px;
-            text-align: center;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            position: absolute;
-            bottom: 0;
-            margin-bottom: 30px;
-        }
-        .container-contattaci {
-            display: flex;
-            flex-wrap: wrap;
-            font-family: 'Formula1 Display';
-            padding-top: 50px; /* Aumenta lo spazio sopra il footer */
-            padding-bottom: 50px; /* Aumenta lo spazio sotto il footer */
-        }
-
-        .footer-column {
-            flex: 1;
-            margin-right: 100px;
-            margin-bottom: 20px;
-            margin-left: 100px;
-            
-        }
-        .footer-column a {
-            color: black; /* Imposta il colore del testo dei link su nero */
-            text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
-        }
-    </style>
-
-<script>
+        $(document).ready(function() {
+            // Gestisci il clic sul link "Chi siamo" nella navbar
+            $('a[href="#footer"]').click(function(event) {
+                // Previene il comportamento predefinito del link
+                event.preventDefault();
+                
+                // Calcola la posizione verticale del footer
+                var targetOffset = $('#footer').offset().top;
+                
+                // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
+                $('html, body').animate({
+                    scrollTop: targetOffset
+                }, 1000);
+            });
+        });
         document.addEventListener('DOMContentLoaded', () => {
             const navbarToggle = document.getElementById('navbar-toggle');
             const navbarMenu = document.getElementById('navbar-menu');

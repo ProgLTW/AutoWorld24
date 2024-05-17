@@ -3,60 +3,90 @@
     padding: 0;
 }
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background-image: url(immagini/auto.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; /* Impedisce la ripetizione dello sfondo */
+    background-attachment: fixed;
 }
-
+@font-face {
+    font-family: 'Formula1 Display';
+    src: url('C:\Windows\Fonts\Formula1-Display.ttf') format('truetype'); /* Imposta il percorso al file del font */
+}
 .navbar {
-    background-color: orange;
+    background-color: #ffa500;
+    font-family: 'Formula1 Display';
     padding: 10px;
     position: relative;
+    top: 0;
+    z-index: 1000;
 }
 
 .navbar-container {
+    width: 95%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 2vw;
 }
 
 .navbar-logo {
-    font-size: 24px;
+    font-size: xx-large;
     color: black;
     text-decoration: none;
+    margin-right: 10vw;
 }
 
+/*collapsed menu*/
 .navbar-menu {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .navbar-item {
+    font-size: 1.2em; /* Adjust the value to your desired font size */
     margin: 0 10px;
     color: black;
     text-decoration: none;
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex-grow: 1; /* Aggiunto per distribuire uniformemente lo spazio */
+    text-align: center; /* Aggiunto per centrare il testo */
 }
 
+.navbar-item a {
+    text-decoration: none; /* Rimuove la sottolineatura dai link */
+}
 .navbar-item:hover {
     color: white;
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
+.dropdown-toggle {
+    text-decoration: none; /* Rimuove la sottolineatura dai link dropdown */
+    color: black;
+}
+
+.dropdown-toggle:hover {
+    text-decoration: none; /* Rimuove la sottolineatura dai link dropdown */
+    color: white;
+}
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%;
+
     left: 0;
     background-color: orange;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     z-index: 1;
+    width: auto;
 }
 
 .dropdown-menu a {
     color: black;
-    padding: 10px;
+    padding: 1vh 1vw;
     display: block;
     text-decoration: none;
 }
@@ -123,7 +153,54 @@ body {
 
 
 
+.icon-auto {
+    width: 8vw; /* Larghezza desiderata */
+    height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
+}
+.small-logo {
+    margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
+}
+/* Aggiungi stili per gli annunci pubblicitari */
+.ad-container {
+    margin-top: 120px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Aggiungi spazio tra gli annunci e il contenuto principale */
+}
+.details-button {
+    background-color: orange;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 30px;
+}
+.container-contattaci {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Formula1 Display';
+    padding-top: 50px; /* Aumenta lo spazio sopra il footer */
+    padding-bottom: 50px; /* Aumenta lo spazio sotto il footer */
+}
 
+.footer-column {
+    flex: 1;
+    margin-right: 100px;
+    margin-bottom: 20px;
+    margin-left: 100px;
+    
+}
+.footer-column a {
+    color: black; /* Imposta il colore del testo dei link su nero */
+    text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
+}
 
 
 .icon-auto-button {

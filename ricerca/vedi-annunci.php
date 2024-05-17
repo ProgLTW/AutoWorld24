@@ -237,9 +237,9 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             text-align: left;
             color: white;
             flex: 1;
-            padding: 20px;
+            padding: 0.5em;
             border: 1px solid orange;
-            
+            background-color: #2c2c2c96;
         }
 
         #searchForm {            
@@ -339,6 +339,9 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
             .caratteristiche { /* Le caratteristiche occupano il 50% dello spazio */
                 font-size: 0.5em;
             }
+            .item2 {
+                padding: 0.25em;
+            }
         }
     </style>
 </head>
@@ -435,7 +438,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                         <option value="Mazda" <?php if($marca == 'Mazda') echo 'selected="selected"'; ?>>Mazda</option>
                     </select> <br>
                     <label for="modello">Modello:</label>
-                    <select id="modello" name="modello" disabled>
+                    <select id="modello" style="width: 12vw" name="modello" disabled>
                         <option value="" <?php if($modello == '') echo 'selected="selected"'; ?>>Seleziona</option>
                     </select><br>
                     <?php
@@ -547,7 +550,7 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
                         <?php echo $kmAOptions; ?>
                     </select><br>
                     <label for="carburante">Carburante:</label>
-                    <select name="carburante">
+                    <select name="carburante" style="width: 12vw">
                         <option value="" <?php if($carburante == '') echo 'selected="selected"'; ?>>Seleziona</option>
                         <option value="Benzina" <?php if($carburante == 'Benzina') echo 'selected="selected"'; ?>>Benzina</option>
                         <option value="Diesel" <?php if($carburante == 'Diesel') echo 'selected="selected"'; ?>>Diesel</option>

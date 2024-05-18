@@ -18,7 +18,8 @@ body {
     background-color: #ffa500;
     font-family: 'Formula1 Display';
     padding: 10px;
-    position: relative;
+    position: fixed;
+    width: 100%;
     top: 0;
     z-index: 1000;
 }

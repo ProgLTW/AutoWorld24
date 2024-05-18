@@ -205,6 +205,14 @@ $(document).ready(function() {
             color: black; /* Imposta il colore del testo dei link su nero */
             text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
         }
+        @media only screen and (max-width: 768px) {
+            .car-logos-container {
+                height: 2em;
+            }
+            .container-contattaci{
+                bottom: 4vh;
+            }
+        }
     </style>
 </head>
 <body class="text-center">

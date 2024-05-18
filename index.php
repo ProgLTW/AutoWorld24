@@ -196,7 +196,7 @@ if ($loggato) {
         @media only screen and (max-width: 768px) {
             .container {
                 font-size: 0.5em;
-                margin-top: -25em;
+                margin-top: -20em;
             }
             .box {
                 display: inline-block; /* Imposta i riquadri come blocchi inline */
@@ -218,10 +218,6 @@ if ($loggato) {
                 height: 2em;
             }
             .container-contattaci{
-                background-color: orange;
-                position: relative;
-                width: 100%;
-                height: auto;
                 bottom: 4vh;
             }
         }

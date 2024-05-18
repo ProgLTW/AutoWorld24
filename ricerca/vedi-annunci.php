@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .item1{
             font-family: 'Formula1 Display';
             font-size: 15px;
-            margin-top: 100px;
+            margin-top: 5vh;
             text-align: left;
             color: black;
             width: 25em; /* Larghezza fissa per la colonna sinistra */
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
             border-radius: 10px;
             font-family: 'Formula1 Display';
             font-size: 20px;
-            margin-top: 100px;
+            margin-top: 5vh;
             text-align: left;
             color: white;
             flex: 1;
@@ -364,6 +364,12 @@ document.addEventListener('DOMContentLoaded', () => {
             border-radius: 5px;
             position: relative;
         }
+        .btn-primary:not(.details-button) {
+            margin-left: 18vw; 
+            margin-top: 4vh; 
+            margin-bottom: 10vh;
+        }
+        
         @media only screen and (max-width: 768px) {
             .form-signin input[type="text"],
             .form-signin input[type="number"],
@@ -396,6 +402,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             .item2 {
                 padding: 0.25em;
+            }
+            .car-logos-container {
+                height: 2em;
+            }
+            .btn-primary:not(.details-button) {
+                margin-left: 18vw; 
+                margin-top: 4vh; 
+                margin-bottom: 10vh;
             }
         }
     </style>
@@ -628,8 +642,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <select id="potenza_a" name="potenza_a" style="margin-left: 0px;" onchange="updateMinimo('potenza_da', 'potenza_a')">
                         <?php echo $potenzaAOptions; ?>
                     </select><br>
-                    <button type="submit" class="btn btn-primary" style="margin-left: 150px; margin-top: 30px; margin-bottom: 30px;">Cerca</button>
-                
+                    <button type="submit" class="btn btn-primary">Cerca</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
             </form>
         </div>
 

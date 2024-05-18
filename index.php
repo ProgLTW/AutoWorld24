@@ -214,6 +214,16 @@ if ($loggato) {
                 height: 13vh; 
                 width: 20vw;
             }
+            .car-logos-container {
+                height: 2em;
+            }
+            .container-contattaci{
+                background-color: orange;
+                position: relative;
+                width: 100%;
+                height: auto;
+                bottom: 4vh;
+            }
         }
     </style>
 </head>

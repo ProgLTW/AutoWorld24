@@ -17,12 +17,13 @@
             color: orange;
         }
         h1 {
-            font-size: x-large;
+            font-size: 1.5em;
         }
         td:nth-child(1) {
-            width: 350px;
+            width: 20vw;
             border-right: 1px solid black;
             height: auto;
+            font-size: 1em;
         }
         td:nth-child(1):hover {
             background-color: white;
@@ -56,6 +57,12 @@
         }
         .logo-container a {
             color: orange; /* Cambia il colore del testo all'interno dell'ancora */
+        }
+        @media only screen and (max-width: 768px) {
+            td:nth-child(1) {
+                width: 10vw;
+                font-size: 0.7em;
+            }
         }
     </style>
 </head>

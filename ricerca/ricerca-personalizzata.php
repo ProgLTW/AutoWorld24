@@ -223,11 +223,39 @@ $(document).ready(function() {
             text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
         }
         @media only screen and (max-width: 768px) {
+            .form-signin {
+                margin-left: 2vw;
+            }
             .car-logos-container {
                 height: 2em;
             }
             .container-contattaci{
-                bottom: 4vh;
+                bottom: 3vh;
+            }
+            .form-signin input[type="text"],
+            .form-signin input[type="number"],
+            .form-signin input[type="email"],
+            .form-signin input[type="password"],
+            .form-signin textarea,
+            .form-signin select, 
+            .form-signin button[type="submit"],
+            .form-signin button[type="reset"] {
+                border-radius: 10px; /* Imposta il raggio dell'arrotondamento del bordo */
+                padding: 10px; /* Aggiungi spazio intorno al contenuto */
+                margin-bottom: 10px; /* Aggiungi spazio tra le caselle */
+                border: 1px solid #ccc; /* Aggiungi un bordo */
+                margin-left: 0;
+                font-family: 'Formula1 Display', sans-serif;
+                font-size: 0.5em;
+                margin-top: 5px;
+            }
+            .form-signin label {
+                font-size: 0.5em;
+                margin-left: 0;
+            }
+            .container2 {
+                margin-left: 20vw;
+                margin-right: 20vw;
             }
         }
     </style>

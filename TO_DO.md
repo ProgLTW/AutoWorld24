@@ -38,19 +38,17 @@ far funzionare filtri-annunci --FATTO--
 password dimenticata --FATTO--
 Finanziamento aggiustare design --FATTO--
 implementare cuore preferiti in tutte le pagine --FATTO--
-Scelta auto-moto messa
+implementare l'acquisto (e relativa eliminazione annuncio + i miei acquisti) --FATTO--
 
 ---DA FARE---
 
+sistemare barra stemmi
+
+sistemare bottone contrassegna come venduto e rendi visibile in MIEI ANNUNCI (posizionare in basso il bottone)
+
 Login effettuato
 
-implementare l'acquisto (e relativa eliminazione annuncio + i miei acquisti)
-
 aggiustare pagine errore e dati inseriti correttamente (sono brutti) -> ho messo un alert su vendi
-
-big annuncio: 
-    gestire foto multiple da testare
-
 
 
 warning in vendi

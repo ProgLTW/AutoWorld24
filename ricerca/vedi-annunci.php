@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 height: 2em;
             }
             .container-contattaci{
-                bottom: 4vh;
+                bottom: 3vh;
             }
             .btn-primary:not(.details-button):not([href*='?logout=true']) {
                 margin-left: 0vw; 

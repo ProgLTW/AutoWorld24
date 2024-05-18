@@ -242,7 +242,39 @@ $(document).ready(function() {
                 height: 2em;
             }
             .container-contattaci{
-                bottom: 4vh;
+                bottom: 3vh;
+            }
+            .form-signin {
+                margin-left: 2vw;
+            }
+            .form-signin input[type="text"],
+            .form-signin input[type="number"],
+            .form-signin input[type="email"],
+            .form-signin input[type="password"],
+            .form-signin textarea,
+            .form-signin select, 
+            .form-signin button[type="submit"],
+            .form-signin button[type="reset"] {
+                border-radius: 10px; /* Imposta il raggio dell'arrotondamento del bordo */
+                padding: 10px; /* Aggiungi spazio intorno al contenuto */
+                margin-bottom: 10px; /* Aggiungi spazio tra le caselle */
+                border: 1px solid #ccc; /* Aggiungi un bordo */
+                margin-left: 0;
+                font-family: 'Formula1 Display', sans-serif;
+                font-size: 0.5em;
+                margin-top: 5px;
+            }
+            .form-signin input[type="file"] {
+                font-size: 0.5em;
+                margin-left: 0;
+            }
+            .form-signin label {
+                font-size: 0.5em;
+                margin-left: 0;
+            }
+            .container2 {
+                margin-left: 20vw;
+                margin-right: 20vw;
             }
         }
     </style>
@@ -383,10 +415,10 @@ $(document).ready(function() {
             <label for="foto">Inserisci immagini:</label>
             <input type="file" name="foto" accept="image/*" multiple><br>
             <label for="descrizione">Inserisci descrizione:</label><br>
-            <textarea name="descrizione" cols="30" rows="6" placeholder="es. tagliandi, stato carrozzeria, stato motore, ecc."></textarea>
+            <textarea name="descrizione" cols="30" rows="6" placeholder="es. tagliandi, stato carrozzeria, stato motore, ecc."></textarea><br>
 
-            <button type="submit" class="btn btn-primary" style="margin-left: 50px; margin-top: 30px; margin-bottom: 30px; font-size: large;" <?php echo isset($_SESSION['loggato']) ? '' : 'disabled'; ?>>Conferma</button>
-            <button type="reset" class="btn btn-secondary" style="margin-left: 10px; font-size: large;">Reset</button>
+            <button type="submit" class="btn btn-primary"<?php echo isset($_SESSION['loggato']) ? '' : 'disabled'; ?>>Conferma</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
 
         </form>
     </div>

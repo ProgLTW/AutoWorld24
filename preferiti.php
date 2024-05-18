@@ -210,7 +210,7 @@ $(document).ready(function() {
                 height: 2em;
             }
             .container-contattaci{
-                bottom: 4vh;
+                bottom: 3vh;
             }
         }
     </style>

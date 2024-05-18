@@ -222,6 +222,29 @@ if ($loggato) {
         });
     });
 });
+$(document).ready(function() {
+            // Gestisci il clic sul link "Chi siamo" nella navbar
+            $('a[href="#footer"]').click(function(event) {
+                // Previene il comportamento predefinito del link
+                event.preventDefault();
+                
+                // Calcola la posizione verticale del footer
+                var targetOffset = $('#footer').offset().top;
+                
+                // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
+                $('html, body').animate({
+                    scrollTop: targetOffset
+                }, 1000);
+            });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+
+            navbarToggle.addEventListener('click', () => {
+                navbarMenu.classList.toggle('active');
+            });
+        });
 document.addEventListener('DOMContentLoaded', () => {
             const navbarToggle = document.getElementById('navbar-toggle');
             const navbarMenu = document.getElementById('navbar-menu');
@@ -364,11 +387,17 @@ document.addEventListener('DOMContentLoaded', () => {
             border-radius: 5px;
             position: relative;
         }
-        .btn-primary:not(.details-button) {
-            margin-left: 18vw; 
+        .btn-primary:not(.details-button):not([href*='?logout=true']) {
+            margin-left: 5vw; 
             margin-top: 4vh; 
             margin-bottom: 10vh;
         }
+        
+
+        .container-contattaci{
+            margin-top: 8vh; 
+        }
+        
         
         @media only screen and (max-width: 768px) {
             .form-signin input[type="text"],
@@ -406,10 +435,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .car-logos-container {
                 height: 2em;
             }
-            .btn-primary:not(.details-button) {
-                margin-left: 18vw; 
-                margin-top: 4vh; 
-                margin-bottom: 10vh;
+            .container-contattaci{
+                bottom: 4vh;
+            }
+            .btn-primary:not(.details-button):not([href*='?logout=true']) {
+                margin-left: 0vw; 
+                margin-top: 2vh; 
+                margin-bottom: 2vh;
             }
         }
     </style>
@@ -778,7 +810,26 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         </div>
     </div>
-
+    
+    <div class="container-contattaci" id="footer">
+        <div class="footer-column">
+            <h2>Chi siamo</h2>
+            <p>Our commitment is to provide you with the highest quality products and the best value in the mobile tool industry. Thank you for your continued support of Cornwell Quality Tools and our franchise owners.</p><br><br>
+            <p><b>© 2024 Autoworld. All Rights Reserved.</b></p>
+        </div>
+        <div class="footer-column">
+            <h2>Contatti</h2>
+            <p>Indirizzo: Via delle Stelle, 123</p>
+            <p>Telefono: 0123-456789</p>
+            <p>Email: <a href="mailto:info@autoworld.com">info@autoworld.com</a></p>
+        </div>
+        <div class="footer-column">
+            <h2>SEGUICI:</h2>
+            <p><a href="https://www.instagram.com/"><img src="../immagini/instagram.png" alt="Instagram" style="width: 20px; height: 20px;">&nbsp;INSTAGRAM</a></p>
+            <p><a href="https://twitter.com/"><img src="../immagini/twitter.png" alt="Twitter" style="width: 20px; height: 20px;">&nbsp;TWITTER</a></p>
+            <p><a href="https://www.facebook.com/"><img src="../immagini/facebook.png" alt="Facebook" style="width: 20px; height: 20px;">&nbsp;FACEBOOK</a></p>
+        </div>
+    </div>
 
     <div class="car-logos-container">
             <div class="car-logos animation">

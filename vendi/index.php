@@ -249,7 +249,7 @@ $(document).ready(function() {
                     <a class="dropdown-toggle"><b>RICERCA</b></a>
                     <div class="dropdown-menu">
                         <a href="../ricerca/ricerca-personalizzata.php">Ricerca personalizzata</a>
-                        <a href="../ricerca/vedi.annunci.php">Vedi annunci</a>
+                        <a href="../ricerca/vedi-annunci.php">Vedi annunci</a>
                     </div>
                 </div>
                 <a href="../vendi/index.php" class="navbar-item"><b>VENDI</b></a>

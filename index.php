@@ -43,7 +43,6 @@ if(isset($_GET['logout'])) {
                     // Trasforma la stringa JSON in un array PHP se non è vuota
                     if ($preferiti) {
                         $preferiti_array = json_decode($preferiti, true);
-                        var_dump($preferiti_array);
                     } else {
                         // Se l'array dei preferiti è vuoto, inizializza un array vuoto
                         $preferiti_array = array();
@@ -192,7 +191,7 @@ if ($loggato) {
                     <a class="dropdown-toggle"><b>RICERCA</b></a>
                     <div class="dropdown-menu">
                         <a href="../ricerca/ricerca-personalizzata.php">Ricerca personalizzata</a>
-                        <a href="../ricerca/vedi.annunci.php">Vedi annunci</a>
+                        <a href="../ricerca/vedi-annunci.php">Vedi annunci</a>
                     </div>
                 </div>
                 <a href="../vendi/index.php" class="navbar-item"><b>VENDI</b></a>

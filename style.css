@@ -210,6 +210,7 @@ body {
 }
 .icon-auto-button img {
     transition: transform 0.3s ease-in-out;
+    width: 8vw;
 }
 .icon-auto-button:hover img {
     transform: scale(1.15);
@@ -222,7 +223,7 @@ body {
     margin-right: 30vw;
     font-family: 'Formula1 Display';
     color: orange;
-    margin-top: -10em;
+    margin-top: -13em;
 }
 
 .container2 {
@@ -358,11 +359,6 @@ body {
     gap: 80px; /* Aggiungi spazio tra l'immagine e il testo */
     padding: 0px; /* Aggiungi padding */
     margin-right: 30px;
-}
-
-.ad img {
-    width: auto; /* Imposta la larghezza massima dell'immagine */
-    height: auto;
 }
 
 .scroll-button {

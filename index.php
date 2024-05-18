@@ -178,7 +178,44 @@ if ($loggato) {
             });
         });
     </script>
-
+    <style>
+        .container {
+            font-size: 1em;
+            margin-top: -13em;
+        }
+        .box {
+            
+        }
+        .icon-auto-button img {
+            width: 8vw;
+        }
+        .ad-container .ad img {
+            height: 25vh; 
+            width: 20vw;
+        }
+        @media only screen and (max-width: 768px) {
+            .container {
+                font-size: 0.5em;
+                margin-top: -25em;
+            }
+            .box {
+                display: inline-block; /* Imposta i riquadri come blocchi inline */
+                width: 15vw;
+                height: 10vh;
+                padding: 1.85em;
+                text-align: center;
+                margin-top: 7vh;
+                margin-bottom: 1vh;
+            }
+            .icon-auto-button img {
+                width: 10vw;
+            }
+            .ad-container .ad img {
+                height: 13vh; 
+                width: 20vw;
+            }
+        }
+    </style>
 </head>
 <body class="text-center">
 
@@ -208,19 +245,16 @@ if ($loggato) {
             </div>
         </div>
     </nav>
-
     <script src="script.js"></script>
-
-
     <div class="ad-container">
         <div class="ad">
-            <a href="https://auto-esperienza.com/2024/03/05/controllare-auto-usata-allacquisto/" target="_blank">
-                <img src="immagini/pubblicita1.jpg" alt="Pubblicità 1" style="height: 25vh; width: 20vw;">
+            <a class="ad1" href="https://auto-esperienza.com/2024/03/05/controllare-auto-usata-allacquisto/" target="_blank">
+                <img src="immagini/pubblicita1.jpg" alt="Pubblicità 1">
             </a>
         </div>
         <div class="ad">
-            <a href="https://auto-esperienza.com/2023/08/09/come-vendere-la-propria-auto-usata-facilmente-velocemente-a-buon-prezzo-e-in-sicurezza-tutti-i-metodi-noicompriamoauto-concessionaria-online-tra-privati-passaggio-proprieta-pagamento-preparazione/" target="_blank">
-                <img src="immagini/pubblicita2.jpg" alt="Pubblicità 2" style="height: 25vh; width: 20vw;">
+            <a class="ad1" href="https://auto-esperienza.com/2023/08/09/come-vendere-la-propria-auto-usata-facilmente-velocemente-a-buon-prezzo-e-in-sicurezza-tutti-i-metodi-noicompriamoauto-concessionaria-online-tra-privati-passaggio-proprieta-pagamento-preparazione/" target="_blank">
+                <img src="immagini/pubblicita2.jpg" alt="Pubblicità 2">
             </a>
         </div>
     </div>

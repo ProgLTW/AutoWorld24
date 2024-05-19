@@ -247,6 +247,8 @@ $(document).ready(function() {
             color: black; /* Imposta il colore del testo dei link su nero */
             text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
         }
+
+        
         .details-button {
             background-color: orange;
             border: none;
@@ -256,12 +258,36 @@ $(document).ready(function() {
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            margin-top: 10px;
+            margin-top: auto;
             margin-right: 10px;
             cursor: pointer;
             border-radius: 5px;
             position: relative;
         }
+
+        
+.container3 {
+    display: flex;
+    flex-direction: column;
+}
+
+.foto {
+    flex: 1;
+}
+
+.caratteristiche {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.details-button {
+    align-self: flex-end;
+}
+
+
         @media only screen and (max-width: 768px) {
             .car-logos-container {
                 height: 2em;

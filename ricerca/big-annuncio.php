@@ -507,6 +507,80 @@ $(document).ready(function() {
             color: black; /* Imposta il colore del testo dei link su nero */
             text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
         }
+        .input-column, .info-column {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .info-column {
+            font-size: 1em;
+        }
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .flex-item {
+            flex: 1;
+            min-width: 200px; /* Imposta una larghezza minima per gli elementi */
+            box-sizing: border-box; /* Assicurati che il padding non aumenti la larghezza degli elementi */
+        }
+        @media only screen and (max-width: 768px) {
+            .car-logos-container {
+                height: 2em;
+            }
+            .container-contattaci{
+                bottom: 3vh;
+            }
+            .img-cell,
+            .price-cell {
+                display: block;
+            }
+            .foto img {
+                width: 68vw; /* Immagine al 100% della larghezza del contenitore */
+                border-radius: 10px;
+                border: 1px solid orange;
+            }
+            .price-cell {
+                margin-top: 20px; /* Aggiunge uno spazio tra l'immagine e la tabella del finanziamento */
+                flex-direction: column;
+            }
+
+            table.finanziamento {
+                margin-top: 20px;
+                width: 50vw;
+            }
+            .input-column, .info-column {
+                padding: 10px;
+                border-radius: 5px;
+                margin-bottom: 10px;
+                font-size: 0.7em;
+            }
+
+            .input-column {
+                order: 1;
+            }
+
+            .info-column {
+                order: 2;
+                margin-right: 0;
+            }
+            .input-column input,
+            .input-column select,
+            .input-column button {
+                font-size: 1em;
+            }
+            .carburante,
+            .preferiti {
+                display: column;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .flex-item {
+                min-width: 100%; /* Gli elementi occuperanno tutta la larghezza disponibile */
+            }
+        }
     </style>
 
 </head>
@@ -600,9 +674,9 @@ $(document).ready(function() {
             //finanziamento
             echo "<tr>";
             //prima colonna -> input
-            echo "<td>";
+            echo "<td class='input-column'>";
             
-            echo "<h3 style='width: 400px; margin-bottom: 20px'>Calcola la rata del tuo prestito</h3>";
+            echo "<h3 style='width: 20vw; margin-bottom: 2vh'>Calcola la rata del tuo prestito</h3>";
 
             echo "<label for='importo_prestito'> Importo prestito (€): </label><br>";
             echo "<input type='number' name='importo_prestito' id='importo_prestito' required><br><br>";
@@ -629,7 +703,7 @@ $(document).ready(function() {
             //seconda colonna -> risultati
             echo "<td class='info-column'>";
             
-            echo "<p style='font-size: 25px;'><b><u>Rata mensile: <span id='risultato_rata_mese'></span></u></b><button onclick='toggleInfo()'><span class=\"info-button\"> info </span></button></p>";
+            echo "<p><b><u>Rata mensile: <span id='risultato_rata_mese'></span></u></b><button onclick='toggleInfo()'><span class=\"info-button\"> info </span></button></p>";
             echo "<p class='info hidden'>Importo totale prestito: <b><span id='risultato_tot_prestito'></span></b></p>";
             echo "<p class='info hidden'>Totale interessi: <b><span id='risultato_tot_interessi'></span></b></p>";
             echo "<p class='info hidden'>Numero di rate: <b><span id='risultato_num_rate'></span></b></p>";
@@ -641,27 +715,28 @@ $(document).ready(function() {
             echo "</td>";
             echo "<table>";
             // Terza riga: Chilometraggio, anno, carburante
-            echo "<tr>";
-            echo "<td>";
+            // Terza riga: Chilometraggio, anno, carburante
+            echo "<tr class='flex-row'>";
+            echo "<td class='flex-item'>";
             echo "<p class='caratteristiche'><span style='color: orange; font-size: 30px'>km</span>  Chilometraggio:  <b>{$annuncio['chilometraggio']}</b></p>";
             echo "</td>";
-            echo "<td>";
+            echo "<td class='flex-item'>";
             echo "<p class='caratteristiche'><img src=\"../immagini/calendario.png\" width='30px'>&nbsp; Anno: <b>{$annuncio['anno']}</b></p>";
             echo "</td>";
-            echo "<td>";
+            echo "<td class='flex-item'>";
             echo "<p class='caratteristiche'><img src=\"../immagini/carburante.png\" width='30px'>&nbsp; Carburante: <b>{$annuncio['carburante']}</b></p>";
             echo "</td>";
             echo "</tr>";
 
             // Quarta riga: Cambio, potenza, aggiungi ai preferiti
-            echo "<tr>";
-            echo "<td>";
+            echo "<tr class='flex-row'>";
+            echo "<td class='flex-item'>";
             echo "<p class='caratteristiche'><img src=\"../immagini/cambio.png\" width='30px'>&nbsp; Cambio: <b>{$annuncio['cambio']}</b></p>";
             echo "</td>";
-            echo "<td>";
+            echo "<td class='flex-item'>";
             echo "<p class='caratteristiche'><img src=\"../immagini/potenza.png\" width='30px'>&nbsp; Potenza: <b>{$annuncio['potenza']} CV</b></p>";
             echo "</td>";
-            echo "<td>";
+            echo "<td class='flex-item'>";
             if (isset($preferiti_array) && is_array($preferiti_array)) {
                 // Controllo se l'annuncio è nei preferiti
                 $isFavorite = in_array($annuncio['id'], $preferiti_array);
@@ -669,12 +744,10 @@ $(document).ready(function() {
                 // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
                 $isFavorite = false;
             }
-
             echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$annuncio['id']}'></span><p class='caratteristiche'><b id='preferitiText'>" . ($isFavorite ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti') . "</b></p>";
-
-       
             echo "</td>";
             echo "</tr>";
+
 
             // Quinta riga: Descrizione
             echo "<tr>";

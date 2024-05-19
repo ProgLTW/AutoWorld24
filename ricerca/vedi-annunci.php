@@ -64,53 +64,53 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
     }
 
 
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+    $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
 
-$navbarContent = "";
-
-if ($loggato) {
-    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
-        or die('Could not connect: ' . pg_last_error());
-
-    if ($dbconn) {
-        $query = "SELECT nome FROM utente WHERE email = $1";
-        $result = pg_query_params($dbconn, $query, array($email));
-
-        if ($result) {
-            $num_rows = pg_num_rows($result);
-            if ($num_rows > 0) {
-                $row = pg_fetch_assoc($result);
-                $nome = htmlspecialchars($row["nome"], ENT_QUOTES, 'UTF-8');
-                $navbarContent = "
-                    <div class='dropdown'>
-                        <a href='#' class='dropdown-toggle'>Ciao, $nome</a>
-                        <div class='dropdown-menu'>
-                            <a href='../miei-annunci.php'>I miei annunci</a>
-                            <a href='../preferiti.php'>Preferiti</a>
-                            <a href='../modifica-password.php'>Modifica password</a>
-                            <a href='?logout=true' class='btn btn-primary btn-lg' role='button'>Esci</a>
+    $navbarContent = "";
+    
+    if ($loggato) {
+        $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+            or die('Could not connect: ' . pg_last_error());
+    
+        if ($dbconn) {
+            $query = "SELECT nome FROM utente WHERE email = $1";
+            $result = pg_query_params($dbconn, $query, array($email));
+    
+            if ($result) {
+                $num_rows = pg_num_rows($result);
+                if ($num_rows > 0) {
+                    $row = pg_fetch_assoc($result);
+                    $nome = htmlspecialchars($row["nome"], ENT_QUOTES, 'UTF-8');
+                    $navbarContent = "
+                        <div class='dropdown'>
+                            <a href='#' class='dropdown-toggle'>Ciao, $nome</a>
+                            <div class='dropdown-menu'>
+                                <a href='../miei-annunci.php'>I miei annunci</a>
+                                <a href='../preferiti.php'>Preferiti</a>
+                                <a href='../modifica-password.php'>Modifica password</a>
+                                <a href='?logout=true' class='btn btn-primary btn-lg' role='button'>Esci</a>
+                            </div>
                         </div>
-                    </div>
-                ";
+                    ";
+                } else {
+                    $navbarContent = "
+                        <a href='../login/index.html' class='navbar-item'>LOGIN</a>
+                        
+                    ";
+                }
             } else {
-                $navbarContent = "
-                    <a href='../login/index.html' class='navbar-item'>LOGIN</a>
-                    
-                ";
+                $navbarContent = "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
             }
+            
         } else {
-            $navbarContent = "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
-        }
-        
+            $navbarContent = "Connessione al database non riuscita.";
+        }pg_close($dbconn);
     } else {
-        $navbarContent = "Connessione al database non riuscita.";
-    }pg_close($dbconn);
-} else {
-    $navbarContent = "
-        <a href='../login/index.html' class='navbar-item'>LOGIN</a>
-        <a href='../registrazione/index.html' class='navbar-item'>REGISTRATI</a>
-    ";
-}
+        $navbarContent = "
+            <a href='../login/index.html' class='navbar-item'>LOGIN</a>
+            <a href='../registrazione/index.html' class='navbar-item'>REGISTRATI</a>
+        ";
+    }
 ?>
 <!DOCTYPE html> 
 <html>
@@ -238,14 +238,6 @@ $(document).ready(function() {
             });
         });
         document.addEventListener('DOMContentLoaded', () => {
-            const navbarToggle = document.getElementById('navbar-toggle');
-            const navbarMenu = document.getElementById('navbar-menu');
-
-            navbarToggle.addEventListener('click', () => {
-                navbarMenu.classList.toggle('active');
-            });
-        });
-document.addEventListener('DOMContentLoaded', () => {
             const navbarToggle = document.getElementById('navbar-toggle');
             const navbarMenu = document.getElementById('navbar-menu');
 
@@ -447,10 +439,9 @@ document.addEventListener('DOMContentLoaded', () => {
     </style>
 </head>
 <body class="text-center">
-
 <nav class="navbar">
         <div class="navbar-container">
-            <a href="../index.php" class="navbar-logo"><b>AUTOWORLD</b></a>
+            <a href="index.php" class="navbar-logo"><b>AUTOWORLD</b></a>
             <div class="navbar-menu" id="navbar-menu">
                 <div class="navbar-item dropdown">
                     <a class="dropdown-toggle"><b>RICERCA</b></a>
@@ -882,6 +873,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="../immagini/loghiauto/nissan.png">
                 <img src="../immagini/loghiauto/renault.png">
             </div>
-    </div>    
+    </div>  
+    
+    
+
+<script>
+  function myFunction() {
+    var x = document.getElementById("myNavbar");
+    if (x.className === "navbar") {
+      x.className += " responsive";
+    } else {
+      x.className = "navbar";
+    }
+  }
+</script>
+
 </body>
 </html>

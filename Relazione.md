@@ -32,7 +32,7 @@ La navbar:
 
     Chi siamo: Riconduce al footer che contiene tutte le informazioni del sito e come contattare i suoi proprietari, insieme ai link per i vari social del sito.
 
-Preferiti: contiene un carosello con tutti gli annunci che l'utente loggato ha segnato come preferiti; se non loggato rimanda alla pagina di login. Cliccando sul cuore si pu rimuovere dai preferiti mentre cliccando sul nome dell'annuncio si viene reindirizati a "big annuncio"
+preferiti.php: contiene un carosello con tutti gli annunci che l'utente loggato ha segnato come preferiti; se non loggato rimanda alla pagina di login. Cliccando sul cuore si può rimuovere dai preferiti mentre cliccando sul nome dell'annuncio si viene reindirizzati a "big annuncio"
 
 Login: form di login con email, password e possibilità di essere ricordati(salvare dati di accesso). Bisogna essere registrati per loggarsi. A sinistra del form ci sono 3 bottoni con login, registrati e password dimenticata che mandano alla rispettive pagine.
 

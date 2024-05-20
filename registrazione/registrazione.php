@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
         $result = pg_query_params($dbconn, $q1, array($email));
         if ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) {
             echo "<h1> Spiacente, l'indirizzo email non è disponibile </h1>
-            Se vuoi, <a href='../login'> clicca qui per loggarti </a>";
+            <h2>Se vuoi, <a href='../login/index.html'> clicca qui per loggarti </a></h2>";
         } else {
             $nome = $_POST['inputName'];
             $cognome = $_POST['inputSurname'];

@@ -392,9 +392,6 @@ if ($loggato) {
             <p><a href="https://www.facebook.com/"><img src="immagini/facebook.png" alt="Facebook" style="width: 20px; height: 20px;">&nbsp;FACEBOOK</a></p>
         </div>
     </div>
-
-
-
     <div class="car-logos-container">
         <div class="car-logos">
             <img src="../immagini/loghiauto/audi.png">

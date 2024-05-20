@@ -220,6 +220,11 @@ if ($loggato) {
             .container-contattaci{
                 bottom: 3vh;
             }
+            .car-logos img {
+                margin-top: 1vh;
+                height: 2vh;
+                margin-right: 0.8vw;
+            }
         }
     </style>
 </head>
@@ -391,57 +396,76 @@ if ($loggato) {
 
 
     <div class="car-logos-container">
-            <div class="car-logos animation">
-                <img src="../immagini/loghiauto/audi.png">
-                <img src="../immagini/loghiauto/bmw.png">
-                <img src="../immagini/loghiauto/ford.png">
-                <img src="../immagini/loghiauto/honda.png">
-                <img src="../immagini/loghiauto/kia.png">
-                <img src="../immagini/loghiauto/mazda.png">
-                <img src="../immagini/loghiauto/mercedes.png">
-                <img src="../immagini/loghiauto/toyota.png">
-                <img src="../immagini/loghiauto/volkswagen.png">
-                <img src="../immagini/loghiauto/hyundai.png">
-                <img src="../immagini/loghiauto/fiat.png">
-                <img src="../immagini/loghiauto/mg.png">
-                <img src="../immagini/loghiauto/peugeot.png">
-                <img src="../immagini/loghiauto/opel.png">
-                <img src="../immagini/loghiauto/nissan.png">
-                <img src="../immagini/loghiauto/renault.png">
-                <img src="../immagini/loghiauto/audi.png">
-                <img src="../immagini/loghiauto/bmw.png">
-                <img src="../immagini/loghiauto/ford.png">
-                <img src="../immagini/loghiauto/honda.png">
-                <img src="../immagini/loghiauto/kia.png">
-                <img src="../immagini/loghiauto/mazda.png">
-                <img src="../immagini/loghiauto/mercedes.png">
-                <img src="../immagini/loghiauto/toyota.png">
-                <img src="../immagini/loghiauto/volkswagen.png">
-                <img src="../immagini/loghiauto/hyundai.png">
-                <img src="../immagini/loghiauto/fiat.png">
-                <img src="../immagini/loghiauto/mg.png">
-                <img src="../immagini/loghiauto/peugeot.png">
-                <img src="../immagini/loghiauto/opel.png">
-                <img src="../immagini/loghiauto/nissan.png">
-                <img src="../immagini/loghiauto/renault.png">
-                <img src="../immagini/loghiauto/audi.png">
-                <img src="../immagini/loghiauto/bmw.png">
-                <img src="../immagini/loghiauto/ford.png">
-                <img src="../immagini/loghiauto/honda.png">
-                <img src="../immagini/loghiauto/kia.png">
-                <img src="../immagini/loghiauto/mazda.png">
-                <img src="../immagini/loghiauto/mercedes.png">
-                <img src="../immagini/loghiauto/toyota.png">
-                <img src="../immagini/loghiauto/volkswagen.png">
-                <img src="../immagini/loghiauto/hyundai.png">
-                <img src="../immagini/loghiauto/fiat.png">
-                <img src="../immagini/loghiauto/mg.png">
-                <img src="../immagini/loghiauto/peugeot.png">
-                <img src="../immagini/loghiauto/opel.png">
-                <img src="../immagini/loghiauto/nissan.png">
-                <img src="../immagini/loghiauto/renault.png">
-            </div>
+        <div class="car-logos">
+            <img src="../immagini/loghiauto/audi.png">
+            <img src="../immagini/loghiauto/bmw.png">
+            <img src="../immagini/loghiauto/ford.png">
+            <img src="../immagini/loghiauto/honda.png">
+            <img src="../immagini/loghiauto/kia.png">
+            <img src="../immagini/loghiauto/mazda.png">
+            <img src="../immagini/loghiauto/mercedes.png">
+            <img src="../immagini/loghiauto/toyota.png">
+            <img src="../immagini/loghiauto/volkswagen.png">
+            <img src="../immagini/loghiauto/hyundai.png">
+            <img src="../immagini/loghiauto/fiat.png">
+            <img src="../immagini/loghiauto/mg.png">
+            <img src="../immagini/loghiauto/peugeot.png">
+            <img src="../immagini/loghiauto/opel.png">
+            <img src="../immagini/loghiauto/nissan.png">
+            <img src="../immagini/loghiauto/renault.png">
+            <img src="../immagini/loghiauto/audi.png">
+            <img src="../immagini/loghiauto/bmw.png">
+            <img src="../immagini/loghiauto/ford.png">
+            <img src="../immagini/loghiauto/honda.png">
+            <img src="../immagini/loghiauto/kia.png">
+            <img src="../immagini/loghiauto/mazda.png">
+            <img src="../immagini/loghiauto/mercedes.png">
+            <img src="../immagini/loghiauto/toyota.png">
+            <img src="../immagini/loghiauto/volkswagen.png">
+            <img src="../immagini/loghiauto/hyundai.png">
+            <img src="../immagini/loghiauto/fiat.png">
+            <img src="../immagini/loghiauto/mg.png">
+            <img src="../immagini/loghiauto/peugeot.png">
+            <img src="../immagini/loghiauto/opel.png">
+            <img src="../immagini/loghiauto/nissan.png">
+            <img src="../immagini/loghiauto/renault.png">
+        </div>
+        <div class="car-logos">
+            <img src="../immagini/loghiauto/audi.png">
+            <img src="../immagini/loghiauto/bmw.png">
+            <img src="../immagini/loghiauto/ford.png">
+            <img src="../immagini/loghiauto/honda.png">
+            <img src="../immagini/loghiauto/kia.png">
+            <img src="../immagini/loghiauto/mazda.png">
+            <img src="../immagini/loghiauto/mercedes.png">
+            <img src="../immagini/loghiauto/toyota.png">
+            <img src="../immagini/loghiauto/volkswagen.png">
+            <img src="../immagini/loghiauto/hyundai.png">
+            <img src="../immagini/loghiauto/fiat.png">
+            <img src="../immagini/loghiauto/mg.png">
+            <img src="../immagini/loghiauto/peugeot.png">
+            <img src="../immagini/loghiauto/opel.png">
+            <img src="../immagini/loghiauto/nissan.png">
+            <img src="../immagini/loghiauto/renault.png">
+            <img src="../immagini/loghiauto/audi.png">
+            <img src="../immagini/loghiauto/bmw.png">
+            <img src="../immagini/loghiauto/ford.png">
+            <img src="../immagini/loghiauto/honda.png">
+            <img src="../immagini/loghiauto/kia.png">
+            <img src="../immagini/loghiauto/mazda.png">
+            <img src="../immagini/loghiauto/mercedes.png">
+            <img src="../immagini/loghiauto/toyota.png">
+            <img src="../immagini/loghiauto/volkswagen.png">
+            <img src="../immagini/loghiauto/hyundai.png">
+            <img src="../immagini/loghiauto/fiat.png">
+            <img src="../immagini/loghiauto/mg.png">
+            <img src="../immagini/loghiauto/peugeot.png">
+            <img src="../immagini/loghiauto/opel.png">
+            <img src="../immagini/loghiauto/nissan.png">
+            <img src="../immagini/loghiauto/renault.png">
+        </div>
     </div>
+
     <script>
         $(document).ready(function() {
             $(".scroll-left").click(function() {

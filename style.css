@@ -283,37 +283,40 @@ body {
 
 .car-logos-container {
     position: fixed;
-    z-index: 1000;
-    overflow-x: hidden;
-    overflow-y: hidden; /* Nascondi lo scorrimento verticale */
-    white-space: nowrap;
-    background-color: black;
+    z-index: 999;
+    overflow: hidden;
+    background: black;
     height: 4.5em;
     bottom: 0;
     width: 100%;
-}
-.car-logos {
-    width: auto;
     white-space: nowrap;
-    padding: 1vh 1vw;
-    background-color: transparent;
 }
-.animation {
-    animation: slide 40s linear infinite;
+
+.car-logos {
+    display: inline-block;
+    animation: 35s slide infinite linear;
+    
 }
-@keyframes slide {
-    0% {
-        transform: translateX(50%);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
+
 .car-logos img {
-    width: 2.7vw;
-    height: auto;
-    margin-right: 0.5vw;
+    margin-top: 2vh;
+    height: 4vh;
+    margin-right: 0.8vw;
 }
+
+@keyframes slide {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+
+
+
+
 .form-signin input[type="text"],
 .form-signin input[type="number"],
 .form-signin input[type="email"],

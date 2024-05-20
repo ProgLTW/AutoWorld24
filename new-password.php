@@ -27,15 +27,27 @@ if ($dbconn) {
             $update_result = pg_query_params($dbconn, $update_query, array($new_password, $email));
 
             if ($update_result) {
-                echo "<h1>Password modificata con successo!</h1>";
+                echo "<script>
+                    alert('Password modificata con successo! Clicca OK per tornare alla home.');
+                    window.location.href = '../index.php';
+                </script>";
             } else {
-                echo "<h1>Errore nella modifica della password.</h1>";
+                echo "<script>
+                    alert('Errore nella modifica della password. Clicca OK per ripovare.');
+                    window.location.href = '../modifica-password.php';
+                </script>";
             }
         } else {
-            echo "<h1>La nuova password e il controllo password non corrispondono.</h1>";
+            echo "<script>
+                alert('La nuova password e il controllo password non corrispondono. Clicca OK per ripovare.');
+                window.location.href = '../modifica-password.php';
+            </script>";
         }
     } else {
-        echo "<h1>La vecchia password non è corretta.</h1>";
+        echo "<script>
+            alert('La vecchia password non è corretta. Clicca OK per ripovare.');
+            window.location.href = '../modifica-password.php';
+        </script>";
     }
 }
 ?>

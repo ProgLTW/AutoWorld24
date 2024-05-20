@@ -47,6 +47,10 @@ $header .= "X-Mailer: PHP/" . phpversion();
         header("Location: ../login/index.html");
         exit();
     } else {
+        echo "<script>
+            alert('Questa email non esiste nel sito. Clicca OK per riprovare.');
+            window.location.href = '../forgot-password/forgot-password.php';
+        </script>";
         echo "Questa email non esiste nel sito.";
     }
 }

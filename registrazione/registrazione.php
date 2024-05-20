@@ -16,8 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
         $q1 = "SELECT * FROM utente WHERE email=$1";
         $result = pg_query_params($dbconn, $q1, array($email));
         if ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-            echo "<h1> Spiacente, l'indirizzo email non è disponibile </h1>
-            <h2>Se vuoi, <a href='../login/index.html'> clicca qui per loggarti </a></h2>";
+            echo "<script>
+            alert('Spiacente, l\\'indirizzo email non è disponibile. Clicca OK per essere reindirizzato alla pagina di login.');
+            window.location.href = '../login/index.html';
+    </script>";
         } else {
             $nome = $_POST['inputName'];
             $cognome = $_POST['inputSurname'];
@@ -25,8 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $q2 = "INSERT INTO utente VALUES ($1, $2, $3, $4)";
             $data = pg_query_params($dbconn, $q2, array($email, $password, $nome, $cognome));
             if ($data) {
-                echo "<h1> Registrazione completata. Puoi iniziare ad usare il sito <br/></h1>";
-                echo "<a href='../login/index.html'> Clicca qui </a> per loggarti!";
+                echo "<script>
+                    alert('Registrazione completata. Puoi iniziare ad usare il sito. Clicca OK per loggarti.');
+                    window.location.href = '../login/index.html';
+                </script>";
             }
         }
     }

@@ -29,12 +29,16 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
                 //exit();
             }
             else {
-                echo "<h1> Password errata. Riprova.
-                Clicca <a href=\"index.html\">qui</> <br/></h1>";
+                echo "<script>
+                    alert('Password errata. Clicca OK per riprovare.');
+                    window.location.href = '../login/index.html';
+                </script>";
             }
         } else {
-            echo "<h1> Spiacente, l'indirizzo email non è registrato </h1>
-            Se vuoi, <a href='../registrazione/index.html'> clicca qui per registrarti </a>";
+            echo "<script>
+                alert('Spiacente, l'indirizzo email non è registrato. Clicca OK per registrarti.');
+                window.location.href = '../registrazione/index.html';
+            </script>";
         }
     }
     ?>

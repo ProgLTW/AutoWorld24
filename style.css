@@ -7,12 +7,12 @@ body {
     background-image: url(immagini/auto.jpg);
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; /* Impedisce la ripetizione dello sfondo */
+    background-repeat: no-repeat;
     background-attachment: fixed;
 }
 @font-face {
     font-family: 'Formula1 Display';
-    src: url('C:\Windows\Fonts\Formula1-Display.ttf') format('truetype'); /* Imposta il percorso al file del font */
+    src: url('C:\Windows\Fonts\Formula1-Display.ttf') format('truetype');
 }
 .navbar {
     background-color: #ffa500;
@@ -23,7 +23,6 @@ body {
     top: 0;
     z-index: 1000;
 }
-
 .navbar-container {
     width: 95%;
     display: flex;
@@ -31,88 +30,74 @@ body {
     align-items: center;
     padding: 0 2vw;
 }
-
 .navbar-logo {
     font-size: xx-large;
     color: black;
     text-decoration: none;
     margin-right: 10vw;
 }
-
-/*collapsed menu*/
 .navbar-menu {
     display: flex;
     align-items: center;
     width: 100%;
 }
-
 .navbar-item {
-    font-size: 1.2em; /* Adjust the value to your desired font size */
+    font-size: 1.2em;
     margin: 0 10px;
     color: black;
     text-decoration: none;
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
-    flex-grow: 1; /* Aggiunto per distribuire uniformemente lo spazio */
-    text-align: center; /* Aggiunto per centrare il testo */
+    flex-grow: 1;
+    text-align: center;
 }
-
 .navbar-item a {
-    text-decoration: none; /* Rimuove la sottolineatura dai link */
+    text-decoration: none;
 }
 .navbar-item:hover {
     color: white;
     transform: scale(1.2);
 }
-
 .dropdown-toggle {
-    text-decoration: none; /* Rimuove la sottolineatura dai link dropdown */
+    text-decoration: none;
     color: black;
 }
-
 .dropdown-toggle:hover {
-    text-decoration: none; /* Rimuove la sottolineatura dai link dropdown */
+    text-decoration: none;
     color: white;
 }
 .dropdown-menu {
     display: none;
     position: absolute;
-
     left: 0;
     background-color: orange;
     z-index: 1;
     width: auto;
 }
-
 .dropdown-menu a {
     color: black;
     padding: 1vh 1vw;
     display: block;
     text-decoration: none;
 }
-
 .dropdown-menu a:hover {
     background-color: white;
 }
-
 .dropdown:hover .dropdown-menu {
     display: block;
 }
-
 .navbar-toggle {
     display: none;
     flex-direction: column;
     cursor: pointer;
 }
-
 .navbar-toggle span {
     background-color: black;
     height: 3px;
     margin: 4px 0;
     width: 25px;
 }
-
 @media (max-width: 768px) {
     .navbar-menu {
         display: none;
@@ -123,52 +108,38 @@ body {
         width: 100%;
         background-color: orange;
     }
-
     .navbar-menu.active {
         display: flex;
     }
-
     .navbar-toggle {
         display: flex;
     }
-
     .navbar-item {
         margin: 10px 0;
     }
-
     .dropdown-menu {
         position: static;
         box-shadow: none;
         background-color: inherit;
     }
-
     .dropdown:hover .dropdown-menu {
         display: block;
     }
 }
-
-
-
-
-
-
-
-
 .icon-auto {
-    width: 8vw; /* Larghezza desiderata */
-    height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
+    width: 8vw;
+    height: auto;
 }
 .small-logo {
-    margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
+    margin-top: -70px;
 }
-/* Aggiungi stili per gli annunci pubblicitari */
 .ad-container {
     margin-top: 120px;
     margin-left: 20px;
     margin-right: 20px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px; /* Aggiungi spazio tra gli annunci e il contenuto principale */
+    margin-bottom: 20px;
 }
 .details-button {
     background-color: orange;
@@ -187,23 +158,19 @@ body {
     display: flex;
     flex-wrap: wrap;
     font-family: 'Formula1 Display';
-    padding-top: 50px; /* Aumenta lo spazio sopra il footer */
-    padding-bottom: 50px; /* Aumenta lo spazio sotto il footer */
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
-
 .footer-column {
     flex: 1;
     margin-right: 100px;
     margin-bottom: 20px;
     margin-left: 100px;
-    
 }
 .footer-column a {
-    color: black; /* Imposta il colore del testo dei link su nero */
-    text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
+    color: black;
+    text-decoration: none;
 }
-
-
 .icon-auto-button {
     border: none;
     background: none;
@@ -218,7 +185,7 @@ body {
 }
 .container {
     border-radius: 30px;
-    text-align: center; /* Allinea il contenuto al centro */
+    text-align: center;
     background-color: #2c2c2c96;
     margin-left: 30vw;
     margin-right: 30vw;
@@ -226,7 +193,6 @@ body {
     color: orange;
     margin-top: -13em;
 }
-
 .container2 {
     border-radius: 30px;
     margin-top: 150px;
@@ -245,9 +211,9 @@ body {
 }
 .row {
     display: flex;
-    overflow-x: auto; /* Abilita lo scorrimento orizzontale */
+    overflow-x: auto;
     overflow-y: hidden;
-    flex-wrap: nowrap; /* Impedisce il wrapping dei contenuti */
+    flex-wrap: nowrap;
 }
 .col {
     flex: 0 0 auto;
@@ -255,11 +221,11 @@ body {
     margin: 10px;
 }
 .content {
-    display: inline-block; /* Imposta il contenuto come blocco inline */
-    margin-top: 20px; /* Spazio sopra i riquadri */
+    display: inline-block;
+    margin-top: 20px;
 }
 .box {
-    display: inline-block; /* Imposta i riquadri come blocchi inline */
+    display: inline-block;
     width: 15vw;
     height: 10vh;
     padding: 2em;
@@ -268,8 +234,7 @@ body {
     margin-bottom: 20vh;
 }
 .box h2 {
-    font-size: 1.5em; /* Modifica la grandezza del testo in modo relativo rispetto alla grandezza del testo di base */
-    /* Puoi regolare il valore di '2em' a seconda delle tue preferenze di dimensione del testo */
+    font-size: 1.5em;
 }
 
 .container-contattaci{
@@ -279,8 +244,6 @@ body {
     height: auto;
     bottom: 7vh;
 }
-
-
 .car-logos-container {
     position: fixed;
     z-index: 999;
@@ -291,19 +254,16 @@ body {
     width: 100%;
     white-space: nowrap;
 }
-
 .car-logos {
     display: inline-block;
-    animation: 35s slide infinite linear;
+    animation: 65s slide infinite linear;
     
 }
-
 .car-logos img {
     margin-top: 2vh;
     height: 4vh;
     margin-right: 0.8vw;
 }
-
 @keyframes slide {
     from {
         transform: translateX(0%);
@@ -312,11 +272,6 @@ body {
         transform: translateX(-100%);
     }
 }
-
-
-
-
-
 .form-signin input[type="text"],
 .form-signin input[type="number"],
 .form-signin input[type="email"],
@@ -325,16 +280,16 @@ body {
 .form-signin select, 
 .form-signin button[type="submit"],
 .form-signin button[type="reset"] {
-    border-radius: 10px; /* Imposta il raggio dell'arrotondamento del bordo */
-    padding: 10px; /* Aggiungi spazio intorno al contenuto */
-    margin-bottom: 10px; /* Aggiungi spazio tra le caselle */
-    border: 1px solid #ccc; /* Aggiungi un bordo */
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
     margin-left: 1em;
 }
 .annunci-container {
     position: fixed;
     overflow-x: hidden;
-    overflow-y: hidden; /* Nascondi lo scorrimento verticale */
+    overflow-y: hidden;
     white-space: nowrap;
     background-color: black;
 }
@@ -349,22 +304,19 @@ body {
     overflow: hidden;
     background-color: #2c2c2c96;
 }
-
 .scroll-content {
     display: flex;
-    white-space: nowrap; /* Fai sì che il contenuto non vada a capo */
+    white-space: nowrap;
     margin: 20px;
     margin-left: 50px;
 }
-
 .ad {
-    display: flex; /* Utilizza flexbox per allineare l'immagine e il testo */
-    align-items: center; /* Allinea verticalmente il contenuto */
-    gap: 80px; /* Aggiungi spazio tra l'immagine e il testo */
-    padding: 0px; /* Aggiungi padding */
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding: 0px;
     margin-right: 30px;
 }
-
 .scroll-button {
     position: absolute;
     top: 50%;
@@ -378,9 +330,8 @@ body {
 }
 .scroll-button.scroll-left img,
 .scroll-button.scroll-right img {
-    width: 80px; /* Imposta la larghezza desiderata dell'immagine */
-    height: 80px; /* Imposta l'altezza automaticamente per mantenere le proporzioni */
-    /* Aggiungi altre proprietà CSS per personalizzare l'aspetto dell'immagine */
+    width: 80px;
+    height: 80px;
 }
 .scroll-left {
     left: 0;
@@ -388,55 +339,13 @@ body {
 .scroll-right {
     right: 0;
 }
-/* CSS */
 .heart-icon {
     display: inline-block;
-    width: 24px; /* Regola la dimensione dell'icona */
+    width: 24px;
     height: 24px;
-    background-image: url('immagini/cuore-vuoto.png'); /* Immagine del cuore vuoto */
+    background-image: url('immagini/cuore-vuoto.png');
     background-size: cover;
 }
-
 .heart-icon.filled {
-    background-image: url('immagini/cuore-pieno.png'); /* Immagine del cuore pieno */
+    background-image: url('immagini/cuore-pieno.png');
 }
-
-/*@media only screen and (max-width: 1550px) {
-    nav ul {
-        justify-content: center;
-    }
-    nav li {
-        padding: 0 20px;
-    }
-    nav a {
-        font-size: 16px;
-    }
-    .container {
-        margin: 10vh 33vw;
-    }
-    .container2 {
-        margin: 50px 10px;
-    }
-    .container3 {
-        margin: 20px;
-    }
-    .row {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .col {
-        width: 90%; 
-        margin: 10px auto;
-    }
-    .ad {
-        flex-direction: column; 
-        
-    }
-    .ad img {
-        height: auto; 
-        width: auto;
-    }
-    .scroll-content {
-        margin-left: 20px;
-    }
-}*/

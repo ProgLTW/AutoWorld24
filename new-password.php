@@ -15,14 +15,11 @@ if ($dbconn) {
     $new_password = $_POST['inputNewPassword'];
     $confirm_password = $_POST['inputConfermaPassword'];
 
-    // Verifica se la vecchia password è corretta
     $old_password_query = "SELECT * FROM utente WHERE email = $1 AND pwd = $2";
     $old_password_result = pg_query_params($dbconn, $old_password_query, array($email, $old_password));
 
     if (pg_num_rows($old_password_result) == 1) {
-        // Verifica se la nuova password corrisponde al controllo password
         if ($new_password === $confirm_password) {
-            // Aggiorna la password nel database
             $update_query = "UPDATE utente SET pwd = $1 WHERE email = $2";
             $update_result = pg_query_params($dbconn, $update_query, array($new_password, $email));
 

@@ -1,36 +1,21 @@
 <?php
 session_start();
-// Logout logic
 if(isset($_GET['logout'])) {
-    // Unset all of the session variables
     $_SESSION = array();
-
-    // Destroy the session
     session_destroy();
-
-    // Redirect to the homepage
     header("Location: ../index.php");
     exit();
-    
 }
-// Verifica se l'utente è loggato
 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
-// URL a cui reindirizzare l'utente
 $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
-
-
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-
 $navbarContent = "";
-
 if ($loggato) {
     $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
         or die('Could not connect: ' . pg_last_error());
-
     if ($dbconn) {
         $query = "SELECT nome FROM utente WHERE email = $1";
         $result = pg_query_params($dbconn, $query, array($email));
-
         if ($result) {
             $num_rows = pg_num_rows($result);
             if ($num_rows > 0) {
@@ -77,9 +62,8 @@ if ($loggato) {
     <link rel="stylesheet" href="../style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="application/javascript">
-
         const modelliPerMarca = {
-            "Audi": ["ModelloA1", "ModelloA3", "ModelloA4"],
+            "Audi": ["A1", "A3", "A4"],
             "BMW": ["Serie1", "Serie3", "Serie5"],
         };
         function updateModelloOptions(marcaSelezionata) {
@@ -121,7 +105,6 @@ if ($loggato) {
                 toSelect.value = fromValue;
             }
         }
-
         function updateMinimo(fromId, toId) {
             var fromSelect = document.getElementById(fromId);
             var fromValue = fromSelect.value;
@@ -144,10 +127,8 @@ if ($loggato) {
             if (fromValue !== "" && parseInt(fromValue) > parseInt(toValue)) {
                 fromSelect.value = toValue;
             }
-    }
-
-
-document.addEventListener('DOMContentLoaded', () => {
+        }
+        document.addEventListener('DOMContentLoaded', () => {
             const navbarToggle = document.getElementById('navbar-toggle');
             const navbarMenu = document.getElementById('navbar-menu');
 
@@ -155,27 +136,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 navbarMenu.classList.toggle('active');
             });
         });
+        $(document).ready(function() {
+            $('a[href="#footer"]').click(function(event) {
+                event.preventDefault();
+                var targetOffset = $('#footer').offset().top;
+                $('html, body').animate({
+                    scrollTop: targetOffset
+                }, 1000);
+            });
+        });
     </script>
-    <script>
-$(document).ready(function() {
-    // Gestisci il clic sul link "Chi siamo" nella navbar
-    $('a[href="#footer"]').click(function(event) {
-        // Previene il comportamento predefinito del link
-        event.preventDefault();
-        
-        // Calcola la posizione verticale del footer
-        var targetOffset = $('#footer').offset().top;
-        
-        // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
-        $('html, body').animate({
-            scrollTop: targetOffset
-        }, 1000);
-    });
-});
-</script>
     <style> 
-
-        
         .container2{
             border-radius: 30px;
             margin-top: 150px;
@@ -183,8 +154,8 @@ $(document).ready(function() {
             font-family: 'Formula1 Display';
         }
         .icon-auto {
-            width: 150px; /* Larghezza desiderata */
-            height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
+            width: 150px;
+            height: auto;
         }
         form {
             margin: auto;
@@ -194,15 +165,14 @@ $(document).ready(function() {
         }
         form label {
             display: inline-block;
-            margin-bottom: 5px; /* Riduce lo spazio inferiore dell'etichetta */
+            margin-bottom: 5px;
         }
         form select {
-            margin-top: 5px; /* Sposta la casella di selezione verso l'alto */
+            margin-top: 5px;
         }
-
         select {
-            font-family: 'Formula1 Display', sans-serif; /* Cambia il font delle caselle di selezione */
-            font-size: 16px; /* Regola la dimensione del font se necessario */
+            font-family: 'Formula1 Display', sans-serif;
+            font-size: 16px;
         }
         input {
             font-family: 'Formula1 Display';
@@ -222,20 +192,18 @@ $(document).ready(function() {
             display: flex;
             flex-wrap: wrap;
             font-family: 'Formula1 Display';
-            padding-top: 50px; /* Aumenta lo spazio sopra il footer */
-            padding-bottom: 50px; /* Aumenta lo spazio sotto il footer */
+            padding-top: 50px;
+            padding-bottom: 50px;
         }
-
         .footer-column {
             flex: 1;
             margin-right: 100px;
             margin-bottom: 20px;
             margin-left: 100px;
-            
         }
         .footer-column a {
-            color: black; /* Imposta il colore del testo dei link su nero */
-            text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
+            color: black;
+            text-decoration: none;
         }
         @media only screen and (max-width: 768px) {
             .car-logos-container {
@@ -255,10 +223,10 @@ $(document).ready(function() {
             .form-signin select, 
             .form-signin button[type="submit"],
             .form-signin button[type="reset"] {
-                border-radius: 10px; /* Imposta il raggio dell'arrotondamento del bordo */
-                padding: 10px; /* Aggiungi spazio intorno al contenuto */
-                margin-bottom: 10px; /* Aggiungi spazio tra le caselle */
-                border: 1px solid #ccc; /* Aggiungi un bordo */
+                border-radius: 10px;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
                 margin-left: 0;
                 font-family: 'Formula1 Display', sans-serif;
                 font-size: 0.5em;
@@ -285,8 +253,7 @@ $(document).ready(function() {
     </style>
 </head>
 <body class="text-center">
-
-<nav class="navbar">
+    <nav class="navbar">
         <div class="navbar-container">
             <a href="../index.php" class="navbar-logo"><b>AUTOWORLD</b></a>
             <div class="navbar-menu" id="navbar-menu">
@@ -311,15 +278,9 @@ $(document).ready(function() {
             </div>
         </div>
     </nav>
-
     <script src="script.js"></script>
-
-
-
     <div class="container2">
-
         <form name="myForm" action="<?php echo isset($_SESSION['loggato']) ? 'vendi.php' : '#'; ?>" method="POST" enctype="multipart/form-data" class="form-signin m-auto" onsubmit="alertRmb()">
-
             <label for="marca">Marca:</label>
             <select id="marca" name="marca" onchange="updateModelloOptions(this.value)">
                 <option value="">Seleziona</option>
@@ -427,8 +388,6 @@ $(document).ready(function() {
 
         </form>
     </div>
-
-    
     <div class="container-contattaci" id="footer">
         <div class="footer-column">
             <h2>Chi siamo</h2>

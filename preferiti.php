@@ -1,81 +1,48 @@
 <?php
 session_start();
-// Logout logic
 if(isset($_GET['logout'])) {
-    // Unset all of the session variables
     $_SESSION = array();
-
-    // Destroy the session
     session_destroy();
-
-    // Redirect to the homepage
     header("Location: ../index.php");
     exit();
 }
-
-   // Verifica se l'utente è loggato
-   $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
-   // URL a cui reindirizzare l'utente
-   $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
-   if ($loggato) {
-    // Recupera l'email dell'utente in sessione
+$loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+$redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
+if ($loggato) {
     $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-
-    // Controlla se l'email è stata recuperata correttamente
     if ($email) {
-        // Connettiti al database
         $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
             or die('Could not connect: ' . pg_last_error());
-
-        // Verifica la connessione al database
         if ($dbconn) {
-            // Esegui la query per recuperare gli annunci preferiti dell'utente
             $query_preferiti = "SELECT preferiti FROM utente WHERE email = $1";
             $result_preferiti = pg_query_params($dbconn, $query_preferiti, array($email));
-
-            // Controlla se la query è stata eseguita correttamente
             if ($result_preferiti) {
-                // Estrai l'array degli ID degli annunci preferiti
                 $row_preferiti = pg_fetch_assoc($result_preferiti);
                 $preferiti = $row_preferiti['preferiti'];
-
-                // Trasforma la stringa JSON in un array PHP se non è vuota
                 if ($preferiti) {
                     $preferiti_array = json_decode($preferiti, true);
                 } else {
-                    // Se l'array dei preferiti è vuoto, inizializza un array vuoto
                     $preferiti_array = array();
                 }
             } else {
-                // Gestisci eventuali errori nella query
                 echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
             }
-
-            // Chiudi la connessione al database
             pg_close($dbconn);
         } else {
-            // Gestisci eventuali errori nella connessione al database
             echo "Connessione al database non riuscita.";
         }
     } else {
-        // Gestisci il caso in cui l'email dell'utente non è stata recuperata correttamente dalla sessione
         echo "Email dell'utente non trovata nella sessione.";
     }
 }
-
-
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-
 $navbarContent = "";
-
 if ($loggato) {
     $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
         or die('Could not connect: ' . pg_last_error());
-
     if ($dbconn) {
         $query = "SELECT nome FROM utente WHERE email = $1";
         $result = pg_query_params($dbconn, $query, array($email));
-
         if ($result) {
             $num_rows = pg_num_rows($result);
             if ($num_rows > 0) {
@@ -101,7 +68,6 @@ if ($loggato) {
         } else {
             $navbarContent = "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
         }
-        
     } else {
         $navbarContent = "Connessione al database non riuscita.";
     }pg_close($dbconn);
@@ -123,36 +89,29 @@ if ($loggato) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-    $('.heart-icon').click(function() {
-        var annuncioId = $(this).data('annuncio-id');
-        var isFavorite = $(this).hasClass('filled');
-        var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
-        
-        // Se l'utente non è loggato, reindirizzalo alla pagina di login
-        if (!isLogged) {
-            window.location.href = 'login/index.html';
-            return;
-        }
-
-        // Cambia lo stato del cuore (pieno o vuoto)
-        $(this).toggleClass('filled');
-
-        // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
-        $.ajax({
-            url: 'aggiorna_preferito.php',
-            type: 'POST',
-            data: { id: annuncioId, checked: !isFavorite }, // Inverti lo stato del preferito
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
+            $('.heart-icon').click(function() {
+                var annuncioId = $(this).data('annuncio-id');
+                var isFavorite = $(this).hasClass('filled');
+                var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
+                if (!isLogged) {
+                    window.location.href = 'login/index.html';
+                    return;
+                }
+                $(this).toggleClass('filled');
+                $.ajax({
+                    url: 'aggiorna_preferito.php',
+                    type: 'POST',
+                    data: { id: annuncioId, checked: !isFavorite },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
         });
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const navbarToggle = document.getElementById('navbar-toggle');
             const navbarMenu = document.getElementById('navbar-menu');
 
@@ -160,50 +119,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 navbarMenu.classList.toggle('active');
             });
         });
+        $(document).ready(function() {
+            $('a[href="#footer"]').click(function(event) {
+                event.preventDefault();
+                var targetOffset = $('#footer').offset().top;
+                $('html, body').animate({
+                    scrollTop: targetOffset
+                }, 1000);
+            });
+        });
     </script>
-    <script>
-$(document).ready(function() {
-    // Gestisci il clic sul link "Chi siamo" nella navbar
-    $('a[href="#footer"]').click(function(event) {
-        // Previene il comportamento predefinito del link
-        event.preventDefault();
-        
-        // Calcola la posizione verticale del footer
-        var targetOffset = $('#footer').offset().top;
-        
-        // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
-        $('html, body').animate({
-            scrollTop: targetOffset
-        }, 1000);
-    });
-});
-</script>
     <style> 
         .icon-auto {
-            width: 150px; /* Larghezza desiderata */
-            height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
+            width: 150px;
+            height: auto;
         }
         .small-logo {
-            margin-top: -70px; /* Modifica il valore del margine superiore in base alle tue esigenze */
+            margin-top: -70px;
         }
         .container-contattaci {
             display: flex;
             flex-wrap: wrap;
             font-family: 'Formula1 Display';
-            padding-top: 50px; /* Aumenta lo spazio sopra il footer */
-            padding-bottom: 50px; /* Aumenta lo spazio sotto il footer */
+            padding-top: 50px;
+            padding-bottom: 50px;
         }
-
         .footer-column {
             flex: 1;
             margin-right: 100px;
             margin-bottom: 20px;
             margin-left: 100px;
-            
         }
         .footer-column a {
-            color: black; /* Imposta il colore del testo dei link su nero */
-            text-decoration: none; /* Rimuove il sottolineato dai link, se presente */
+            color: black;
+            text-decoration: none;
         }
         @media only screen and (max-width: 768px) {
             .car-logos-container {
@@ -221,8 +170,7 @@ $(document).ready(function() {
     </style>
 </head>
 <body class="text-center">
-
-<nav class="navbar">
+    <nav class="navbar">
         <div class="navbar-container">
             <a href="../index.php" class="navbar-logo"><b>AUTOWORLD</b></a>
             <div class="navbar-menu" id="navbar-menu">
@@ -247,10 +195,7 @@ $(document).ready(function() {
             </div>
         </div>
     </nav>
-
     <script src="script.js"></script>
-
-
     <div class="scroll-big-container">
         <button class="scroll-button scroll-left">
             <img src="immagini/leftarrow.png" alt="Scroll Left">
@@ -261,21 +206,15 @@ $(document).ready(function() {
                     $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
                         or die('Could not connect: ' . pg_last_error());
                     if ($dbconn) {
-                        // Esegui la query per recuperare gli ID degli annunci preferiti dell'utente loggato
                         $query_preferiti = "SELECT * FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email') and nascosto is false";
                         $result_preferiti = pg_query($dbconn, $query_preferiti);
                         if ($result_preferiti) {
-                            // Iterazione sui risultati della query per visualizzare gli annunci
-                            // Dentro il loop degli annunci
                             while ($row = pg_fetch_assoc($result_preferiti)) {
-                                // Inizio di un nuovo annuncio
                                 echo "<div class='container3'>";
-                                // Visualizzazione dell'immagine dell'annuncio
                                 echo "<div class='foto'>";
                                 echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
                                 echo "</div>";
 
-                                // Inizio delle caratteristiche dell'annuncio
                                 echo "<div class='caratteristiche'>";
                                 echo "<h2><u><a href='../ricerca/big-annuncio.php?id={$row['id']}' style='color: orange;'>{$row['marca']} {$row['modello']}</a></u></h2><br>";
                                 echo "<p>km {$row['chilometraggio']}</p>";
@@ -284,19 +223,12 @@ $(document).ready(function() {
                                 echo "<p><img src=\"immagini/carburante.png\" width='20px'>&nbsp;{$row['carburante']}</p>";
                                 echo "<p><img src=\"immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
                                 echo "<p><img src=\"immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
-                                
-                                // Checkbox per il preferito
-                                // Controllo se l'array dei preferiti è stato correttamente inizializzato
                                 $isFavorite = 1;
 
                                 echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span>";
-
-                                // Fine dell'annuncio
                                 echo "</div>";
                                 echo "</div>";
                             }
-
-                            // Rilascio della risorsa del risultato
                             pg_free_result($result);
                         } else {
                             echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
@@ -304,16 +236,13 @@ $(document).ready(function() {
                     } else {
                         echo "Connessione al database non riuscita.";
                     }
-
-                    // Chiusura della connessione al database
                     pg_close($dbconn);
                 ?>
-                
             </div>
         </div>
-            <button class="scroll-button scroll-right">
-                <img src="immagini/rightarrow.png" alt="Scroll Right">
-            </button>
+        <button class="scroll-button scroll-right">
+            <img src="immagini/rightarrow.png" alt="Scroll Right">
+        </button>
     </div>
     <div class="container-contattaci" id="footer">
         <div class="footer-column">

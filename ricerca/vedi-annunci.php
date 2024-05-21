@@ -1,116 +1,83 @@
 <?php
 session_start();
-// Logout logic
 if(isset($_GET['logout'])) {
-    // Unset all of the session variables
     $_SESSION = array();
-
-    // Destroy the session
     session_destroy();
-
-    // Redirect to the homepage
     header("Location: ../index.php");
     exit();
-    
 }
 $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
-    // URL a cui reindirizzare l'utente
-    $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
-    // Controlla se l'utente è loggato e recupera l'email
-    if ($loggato) {
-        // Recupera l'email dell'utente in sessione
-        $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-
-        // Controlla se l'email è stata recuperata correttamente
-        if ($email) {
-            // Connettiti al database
-            $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
-                or die('Could not connect: ' . pg_last_error());
-
-            // Verifica la connessione al database
-            if ($dbconn) {
-                // Esegui la query per recuperare gli annunci preferiti dell'utente
-                $query_preferiti = "SELECT preferiti FROM utente WHERE email = $1";
-                $result_preferiti = pg_query_params($dbconn, $query_preferiti, array($email));
-
-                // Controlla se la query è stata eseguita correttamente
-                if ($result_preferiti) {
-                    // Estrai l'array degli ID degli annunci preferiti
-                    $row_preferiti = pg_fetch_assoc($result_preferiti);
-                    $preferiti = $row_preferiti['preferiti'];
-
-                    // Trasforma la stringa JSON in un array PHP se non è vuota
-                    if ($preferiti) {
-                        $preferiti_array = json_decode($preferiti, true);
-                    } else {
-                        // Se l'array dei preferiti è vuoto, inizializza un array vuoto
-                        $preferiti_array = array();
-                    }
-                } else {
-                    // Gestisci eventuali errori nella query
-                    echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
-                }
-
-                // Chiudi la connessione al database
-                pg_close($dbconn);
-            } else {
-                // Gestisci eventuali errori nella connessione al database
-                echo "Connessione al database non riuscita.";
-            }
-        } else {
-            // Gestisci il caso in cui l'email dell'utente non è stata recuperata correttamente dalla sessione
-            echo "Email dell'utente non trovata nella sessione.";
-        }
-    }
-
-
+$redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
+if ($loggato) {
     $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-
-    $navbarContent = "";
-    
-    if ($loggato) {
+    if ($email) {
         $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
             or die('Could not connect: ' . pg_last_error());
-    
         if ($dbconn) {
-            $query = "SELECT nome FROM utente WHERE email = $1";
-            $result = pg_query_params($dbconn, $query, array($email));
-    
-            if ($result) {
-                $num_rows = pg_num_rows($result);
-                if ($num_rows > 0) {
-                    $row = pg_fetch_assoc($result);
-                    $nome = htmlspecialchars($row["nome"], ENT_QUOTES, 'UTF-8');
-                    $navbarContent = "
-                        <div class='dropdown'>
-                            <a href='#' class='dropdown-toggle'>Ciao, $nome</a>
-                            <div class='dropdown-menu'>
-                                <a href='../miei-annunci.php'>I miei annunci</a>
-                                <a href='../preferiti.php'>Preferiti</a>
-                                <a href='../modifica-password.php'>Modifica password</a>
-                                <a href='?logout=true' class='btn btn-primary btn-lg' role='button'>Esci</a>
-                            </div>
-                        </div>
-                    ";
+            $query_preferiti = "SELECT preferiti FROM utente WHERE email = $1";
+            $result_preferiti = pg_query_params($dbconn, $query_preferiti, array($email));
+            if ($result_preferiti) {
+                $row_preferiti = pg_fetch_assoc($result_preferiti);
+                $preferiti = $row_preferiti['preferiti'];
+                if ($preferiti) {
+                    $preferiti_array = json_decode($preferiti, true);
                 } else {
-                    $navbarContent = "
-                        <a href='../login/index.html' class='navbar-item'>LOGIN</a>
-                        
-                    ";
+                    $preferiti_array = array();
                 }
             } else {
-                $navbarContent = "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+                echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
             }
-            
+            pg_close($dbconn);
         } else {
-            $navbarContent = "Connessione al database non riuscita.";
-        }pg_close($dbconn);
+            echo "Connessione al database non riuscita.";
+        }
     } else {
-        $navbarContent = "
-            <a href='../login/index.html' class='navbar-item'>LOGIN</a>
-            <a href='../registrazione/index.html' class='navbar-item'>REGISTRATI</a>
-        ";
+        echo "Email dell'utente non trovata nella sessione.";
     }
+}
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+
+$navbarContent = "";
+
+if ($loggato) {
+    $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+        or die('Could not connect: ' . pg_last_error());
+    if ($dbconn) {
+        $query = "SELECT nome FROM utente WHERE email = $1";
+        $result = pg_query_params($dbconn, $query, array($email));
+        if ($result) {
+            $num_rows = pg_num_rows($result);
+            if ($num_rows > 0) {
+                $row = pg_fetch_assoc($result);
+                $nome = htmlspecialchars($row["nome"], ENT_QUOTES, 'UTF-8');
+                $navbarContent = "
+                    <div class='dropdown'>
+                        <a href='#' class='dropdown-toggle'>Ciao, $nome</a>
+                        <div class='dropdown-menu'>
+                            <a href='../miei-annunci.php'>I miei annunci</a>
+                            <a href='../preferiti.php'>Preferiti</a>
+                            <a href='../modifica-password.php'>Modifica password</a>
+                            <a href='?logout=true' class='btn btn-primary btn-lg' role='button'>Esci</a>
+                        </div>
+                    </div>
+                ";
+            } else {
+                $navbarContent = "
+                    <a href='../login/index.html' class='navbar-item'>LOGIN</a>
+                ";
+            }
+        } else {
+            $navbarContent = "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
+        }
+    } else {
+        $navbarContent = "Connessione al database non riuscita.";
+    }pg_close($dbconn);
+} else {
+    $navbarContent = "
+        <a href='../login/index.html' class='navbar-item'>LOGIN</a>
+        <a href='../registrazione/index.html' class='navbar-item'>REGISTRATI</a>
+    ";
+}
 ?>
 <!DOCTYPE html> 
 <html>
@@ -194,44 +161,32 @@ $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
     </script>
     <script>
         $(document).ready(function() {
-    $('.heart-icon').click(function() {
-        var annuncioId = $(this).data('annuncio-id');
-        var isFavorite = $(this).hasClass('filled');
-        var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
-        
-        // Se l'utente non è loggato, reindirizzalo alla pagina di login
-        if (!isLogged) {
-            window.location.href = '../login/index.html';
-            return;
-        }
-
-        // Cambia lo stato del cuore (pieno o vuoto)
-        $(this).toggleClass('filled');
-
-        // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
-        $.ajax({
-            url: '../aggiorna_preferito.php',
-            type: 'POST',
-            data: { id: annuncioId, checked: !isFavorite }, // Inverti lo stato del preferito
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
+            $('.heart-icon').click(function() {
+                var annuncioId = $(this).data('annuncio-id');
+                var isFavorite = $(this).hasClass('filled');
+                var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
+                if (!isLogged) {
+                    window.location.href = '../login/index.html';
+                    return;
+                }
+                $(this).toggleClass('filled');
+                $.ajax({
+                    url: '../aggiorna_preferito.php',
+                    type: 'POST',
+                    data: { id: annuncioId, checked: !isFavorite },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
         });
-    });
-});
-$(document).ready(function() {
-            // Gestisci il clic sul link "Chi siamo" nella navbar
+        $(document).ready(function() {
             $('a[href="#footer"]').click(function(event) {
-                // Previene il comportamento predefinito del link
                 event.preventDefault();
-                
-                // Calcola la posizione verticale del footer
                 var targetOffset = $('#footer').offset().top;
-                
-                // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
                 $('html, body').animate({
                     scrollTop: targetOffset
                 }, 1000);
@@ -240,7 +195,6 @@ $(document).ready(function() {
         document.addEventListener('DOMContentLoaded', () => {
             const navbarToggle = document.getElementById('navbar-toggle');
             const navbarMenu = document.getElementById('navbar-menu');
-
             navbarToggle.addEventListener('click', () => {
                 navbarMenu.classList.toggle('active');
             });
@@ -248,8 +202,8 @@ $(document).ready(function() {
     </script>
     <style> 
         .icon-auto {
-            width: 150px; /* Larghezza desiderata */
-            height: auto; /* Altezza automaticamente ridimensionata in base alla larghezza */
+            width: 150px;
+            height: auto;
         }
         form {
             margin: auto;
@@ -259,10 +213,10 @@ $(document).ready(function() {
         }
         form label {
             display: inline-block;
-            margin-bottom: 5px; /* Riduce lo spazio inferiore dell'etichetta */
+            margin-bottom: 5px;
         }
         form select {
-            margin-top: 5px; /* Sposta la casella di selezione verso l'alto */
+            margin-top: 5px;
             font-size: 1em;
             font-family: 'Formula1 Display', sans-serif;
         }
@@ -277,16 +231,13 @@ $(document).ready(function() {
         }
         .item1{grid-area: filtri; }
         .item2{grid-area: annunci; }
-
         .col-container {
             display: flex;
             gap: 10px;
-            /*background-color: #2c2c2c96;*/
             padding: 10px;
             margin-top: 50px;
             margin: 30px;
         }
-
         .item1{
             font-family: 'Formula1 Display';
             font-size: 15px;
@@ -298,7 +249,6 @@ $(document).ready(function() {
             background-color: orange;
             border-radius: 10px;
         }
-        
         .item2 {
             border-radius: 10px;
             font-family: 'Formula1 Display';
@@ -311,13 +261,10 @@ $(document).ready(function() {
             border: 1px solid orange;
             background-color: #2c2c2c96;
         }
-
         #searchForm {            
             border-radius: 10px;
-            margin: 0 auto; /* Centra il form orizzontalmente */
+            margin: 0 auto;
         }
-
-
         .container3 {
             display: flex;
             border-radius: 10px;
@@ -327,25 +274,19 @@ $(document).ready(function() {
             background-color: #2c2c2cea;
             border: 1px solid orange;
         }
-
         .foto {
-            /* Imposta la larghezza massima al 30% del contenitore */
             margin-right: 1vw;
         }
-
         .foto img {
             margin-top: 20px;
-            width: 100%; /* Immagine al 100% della larghezza del contenitore */
+            width: 100%;
             border-radius: 10px;
         }
-
         .caratteristiche {
-            flex: 1; /* Le caratteristiche occupano il 50% dello spazio */
+            flex: 1;
             padding: 1vh;
             font-size: 1em;
         }
-        
-
         .buy-button {
             background-color: orange;
             border: none;
@@ -361,9 +302,8 @@ $(document).ready(function() {
             border-radius: 5px;
             float: right;
             right: 0;
-            top: 0px; /* Altezza del pulsante Details */
+            top: 0px;
         }
-
         .details-button {
             background-color: orange;
             border: none;
@@ -384,13 +324,9 @@ $(document).ready(function() {
             margin-top: 4vh; 
             margin-bottom: 10vh;
         }
-        
-
         .container-contattaci{
             margin-top: 8vh; 
         }
-        
-        
         @media only screen and (max-width: 768px) {
             .form-signin input[type="text"],
             .form-signin input[type="number"],
@@ -400,10 +336,10 @@ $(document).ready(function() {
             .form-signin select, 
             .form-signin button[type="submit"],
             .form-signin button[type="reset"] {
-                border-radius: 10px; /* Imposta il raggio dell'arrotondamento del bordo */
-                padding: 10px; /* Aggiungi spazio intorno al contenuto */
-                margin-bottom: 10px; /* Aggiungi spazio tra le caselle */
-                border: 1px solid #ccc; /* Aggiungi un bordo */
+                border-radius: 10px;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
                 margin-left: 0;
                 font-family: 'Formula1 Display', sans-serif;
                 font-size: 0.5em;
@@ -413,12 +349,12 @@ $(document).ready(function() {
                 font-size: 0.5em;
             }
             .item1{
-                width: 5em; /* Larghezza fissa per la colonna sinistra */
+                width: 5em;
             }
             .form-signin option {
                 width: 0.5vw;
             }
-            .caratteristiche { /* Le caratteristiche occupano il 50% dello spazio */
+            .caratteristiche {
                 font-size: 0.5em;
             }
             .item2 {
@@ -444,7 +380,7 @@ $(document).ready(function() {
     </style>
 </head>
 <body class="text-center">
-<nav class="navbar">
+    <nav class="navbar">
         <div class="navbar-container">
             <a href="../index.php" class="navbar-logo"><b>AUTOWORLD</b></a>
             <div class="navbar-menu" id="navbar-menu">
@@ -469,14 +405,10 @@ $(document).ready(function() {
             </div>
         </div>
     </nav>
-
     <script src="script.js"></script>
-
-
     <div class="col-container">
         <div class="item1">
             <?php
-                // Recupera i valori inviati dal form
                 $marca = isset($_POST['marca']) ? $_POST['marca'] : '';
                 $modello = isset($_POST['modello']) ? $_POST['modello'] : '';
                 $prezzoDa = isset($_POST['PrezzoDa']) ? $_POST['PrezzoDa'] : null;
@@ -491,10 +423,7 @@ $(document).ready(function() {
                 $potenzaDa = isset($_POST['PotenzaDa']) ? $_POST['PotenzaDa'] : '';
                 $potenzaA = isset($_POST['PotenzaA']) ? $_POST['PotenzaA'] : '';
             ?>
-
-
             <form name="searchForm" action="vedi-annunci.php" method="POST" class="form-signin m-auto" style="margin-left: 0;">
-
                     <label for="marca">Marca:</label>
                     <select id="marca" name="marca" onchange="updateModelloOptions(this.value)" style="width: 12vw">
                         <option value="" <?php if($marca == '') echo 'selected="selected"'; ?>>Seleziona</option>
@@ -515,7 +444,6 @@ $(document).ready(function() {
                         <option value="" <?php if($modello == '') echo 'selected="selected"'; ?>>Seleziona</option>
                     </select><br>
                     <?php
-                        // Funzione per generare le opzioni del campo select per un intervallo di prezzi con l'opzione "Da" o "A"
                         function generatePriceOptions($min, $max, $selectedValue, $isFromField) {
                             $selectOptions = '';
                             $defaultOption = $isFromField ? 'Da' : 'A';
@@ -526,16 +454,11 @@ $(document).ready(function() {
                             }
                             return $selectOptions;
                         }
-
-                        // Definisci gli estremi dell'intervallo di prezzo
                         $prezzoMin = 500;
                         $prezzoMax = 100000;
-
-                        // Recupera i valori inviati dal form per il prezzo
                         $prezzoDa = isset($_POST['prezzo_da']) ? $_POST['prezzo_da'] : '';
                         $prezzoA = isset($_POST['prezzo_a']) ? $_POST['prezzo_a'] : '';
 
-                        // Genera le opzioni per i campi select di prezzo
                         $prezzoDaOptions = generatePriceOptions($prezzoMin, $prezzoMax, $prezzoDa, true);
                         $prezzoAOptions = generatePriceOptions($prezzoMin, $prezzoMax, $prezzoA, false);
                     ?>
@@ -557,7 +480,6 @@ $(document).ready(function() {
                         <option value="Monovolume" <?php if($carrozzeria == 'Monovolume') echo 'selected="selected"'; ?>>Monovolume</option>
                     </select><br>
                     <?php
-                        // Funzione per generare le opzioni del campo select per un intervallo di anni con l'opzione "Da" o "A"
                         function generateYearOptions($min, $max, $selectedValue, $isFromField) {
                             $selectOptions = '';
                             $defaultOption = $isFromField ? 'Da' : 'A';
@@ -568,16 +490,11 @@ $(document).ready(function() {
                             }
                             return $selectOptions;
                         }
-
-                        // Definisci gli estremi dell'intervallo di anni
                         $annoMin = 1950;
                         $annoMax = date("Y");
-
-                        // Recupera i valori inviati dal form per l'anno
                         $annoDa = isset($_POST['anno_da']) ? $_POST['anno_da'] : '';
                         $annoA = isset($_POST['anno_a']) ? $_POST['anno_a'] : '';
 
-                        // Genera le opzioni per i campi select di anno
                         $annoDaOptions = generateYearOptions($annoMin, $annoMax, $annoDa, true);
                         $annoAOptions = generateYearOptions($annoMin, $annoMax, $annoA, false);
                     ?>
@@ -590,7 +507,6 @@ $(document).ready(function() {
                         <?php echo $annoAOptions; ?>
                     </select><br>
                     <?php
-                        // Funzione per generare le opzioni del campo select per un intervallo di chilometraggio con l'opzione "Da" o "A"
                         function generateKilometerOptions($min, $max, $selectedValue, $isFromField) {
                             $selectOptions = '';
                             $defaultOption = $isFromField ? 'Da' : 'A';
@@ -601,16 +517,11 @@ $(document).ready(function() {
                             }
                             return $selectOptions;
                         }
-
-                        // Definisci gli estremi dell'intervallo di chilometraggio
                         $kmMin = 0;
                         $kmMax = 200000;
-
-                        // Recupera i valori inviati dal form per il chilometraggio
                         $kmDa = isset($_POST['km_da']) ? $_POST['km_da'] : '';
                         $kmA = isset($_POST['km_a']) ? $_POST['km_a'] : '';
 
-                        // Genera le opzioni per i campi select di chilometraggio
                         $kmDaOptions = generateKilometerOptions($kmMin, $kmMax, $kmDa, true);
                         $kmAOptions = generateKilometerOptions($kmMin, $kmMax, $kmA, false);
                     ?>
@@ -639,27 +550,21 @@ $(document).ready(function() {
                         <option value="Semiautomatico" <?php if($cambio == 'Semiautomatico') echo 'selected="selected"'; ?>>Semiautomatico</option>
                     </select><br>
                     <?php
-                        // Funzione per generare le opzioni del campo select per un intervallo di numeri con l'opzione "Da" o "A"
                         function generateNumberOptions($min, $max, $selectedValue, $isFromField) {
                             $selectOptions = '';
                             $defaultOption = $isFromField ? 'Da' : 'A';
                             $selectOptions .= "<option value=\"\">$defaultOption</option>";
-                            for ($i = $min; $i <= $max; $i += 25) { // L'intervallo per l'anno e la potenza è di 1
+                            for ($i = $min; $i <= $max; $i += 25) {
                                 $isSelected = ($selectedValue !== null && $selectedValue == $i) ? 'selected="selected"' : '';
                                 $selectOptions .= "<option value=\"$i\" $isSelected>$i</option>";
                             }
                             return $selectOptions;
                         }
-
-                        // Definisci gli estremi dell'intervallo per i campi di anno, chilometraggio e potenza
                         $potenzaMin = 0;
                         $potenzaMax = 1000;
-
-                        // Recupera i valori inviati dal form per anno, chilometraggio e potenza
                         $potenzaDa = isset($_POST['potenza_da']) ? $_POST['potenza_da'] : '';
                         $potenzaA = isset($_POST['potenza_a']) ? $_POST['potenza_a'] : '';
 
-                        // Genera le opzioni per i campi select di anno, chilometraggio e potenza
                         $potenzaDaOptions = generateNumberOptions($potenzaMin, $potenzaMax, $potenzaDa, true);
                         $potenzaAOptions = generateNumberOptions($potenzaMin, $potenzaMax, $potenzaA, false);
                     ?>
@@ -674,20 +579,13 @@ $(document).ready(function() {
                     <button type="reset" class="btn btn-secondary">Reset</button>
             </form>
         </div>
-
-        <div id="searchResult"></div>
-
         <div class="item2" >
             <div class="annunci-block">
                 <?php
                     $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
                         or die('Could not connect: ' . pg_last_error());
-
                     if ($dbconn) {
-                        // Query per recuperare gli annunci dalla tabella annuncio in base ai filtri
-                        $query = "SELECT * FROM annuncio WHERE nascosto is false"; // Inizia la query con un'istruzione true 
-                        
-                        // Aggiungi filtri sulla marca e sul modello solo se sono stati specificati
+                        $query = "SELECT * FROM annuncio WHERE nascosto is false";
                         if (!empty($marca)) {
                             $query .= " AND marca = '$marca'";
                         }
@@ -728,69 +626,46 @@ $(document).ready(function() {
                             $query .= " AND potenza <= $potenzaA";
                         }
                         $query .= " AND nascosto IS not true";
-                        // Esecuzione della query
                         $result = pg_query($dbconn, $query);
                         $query_preferiti = "SELECT id FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
                         $result_preferiti = pg_query($dbconn, $query_preferiti);
                         if ($result_preferiti) {
-                            // Inizializza un array per memorizzare gli ID degli annunci preferiti
                             $preferiti_array = array();
-
-                            // Itera sui risultati della query e aggiungi gli ID all'array dei preferiti
                             while ($row_preferiti = pg_fetch_assoc($result_preferiti)) {
                                 $preferiti_array[] = $row_preferiti['id'];
                             }
-
-                            // Libera la memoria del risultato della query
                             pg_free_result($result_preferiti);
                         } else {
-                            // Gestisci eventuali errori nella query per recuperare gli annunci preferiti
                             echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
                         }
-
                         if ($result) {
-                            
-                                // Iterazione sui risultati della query per visualizzare gli annunci
-                                while ($row = pg_fetch_assoc($result)) {
-                                    // Inizio di un nuovo annuncio
-                                    echo "<div class='container3'>";
-                                    // Visualizzazione dell'immagine dell'annuncio
-                                    echo "<div class='foto'>";
-                                    echo "<img src='../vendi/{$row['foto']}' alt='Foto auto' style='border-top-left-radius: 10px; border-top-right-radius: 10px; margin-left:1vw; margin-bottom:1vh; width:20vw'>";
-                                    echo "</div>";
+                            while ($row = pg_fetch_assoc($result)) {
+                                echo "<div class='container3'>";
+                                echo "<div class='foto'>";
+                                echo "<img src='../vendi/{$row['foto']}' alt='Foto auto' style='border-top-left-radius: 10px; border-top-right-radius: 10px; margin-left:1vw; margin-bottom:1vh; width:20vw'>";
+                                echo "</div>";
 
-                                    // Inizio delle caratteristiche dell'annuncio
-                                    echo "<div class='caratteristiche'>";
-                                    echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
-                                    echo "<p>Chilometraggio:  {$row['chilometraggio']}</p>";
-                                    echo "<p>Prezzo:  {$row['prezzo']}</p>";
-                                    echo "<p>Anno: {$row['anno']}</p>";
-                                    echo "<p>Carburante: {$row['carburante']}</p>";
-                                    echo "<p>Cambio: {$row['cambio']}</p>";
-                                    echo "<p>Potenza: {$row['potenza']} CV</p>";
-                                    // Aggiungi altre caratteristiche dell'annuncio qui...
-                                    echo "<a href='big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button' style='width: 8vw; height: 2.4vh; font-size: 0.8em'>VEDI DETTAGLI</a>";
-                                    echo "</div>";                   
-                                    echo "<div class='preferito' style='margin-right: 1vw; margin-top: 1vh'>";
-                                    // Aggiunta della stella per contrassegnare come preferito
-                                    if (isset($preferiti_array) && is_array($preferiti_array)) {
-                                        // Controllo se l'annuncio è nei preferiti
-                                        $isFavorite = in_array($row['id'], $preferiti_array);
-                                    } else {
-                                        // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
-                                        $isFavorite = false;
-                                    }
-
-                                    echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span><br>";
-                                    echo "</div>";
-                                    // Fine dell'annuncio
-                                    echo "</div>";
-                                
+                                echo "<div class='caratteristiche'>";
+                                echo "<h2><u>{$row['marca']} {$row['modello']}</u></h2><br>";
+                                echo "<p>Chilometraggio:  {$row['chilometraggio']}</p>";
+                                echo "<p>Prezzo:  {$row['prezzo']}</p>";
+                                echo "<p>Anno: {$row['anno']}</p>";
+                                echo "<p>Carburante: {$row['carburante']}</p>";
+                                echo "<p>Cambio: {$row['cambio']}</p>";
+                                echo "<p>Potenza: {$row['potenza']} CV</p>";
+                                echo "<a href='big-annuncio.php?id={$row['id']}' class='btn btn-primary btn-lg details-button' role='button' style='width: 8vw; height: 2.4vh; font-size: 0.8em'>VEDI DETTAGLI</a>";
+                                echo "</div>";                   
+                                echo "<div class='preferito' style='margin-right: 1vw; margin-top: 1vh'>";
+                                if (isset($preferiti_array) && is_array($preferiti_array)) {
+                                    $isFavorite = in_array($row['id'], $preferiti_array);
+                                } else {
+                                    $isFavorite = false;
                                 }
-                            
 
-
-                            // Rilascio della risorsa del risultato
+                                echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span><br>";
+                                echo "</div>";
+                                echo "</div>";
+                            }
                             pg_free_result($result);
                         } else {
                             echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
@@ -798,15 +673,11 @@ $(document).ready(function() {
                     }else {
                         echo "Connessione al database non riuscita.";
                     }
-                    // Chiusura della connessione al database
                     pg_close($dbconn);
                 ?>  
-                </div>
             </div>
         </div>
-        </div>
     </div>
-    
     <div class="container-contattaci" id="footer">
         <div class="footer-column">
             <h2>Chi siamo</h2>
@@ -902,6 +773,5 @@ $(document).ready(function() {
     }
   }
 </script>
-
 </body>
 </html>

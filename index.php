@@ -1,81 +1,48 @@
 <?php 
 session_start();
-// Logout logic
 if(isset($_GET['logout'])) {
-    // Unset all of the session variables
     $_SESSION = array();
-
-    // Destroy the session
     session_destroy();
-
-    // Redirect to the homepage
     header("Location: ../index.php");
     exit();
 }
-
-    // Verifica se l'utente è loggato
-    $loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
-    // URL a cui reindirizzare l'utente
-    $redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
-    // Controlla se l'utente è loggato e recupera l'email
-    if ($loggato) {
-        // Recupera l'email dell'utente in sessione
-        $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-
-        // Controlla se l'email è stata recuperata correttamente
-        if ($email) {
-            // Connettiti al database
-            $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
-                or die('Could not connect: ' . pg_last_error());
-
-            // Verifica la connessione al database
-            if ($dbconn) {
-                // Esegui la query per recuperare gli annunci preferiti dell'utente
-                $query_preferiti = "SELECT preferiti FROM utente WHERE email = $1";
-                $result_preferiti = pg_query_params($dbconn, $query_preferiti, array($email));
-
-                // Controlla se la query è stata eseguita correttamente
-                if ($result_preferiti) {
-                    // Estrai l'array degli ID degli annunci preferiti
-                    $row_preferiti = pg_fetch_assoc($result_preferiti);
-                    $preferiti = $row_preferiti['preferiti'];
-
-                    // Trasforma la stringa JSON in un array PHP se non è vuota
-                    if ($preferiti) {
-                        $preferiti_array = json_decode($preferiti, true);
-                    } else {
-                        // Se l'array dei preferiti è vuoto, inizializza un array vuoto
-                        $preferiti_array = array();
-                    }
+$loggato = isset($_SESSION['loggato']) ? $_SESSION['loggato'] : false;
+$redirectURL = $loggato ? '../preferiti.php' : '../login/index.html';
+if ($loggato) {
+    $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+    if ($email) {
+        $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
+            or die('Could not connect: ' . pg_last_error());
+        if ($dbconn) {
+            $query_preferiti = "SELECT preferiti FROM utente WHERE email = $1";
+            $result_preferiti = pg_query_params($dbconn, $query_preferiti, array($email));
+            if ($result_preferiti) {
+                $row_preferiti = pg_fetch_assoc($result_preferiti);
+                $preferiti = $row_preferiti['preferiti'];
+                if ($preferiti) {
+                    $preferiti_array = json_decode($preferiti, true);
                 } else {
-                    // Gestisci eventuali errori nella query
-                    echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
+                    $preferiti_array = array();
                 }
-
-                // Chiudi la connessione al database
-                pg_close($dbconn);
             } else {
-                // Gestisci eventuali errori nella connessione al database
-                echo "Connessione al database non riuscita.";
+                echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
             }
+            pg_close($dbconn);
         } else {
-            // Gestisci il caso in cui l'email dell'utente non è stata recuperata correttamente dalla sessione
-            echo "Email dell'utente non trovata nella sessione.";
+            echo "Connessione al database non riuscita.";
         }
+    } else {
+        echo "Email dell'utente non trovata nella sessione.";
     }
-
+}
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : null;
-
 $navbarContent = "";
-
 if ($loggato) {
     $dbconn = pg_connect("host=localhost port=5432 dbname=utenti user=postgres password=Lukakuinter9")
         or die('Could not connect: ' . pg_last_error());
-
     if ($dbconn) {
         $query = "SELECT nome FROM utente WHERE email = $1";
         $result = pg_query_params($dbconn, $query, array($email));
-
         if ($result) {
             $num_rows = pg_num_rows($result);
             if ($num_rows > 0) {
@@ -95,13 +62,11 @@ if ($loggato) {
             } else {
                 $navbarContent = "
                     <a href='../login/index.html' class='navbar-item'>LOGIN</a>
-                    
                 ";
             }
         } else {
             $navbarContent = "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
         }
-        
     } else {
         $navbarContent = "Connessione al database non riuscita.";
     }pg_close($dbconn);
@@ -112,7 +77,6 @@ if ($loggato) {
     ";
 }
 ?>
-
 <!DOCTYPE html> 
 <html>
 <head>
@@ -129,21 +93,15 @@ if ($loggato) {
                 var annuncioId = $(this).data('annuncio-id');
                 var isFavorite = $(this).hasClass('filled');
                 var isLogged = <?php echo isset($_SESSION['email']) ? 'true' : 'false'; ?>;
-                
-                // Se l'utente non è loggato, reindirizzalo alla pagina di login
                 if (!isLogged) {
                     window.location.href = 'login/index.html';
                     return;
                 }
-
-                // Cambia lo stato del cuore (pieno o vuoto)
                 $(this).toggleClass('filled');
-
-                // Invia una richiesta AJAX per aggiungere o rimuovere l'annuncio dai preferiti
                 $.ajax({
                     url: 'aggiorna_preferito.php',
                     type: 'POST',
-                    data: { id: annuncioId, checked: !isFavorite }, // Inverti lo stato del preferito
+                    data: { id: annuncioId, checked: !isFavorite },
                     success: function(response) {
                         console.log(response);
                     },
@@ -153,17 +111,10 @@ if ($loggato) {
                 });
             });
         });
-
         $(document).ready(function() {
-            // Gestisci il clic sul link "Chi siamo" nella navbar
             $('a[href="#footer"]').click(function(event) {
-                // Previene il comportamento predefinito del link
                 event.preventDefault();
-                
-                // Calcola la posizione verticale del footer
                 var targetOffset = $('#footer').offset().top;
-                
-                // Anima lo scorrimento della pagina fino al footer con una durata di 1000ms (1 secondo)
                 $('html, body').animate({
                     scrollTop: targetOffset
                 }, 1000);
@@ -183,9 +134,6 @@ if ($loggato) {
             font-size: 1em;
             margin-top: -13em;
         }
-        .box {
-            
-        }
         .icon-auto-button img {
             width: 8vw;
         }
@@ -199,7 +147,7 @@ if ($loggato) {
                 margin-top: -20em;
             }
             .box {
-                display: inline-block; /* Imposta i riquadri come blocchi inline */
+                display: inline-block;
                 width: 15vw;
                 height: 10vh;
                 padding: 1.85em;
@@ -229,9 +177,7 @@ if ($loggato) {
     </style>
 </head>
 <body class="text-center">
-
-
-<nav class="navbar">
+    <nav class="navbar">
         <div class="navbar-container">
             <a href="index.php" class="navbar-logo"><b>AUTOWORLD</b></a>
             <div class="navbar-menu" id="navbar-menu">
@@ -296,36 +242,24 @@ if ($loggato) {
                     if ($dbconn) {
                         $query = "SELECT * FROM annuncio WHERE nascosto is false";
                         $result = pg_query($dbconn, $query);
-                        // Esegui la query per recuperare gli ID degli annunci preferiti dell'utente loggato
                         $query_preferiti = "SELECT id FROM annuncio WHERE id IN (SELECT UNNEST(preferiti) FROM utente WHERE email = '$email')";
                         $result_preferiti = pg_query($dbconn, $query_preferiti);
                         if ($result_preferiti) {
-                            // Inizializza un array per memorizzare gli ID degli annunci preferiti
                             $preferiti_array = array();
-
-                            // Itera sui risultati della query e aggiungi gli ID all'array dei preferiti
                             while ($row_preferiti = pg_fetch_assoc($result_preferiti)) {
                                 $preferiti_array[] = $row_preferiti['id'];
                             }
-
-                            // Libera la memoria del risultato della query
                             pg_free_result($result_preferiti);
                         } else {
-                            // Gestisci eventuali errori nella query per recuperare gli annunci preferiti
                             echo "Errore durante l'esecuzione della query per recuperare gli annunci preferiti: " . pg_last_error($dbconn);
                         }
                         if ($result) {
-                            // Iterazione sui risultati della query per visualizzare gli annunci
-                            // Dentro il loop degli annunci
                             while ($row = pg_fetch_assoc($result)) {
-                                // Inizio di un nuovo annuncio
                                 echo "<div class='container3'>";
-                                // Visualizzazione dell'immagine dell'annuncio
                                 echo "<div class='foto'>";
                                 echo "<img src='vendi/{$row['foto']}' alt='Foto auto' width='250' style='border-top-left-radius: 10px; border-top-right-radius: 10px;'>";
                                 echo "</div>";
 
-                                // Inizio delle caratteristiche dell'annuncio
                                 echo "<div class='caratteristiche'>";
                                 echo "<h2><u><a href='../ricerca/big-annuncio.php?id={$row['id']}' style='color: orange;'>{$row['marca']} {$row['modello']}</a></u></h2><br>";
                                 echo "<p>km {$row['chilometraggio']}</p>";
@@ -335,24 +269,15 @@ if ($loggato) {
                                 echo "<p><img src=\"immagini/cambio.png\" width='20px'>&nbsp;{$row['cambio']}</p>";
                                 echo "<p><img src=\"immagini/potenza.png\" width='20px'>&nbsp;{$row['potenza']} CV</p>";
                                 
-                                // Checkbox per il preferito
-                                // Controllo se l'array dei preferiti è stato correttamente inizializzato
                                 if (isset($preferiti_array) && is_array($preferiti_array)) {
-                                    // Controllo se l'annuncio è nei preferiti
                                     $isFavorite = in_array($row['id'], $preferiti_array);
                                 } else {
-                                    // Inizializzo $isFavorite a false in caso di problemi con l'array dei preferiti
                                     $isFavorite = false;
                                 }
-
                                 echo "<span class='heart-icon " . ($isFavorite ? 'filled' : '') . "' data-annuncio-id='{$row['id']}'></span>";
-
-                                // Fine dell'annuncio
                                 echo "</div>";
                                 echo "</div>";
                             }
-
-                            // Rilascio della risorsa del risultato
                             pg_free_result($result);
                         } else {
                             echo "Errore durante l'esecuzione della query: " . pg_last_error($dbconn);
@@ -360,19 +285,14 @@ if ($loggato) {
                     } else {
                         echo "Connessione al database non riuscita.";
                     }
-
-                    // Chiusura della connessione al database
                     pg_close($dbconn);
                 ?>  
             </div>
         </div>
-            <button class="scroll-button scroll-right">
-                <img src="immagini/rightarrow.png" alt="Scroll Right">
-            </button>
+        <button class="scroll-button scroll-right">
+            <img src="immagini/rightarrow.png" alt="Scroll Right">
+        </button>
     </div>
-        
-
-
     <div class="container-contattaci" id="footer">
         <div class="footer-column">
             <h2>Chi siamo</h2>
@@ -458,7 +378,6 @@ if ($loggato) {
             <img src="../immagini/loghiauto/acura.png">
         </div>
     </div>
-
     <script>
         $(document).ready(function() {
             $(".scroll-left").click(function() {
@@ -472,7 +391,6 @@ if ($loggato) {
             });
         });
     </script>     
-
 <script>
   function myFunction() {
     var x = document.getElementById("myNavbar");
@@ -483,6 +401,5 @@ if ($loggato) {
     }
   }
 </script>
-
 </body>
 </html>

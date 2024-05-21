@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $q2 = "SELECT * FROM utente WHERE email=$1 and pwd=$2";
             $data = pg_query_params($dbconn, $q2, array($email, $password));
             if ($tuple = pg_fetch_array($data, null, PGSQL_ASSOC)) {
-                $_SESSION['loggato'] = true; // Imposta il valore di 'loggato' nella sessione
-                $_SESSION['email'] = $_POST['inputEmail']; // Memorizza l'email dell'utente nella sessione
-                header("Location: ../index.php"); // Reindirizza alla homepage
+                $_SESSION['loggato'] = true;
+                $_SESSION['email'] = $_POST['inputEmail'];
+                header("Location: ../index.php");
                 //exit();
             }
             else {

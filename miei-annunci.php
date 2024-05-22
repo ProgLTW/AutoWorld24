@@ -326,7 +326,7 @@ if ($loggato) {
     <div class="container-contattaci" id="footer">
         <div class="footer-column">
             <h2>Chi siamo</h2>
-            <p>Our commitment is to provide you with the highest quality products and the best value in the mobile tool industry. Thank you for your continued support of Cornwell Quality Tools and our franchise owners.</p><br><br>
+            <p>AutoWorld si dedica a fornire un'assistenza eccellente per la compravendita di auto, assicurando esperienze soddisfacenti, trasparenti e vantaggiose. Che cerchiate l'auto ideale o vogliate vendere la vostra al miglior prezzo, il team è a disposizione con professionalità e dedizione. Grazie per il vostro continuo supporto!</p><br><br>
             <p><b>© 2024 Autoworld. All Rights Reserved.</b></p>
         </div>
         <div class="footer-column">

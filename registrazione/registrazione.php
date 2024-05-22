@@ -24,13 +24,22 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
             $nome = $_POST['inputName'];
             $cognome = $_POST['inputSurname'];
             $password = ($_POST['inputPassword']);
-            $q2 = "INSERT INTO utente VALUES ($1, $2, $3, $4)";
-            $data = pg_query_params($dbconn, $q2, array($email, $password, $nome, $cognome));
-            if ($data) {
+            $password2 = ($_POST['inputConfermaPassword']);
+            if ($password ==  $password2) {
+                $q2 = "INSERT INTO utente VALUES ($1, $2, $3, $4)";
+                $data = pg_query_params($dbconn, $q2, array($email, $password, $nome, $cognome));
+                if ($data) {
+                    echo "<script>
+                        alert('Registrazione completata. Puoi iniziare ad usare il sito. Clicca OK per loggarti.');
+                        window.location.href = '../login/index.html';
+                    </script>";
+                }
+            }
+            else {
                 echo "<script>
-                    alert('Registrazione completata. Puoi iniziare ad usare il sito. Clicca OK per loggarti.');
-                    window.location.href = '../login/index.html';
-                </script>";
+                        alert('Spiacente, la password non combacia. Riprova.');
+                        window.location.href = '../registrazione/index.html';
+                    </script>";
             }
         }
     }

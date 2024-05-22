@@ -520,9 +520,8 @@ if ($loggato) {
                 echo "<div class='foto'><img src='../vendi/{$annuncio['foto']}' alt='Foto auto'></div>";
                 echo "</td>";
                 echo "<td rowspan='2' class='price-cell'>";
-                $trattabilita = $annuncio['trattabile'] ? "<small style='font-size: 15px;'>-trattabile</small>" : "<small style='font-size: 15px;'>-non trattabile</small>";
+                $trattabilita = ($annuncio['trattabile'] == 't') ? "<small style='font-size: 15px;'>-trattabile</small>" : "<small style='font-size: 15px;'>-non trattabile</small>";
                 echo "<p class='prezzo'>€  {$annuncio['prezzo']} {$trattabilita}</p>";
-
                 echo "<table class='finanziamento'>";
                 echo "<tr>";
                 echo "<td class='input-column'>";

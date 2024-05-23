@@ -99,7 +99,7 @@
     <div class="box">
         <h1>Recupera Password</h1>
         <form name="myForm" action="../forgot-psw/send-mail.php" method="POST" class="form-signin m-auto" onsubmit="alertRmb()">
-            <input type="email" id="email" name="email" required><br><br>
+            <input type="email" id="email" name="email" placeholder="Indirizzo email" required><br><br>
             <button type="submit" class="btn btn-primary">Invia mail</button>
         </form>
     </div>

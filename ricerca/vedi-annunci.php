@@ -92,7 +92,7 @@ if ($loggato) {
     <script type="application/javascript">
 
         const modelliPerMarca = {
-            "Audi": ["ModelloA1", "ModelloA3", "ModelloA4"],
+            "Audi": ["A1", "A3", "A4"],
             "BMW": ["Serie1", "Serie3", "Serie5"],
         };
         function updateModelloOptions(marcaSelezionata) {
@@ -440,8 +440,15 @@ if ($loggato) {
                         <option value="Mazda" <?php if($marca == 'Mazda') echo 'selected="selected"'; ?>>Mazda</option>
                     </select> <br>
                     <label for="modello">Modello:</label>
-                    <select id="modello" style="width: 12vw" name="modello" disabled>
+                    <select id="modello" style="width: 12vw" name="modello">
                         <option value="" <?php if($modello == '') echo 'selected="selected"'; ?>>Seleziona</option>
+                        <?php if($marca == 'Audi') {
+                            echo "<option value=\"A1\" <?php if($modello == 'A1' && $marca == 'Audi') echo 'selected=\"selected\"'; ?>A1</option>";
+                            echo "<option value=\"A3\" <?php if($modello == 'A3' && $marca == 'Audi') echo 'selected=\"selected\"'; ?>A3</option>";
+                            echo "<option value=\"A4\" <?php if($modello == 'A4' && $marca == 'Audi') echo 'selected=\"selected\"'; ?>A4</option>";
+                        } 
+                        ?>
+                        
                     </select><br>
                     <?php
                         function generatePriceOptions($min, $max, $selectedValue, $isFromField) {
